@@ -1,0 +1,50 @@
+{
+  "_args": [
+    [
+      "vue-barcode-scanner@0.8.1",
+      "C:\\wamp64\\www\\front"
+    ]
+  ],
+  "_from": "vue-barcode-scanner@0.8.1",
+  "_id": "vue-barcode-scanner@0.8.1",
+  "_inBundle": false,
+  "_integrity": "sha512-5F+4P6QqvXeI4epAeB4FjKZP+PmotD0hRyfLkKNk9EJQGIqYIaeCreimPUkLeNX0UQ3r175NEwH645xX2+93jQ==",
+  "_location": "/vue-barcode-scanner",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "vue-barcode-scanner@0.8.1",
+    "name": "vue-barcode-scanner",
+    "escapedName": "vue-barcode-scanner",
+    "rawSpec": "0.8.1",
+    "saveSpec": null,
+    "fetchSpec": "0.8.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/vue-barcode-scanner/-/vue-barcode-scanner-0.8.1.tgz",
+  "_spec": "0.8.1",
+  "_where": "C:\\wamp64\\www\\front",
+  "author": {
+    "name": "Wisarut Phuvanantanond",
+    "email": "noomerzx@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/noomerzx/vue-barcode-scanner/issues"
+  },
+  "description": "Barcode Scanner Plugin for Vue.js",
+  "homepage": "https://github.com/noomerzx/vue-barcode-scanner",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "vue-barcode-scanner",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noomerzx/vue-barcode-scanner.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.8.1"
+}

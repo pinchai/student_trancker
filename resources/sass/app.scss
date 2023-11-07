@@ -1,0 +1,21 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
+@import '~sweetalert2/src/variables';
+
+//Sweet Alert
+$swal2-background: #990000;
+@import '~sweetalert2/src/sweetalert2';
+
+// Notify
+@import 'notify';
+
+// Error Feedback
+@import 'error-message';
+

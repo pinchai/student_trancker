@@ -1,0 +1,67 @@
+.string{
+    text-align: left;
+}
+.currency{
+    text-align: right;
+    font-weight: bold;
+}
+.center{
+    text-align: center;
+}
+
+.ql-align-right {
+    text-align: right;
+}
+
+.ql-align-center {
+    text-align: center;
+}
+
+.ql-align-left {
+    text-align: left;
+}
+
+.ql-picker-item[data-value='10px']::before, .ql-picker-label[data-value='10px']::before {
+    content: '10' !important;
+}
+
+.ql-picker-item[data-value='12px']::before, .ql-picker-label[data-value='12px']::before {
+    content: '12' !important;
+}
+
+.ql-picker-item[data-value='14px']::before, .ql-picker-label[data-value='14px']::before {
+    content: '14' !important;
+}
+
+.ql-picker-item[data-value='16px']::before, .ql-picker-label[data-value='16px']::before {
+    content: '16' !important;
+}
+
+.ql-picker-item[data-value='18px']::before, .ql-picker-label[data-value='18px']::before {
+    content: '18' !important;
+}
+
+.ql-picker-item[data-value='20px']::before, .ql-picker-label[data-value='20px']::before {
+    content: '20' !important;
+}
+
+.ql-picker-item[data-value='24px']::before, .ql-picker-label[data-value='24px']::before {
+    content: '24' !important;
+}
+
+.ql-picker-item[data-value='30px']::before, .ql-picker-label[data-value='30px']::before {
+    content: '30' !important;
+}
+
+.ql-picker-item[data-value='32px']::before, .ql-picker-label[data-value='32px']::before {
+    content: '32' !important;
+}
+
+.ql-picker-item[data-value='36px']::before, .ql-picker-label[data-value='36px']::before {
+    content: '36' !important;
+}
+
+
+
+
+

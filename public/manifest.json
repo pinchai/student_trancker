@@ -1,0 +1,17 @@
+{
+    "name": "PERFECT PEOPLE",
+    "short_name": "PFP",
+    "start_url": "/dashboard",
+    "background_color": "#6777ef",
+    "description": "PERFECT PEOPLE",
+    "display": "fullscreen",
+    "theme_color": "#6777ef",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
