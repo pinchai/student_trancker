@@ -31,7 +31,8 @@ Route::middleware('auth')->group(function () {
     include 'admin/product_unit_variation.php';
     include 'admin/product_composite.php';
     include 'admin/setting.php';
-    include 'admin/employee.php';
+    include 'admin/student.php';
+    include 'admin/group.php';
     include 'admin/blog.php';
     include 'admin/promotion.php';
     include 'admin/slider.php';

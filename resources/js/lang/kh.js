@@ -404,7 +404,6 @@ export default {
   percentage: "%",
   fix: "ជាតម្លៃ",
   normal: "ទំនិញរាយ",
-  group: "ទំនិញដុំ",
   composite: "ទំនិញឈុត",
   product_type: "ប្រភេទទំនិញ",
   user_activity: "សកម្មភាពអ្នកប្រើប្រាស់",
@@ -531,5 +530,8 @@ export default {
   ingredients: "គ្រឿងផ្សំ",
   facebook: "Facebook",
   ig: "Instagram",
+  student: "សិស្ស",
+  student_management: "ការគ្រប់គ្រងសិស្ស",
+  group: "ក្រុម",
 
 };

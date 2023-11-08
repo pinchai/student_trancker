@@ -1,23 +1,24 @@
 import Vue from "vue";
+
 export default {
 
-    state: {
-        position: [],
-    },
+  state: {
+    position: [],
+  },
 
-    getters: {
-        getPosition: (state) => state.position,
-    },
+  getters: {
+    getPosition: (state) => state.position,
+  },
 
-    mutations: {
-        SET_POSITION(state, customer) {
-            state.position = customer;
-        },
+  mutations: {
+    SET_POSITION(state, position) {
+      state.position = position;
     },
+  },
 
-    actions: {
-        setPosition({ commit }, position) {
-            commit('SET_POSITION', position);
-        },
+  actions: {
+    setPosition({commit}, position) {
+      commit('SET_POSITION', position);
     },
+  },
 };

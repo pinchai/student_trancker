@@ -112,19 +112,13 @@ const app = new Vue({
           store.dispatch("setEnums", response.data.data.enums);
           store.dispatch("fetchBranch", response.data.data.branch);
           store.dispatch("setModuleItems", response.data.data.module_permission);
-          store.dispatch("setCurrency", response.data.data.currency);
-          store.dispatch("setProductCategory", response.data.data.category);
-          store.dispatch("setBrand", response.data.data.brand);
-          store.dispatch("setUnit", response.data.data.unit);
-          store.dispatch("setTag", response.data.data.tag);
-          store.dispatch("setDefaultCurrency", response.data.data.default_currency);
-          store.dispatch("setProducts", response.data.data.products);
 
           store.dispatch("setCustomUserModulePermission", response.data.data.custom_user_module_permission);
           store.dispatch("setUser", response.data.data.users);
-          store.dispatch("setPosition", response.data.data.position);
           store.dispatch("setTableSize", response.data.data.default_table_size);
           store.dispatch("setVersion", response.data.data.version);
+          store.dispatch("setPosition", response.data.data.position);
+          store.dispatch("setGroup", response.data.data.group);
           //
         }
       })

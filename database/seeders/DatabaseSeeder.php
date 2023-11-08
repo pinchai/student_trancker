@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             CustomPermissionSeeder::class,
             SettingSeeder::class,
             TelegramBotSeeder::class,
+            PositionSeeder::class,
         ]);
     }
 }

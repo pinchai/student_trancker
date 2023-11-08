@@ -103,84 +103,24 @@ export default {
           active: false
         },
         {
-          label: "product_management",
-          icon: "fas fa-cubes",
-          to: "/product_management",
-          key: "product_management",
-          active: false,
-          subs: [
-            {
-              label: "category",
-              to: "/product_management/category",
-              key: "product_category",
-              active: false
-            },
-            {
-              label: "brand",
-              to: "/product_management/brand",
-              key: "brand",
-              active: false
-            },
-            {
-              label: "unit",
-              to: "/product_management/unit",
-              key: "unit",
-              active: false
-            },
-            {
-              label: "tag",
-              to: "/product_management/tag",
-              key: "tag",
-              active: false
-            },
-            {
-              label: "product",
-              to: "/product_management/product",
-              key: "product",
-              active: false
-            },
-          ]
+          label: "group",
+          icon: "fas fa-dice-d6",
+          to: "/student_management/group",
+          key: "group",
+          active: false
         },
         {
           label: "position",
           icon: "fas fa-key",
-          to: "/HR/position",
+          to: "/student_management/position",
           key: "position",
           active: false
         },
         {
-          label: "employee",
-          icon: "fas fa-user-alt",
-          to: "/HR/employee",
-          key: "employee",
-          active: false
-        },
-        {
-          label: "blog",
-          icon: "fas fa-ticket-alt",
-          to: "/blog",
-          key: "blog",
-          active: false
-        },
-        {
-          label: "promotion",
-          icon: "fas fa-award",
-          to: "/promotion",
-          key: "promotion",
-          active: false
-        },
-        {
-          label: "slider",
-          icon: "fas fa-location-arrow",
-          to: "/slider",
-          key: "slider",
-          active: false
-        },
-        {
-          label: "currency",
-          icon: "fas fa-money-bill-wave-alt",
-          to: "/setting/currency",
-          key: "currency",
+          label: "student",
+          icon: "fas fa-user-graduate",
+          to: "/student_management/student",
+          key: "student",
           active: false
         },
         {
