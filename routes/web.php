@@ -18,24 +18,13 @@ Route::middleware('auth')->group(function () {
     include 'admin/welcome.php';
     include 'admin/dashboard.php';
     include 'admin/system.php';
-    include 'admin/product_category.php';
     include 'admin/user.php';
     include 'admin/role.php';
     include 'admin/branch.php';
-    include 'admin/brand.php';
-    include 'admin/unit.php';
-    include 'admin/variation.php';
-    include 'admin/tag.php';
-    include 'admin/product.php';
-    include 'admin/currency.php';
-    include 'admin/product_unit_variation.php';
-    include 'admin/product_composite.php';
     include 'admin/setting.php';
     include 'admin/student.php';
     include 'admin/group.php';
-    include 'admin/blog.php';
-    include 'admin/promotion.php';
-    include 'admin/slider.php';
+    include 'admin/attendance.php';
 
 
     include 'admin/position.php';

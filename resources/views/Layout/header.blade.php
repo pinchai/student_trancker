@@ -53,6 +53,13 @@
   <meta name="theme-color" content="#6777ef"/>
   <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
   <link rel="manifest" href="{{ asset('/manifest.json') }}">
+
+  <!--heic2any converter-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"
+          integrity="sha512-VjmsArkf8Vv2yyvbXCyVxp+R3n4N2WyS1GEQ+YQxa7Hu0tx836WpY4nW9/T1W5JBmvuIsxkVH/DlHgp7NEMjDw=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+  ></script>
 </head>
 <style>
   body {

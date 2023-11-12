@@ -34,7 +34,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../../../components/sharing/ModalCropperImage */ "./resources/js/components/sharing/ModalCropperImage.vue"));
     },
     TextEditor: function TextEditor() {
-      return Promise.all(/*! import() */[__webpack_require__.e(11), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ../../../components/sharing/TextEditor */ "./resources/js/components/sharing/TextEditor.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(12), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ../../../components/sharing/TextEditor */ "./resources/js/components/sharing/TextEditor.vue"));
     }
   },
   data: function data() {

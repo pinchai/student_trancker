@@ -103,11 +103,12 @@ class StringHelper
     $isHasThumbnail = IsHasThumbnail::NO['id'],
     $isCropImage = IsCropImage::NO['id'],
     $cropWidth = 350,
-    $cropHeight = 350
+    $cropHeight = 350,
+    $img_prefix = ''
   ) {
     //Save Image Normal
     $imagePath = 'images' . DIRECTORY_SEPARATOR . $folderName;
-    $imageName = uniqid('', true) . '.png';
+    $imageName = $img_prefix.uniqid('', true) . '.png';
     self::saveImage(
       $image,
       $imagePath,

@@ -124,6 +124,13 @@ export default {
           active: false
         },
         {
+          label: "attendance",
+          icon: "fas fa-calendar-check",
+          to: "/student_management/attendance",
+          key: "attendance",
+          active: false
+        },
+        {
           label: "user_management",
           icon: "fas fa-user-lock",
           to: "/user_management",

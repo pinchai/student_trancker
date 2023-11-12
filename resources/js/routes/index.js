@@ -24,6 +24,9 @@ import branch from "../pages/branch";
 //Student
 import student from "../pages/student_management/student";
 
+//Attendance
+import attendance from "../pages/student_management/attendance";
+
 //position
 import position from "../pages/student_management/position";
 
@@ -89,6 +92,14 @@ const router = new VueRouter({
             component: student,
             meta: {
                 title: "student"
+            }
+        },
+        {
+            path: "/student_management/attendance",
+            name: "attendance",
+            component: attendance,
+            meta: {
+                title: "attendance"
             }
         },
         {
