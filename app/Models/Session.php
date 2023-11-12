@@ -9,15 +9,15 @@ use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Log;
 
-class Attendance extends Model
+class Session extends Model
 {
 
-    protected $table = 'attendance';
+    protected $table = 'session';
     use Loggable;
     use HasFactory, SoftDeletes;
 
-    const logoPath = 'images' . DIRECTORY_SEPARATOR . 'attendance';
-    const thumbnailPath = 'images' . DIRECTORY_SEPARATOR . 'attendance' . DIRECTORY_SEPARATOR . 'thumbnail';
+    const logoPath = 'images' . DIRECTORY_SEPARATOR . 'session';
+    const thumbnailPath = 'images' . DIRECTORY_SEPARATOR . 'session' . DIRECTORY_SEPARATOR . 'thumbnail';
 
     public function setData($data)
     {

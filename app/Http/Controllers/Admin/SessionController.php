@@ -6,18 +6,16 @@ use App\Enums\IsCropImage;
 use App\Enums\IsHasThumbnail;
 use App\Http\Controllers\Controller;
 use App\Helpers\StringHelper;
-use App\Models\Attendance;
-use App\Models\Branch;
+use App\Models\Session;
 use App\Models\Group;
-use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Log;
 
-class AttendanceController extends Controller
+class SessionController extends Controller
 {
-    const MODULE_KEY = 'attendance';
+    const MODULE_KEY = 'session';
 
     public function get(Request $request)
     {
@@ -25,13 +23,9 @@ class AttendanceController extends Controller
         if (empty($table_size)) {
             $table_size = 10;
         }
-        $data = Attendance::join('student', 'attendance.student_id', 'student.id')
-            ->join('group', 'student.group_id', 'group.id')
+        $data = Session::join('group', 'session.group_id', 'group.id')
             ->select(
-                'attendance.*',
-                'student.name as name',
-                'student.gender as gender',
-                'student.latin_name as latin_name',
+                'session.*',
                 'group.name as group',
             )
             ->paginate($table_size);
@@ -73,9 +67,9 @@ class AttendanceController extends Controller
                 'group_id' => $request->group_id,
                 'description' => null,
             ];
-            $attendance = new Attendance();
-            $attendance->setData($data);
-            $attendance->save();
+            $session = new Session();
+            $session->setData($data);
+            $session->save();
         }
 
 
@@ -90,50 +84,53 @@ class AttendanceController extends Controller
     //store
     public function store(Request $request)
     {
+        foreach(json_decode($request->student_list) as $item){
+            dd($item->latin_name);
+        }
         $this->checkValidation($request);
         DB::beginTransaction();
 
-        $attendance = new Attendance();
+        $session = new Session();
         $group = Group::find($request->group_id)->name;
-        $attendance_data = [
+        $session_data = [
             'group_id'=>$request->group_id,
             'date_time'=>$request->date_time,
             'remark'=>$request->remark,
         ];
-        $attendance->setData($attendance_data);
-        if ($attendance->save()) {
+        $session->setData($session_data);
+        if ($session->save()) {
             $image_one = $request->file('image_one');
             if ($image_one) {
                 $image_one_path = StringHelper::uploadImage(
                     $image_one,
-                    'attendance',
+                    'session',
                     IsHasThumbnail::YES['id'],
                     IsCropImage::NO['id'],
                     '',
                     '',
                     $group.'_'
                 );
-                $attendance->image_one = "$image_one_path";
+                $session->image_one = "$image_one_path";
             }
 
             $image_two = $request->file('image_two');
             if ($image_two) {
                 $image_two_path = StringHelper::uploadImage(
                     $image_two,
-                    'attendance',
+                    'session',
                     IsHasThumbnail::YES['id'],
                     IsCropImage::NO['id'],
                     '',
                     '',
                     $group.'_'
                 );
-                $attendance->image_two = "$image_two_path";
+                $session->image_two = "$image_two_path";
             }
-            $attendance->save();
+            $session->save();
         }
         DB::commit();
         return response()->json([
-            'data' => $attendance,
+            'data' => $session,
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);
@@ -145,19 +142,19 @@ class AttendanceController extends Controller
     {
         DB::beginTransaction();
         $this->checkValidation($request);
-        $attendance = Attendance::find($request->id);
-        $attendance->setData($request);
-        if ($attendance->save()) {
+        $session = Session::find($request->id);
+        $session->setData($request);
+        if ($session->save()) {
             $image = $request->file('cropped_logo');
             if ($image) {
                 $image = StringHelper::uploadImage($image, 'student', IsHasThumbnail::YES['id'], IsCropImage::NO['id']);
-                $attendance->image = "$image";
+                $session->image = "$image";
             }
-            $attendance->save();
+            $session->save();
         }
         DB::commit();
         return response()->json([
-            'data' => $attendance,
+            'data' => $session,
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);
@@ -167,14 +164,14 @@ class AttendanceController extends Controller
     public function delete(Request $request)
     {
         DB::beginTransaction();
-        $attendance = Attendance::find($request->id);
-        if ($attendance->delete()) {
+        $session = Session::find($request->id);
+        if ($session->delete()) {
             //Delete Logo
-            StringHelper::deleteImage($attendance->logo, Attendance::logoPath, Attendance::thumbnailPath);
+            StringHelper::deleteImage($session->logo, Session::logoPath, Session::thumbnailPath);
         }
         DB::commit();
         return response()->json([
-            'data' => $attendance,
+            'data' => $session,
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);

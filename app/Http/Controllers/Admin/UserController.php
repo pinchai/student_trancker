@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\IsHasThumbnail;
 use App\Helpers\StringHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Attendance;
+use App\Models\Session;
 use App\Models\CustomUserModulePermission;
 use App\Models\Permission;
 use App\Models\RolePermission;

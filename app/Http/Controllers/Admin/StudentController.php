@@ -46,6 +46,21 @@ class StudentController extends Controller
         return response()->json($response, 200);
     }
 
+    public function getByGroupId(Request $request)
+    {
+        $data = Student::join('group', 'student.group_id', 'group.id')
+            ->select(
+                'student.*',
+                'group.name as group',
+                DB::raw("1 as 'checked'")
+            )
+            ->where('group_id',$request->group_id)
+            ->get();
+
+        return $this->responseWithData($data);
+    }
+
+
     //import
     public function import(Request $request)
     {

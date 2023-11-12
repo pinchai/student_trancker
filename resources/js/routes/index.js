@@ -25,7 +25,7 @@ import branch from "../pages/branch";
 import student from "../pages/student_management/student";
 
 //Attendance
-import attendance from "../pages/student_management/attendance";
+import session from "../pages/student_management/session";
 
 //position
 import position from "../pages/student_management/position";
@@ -95,11 +95,11 @@ const router = new VueRouter({
             }
         },
         {
-            path: "/student_management/attendance",
-            name: "attendance",
-            component: attendance,
+            path: "/student_management/session",
+            name: "session",
+            component: session,
             meta: {
-                title: "attendance"
+                title: "session"
             }
         },
         {

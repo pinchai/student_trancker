@@ -11,7 +11,7 @@
     content-class="custom-modal"
   >
     <template slot="modal-header">
-      <h3><i class="fas fa-user-graduate"></i> {{ $t("attendance") }}</h3>
+      <h3><i class="fas fa-user-graduate"></i> {{ $t("session") }}</h3>
     </template>
 
     <b-row>
@@ -76,6 +76,7 @@
             data-vv-name="group_id"
             :data-vv-as="$t('group')"
             v-model="form.group_id"
+            @input="getStudent(form.group_id)"
           >
             <b-form-select-option value="null">{{ $t('group') }}</b-form-select-option>
             <b-form-select-option
@@ -130,6 +131,41 @@
             :placeholder="$t('remark')"
           ></b-textarea>
         </b-form-group>
+      </b-col>
+      <b-col lg="12" xl="12" md="12" sm="12">
+        <div class="table-responsive">
+          <table class="table table-sm table-striped">
+            <thead>
+            <tr>
+              <th>No.</th>
+              <th>Name</th>
+              <th>Latin Name</th>
+              <th>Check</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+              v-for="(item, index) in student_list"
+              :key="'student_'+index"
+            >
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.latin_name }}</td>
+              <td>
+                <b-form-checkbox
+                  size="lg"
+                  v-model="item.checked"
+                  name="checkbox-1"
+                  value="1"
+                  unchecked-value="0"
+                >
+                  Present
+                </b-form-checkbox>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </b-col>
     </b-row>
 
@@ -190,8 +226,9 @@ export default {
         remark: null,
       },
       url: null,
-      imgUrl: "/images/attendance/",
+      imgUrl: "/images/session/",
       listItems: {},
+      student_list: [],
     };
   },
   computed: {
@@ -212,11 +249,11 @@ export default {
       handler(val) {
         if (val == 1) {
           this.modal = true;
-          this.url = "/attendance/store";
+          this.url = "/session/store";
         } else if (val == 2) {
           this.modal = true;
           this.setData();
-          this.url = "/attendance/edit";
+          this.url = "/session/edit";
         }
       },
       immediate: true
@@ -233,6 +270,7 @@ export default {
           formData.append('image_two', this.form.image_two)
           formData.append('group_id', this.form.group_id)
           formData.append('date_time', this.form.date_time)
+          formData.append('student_list', JSON.stringify(this.student_list))
           axios.post(this.url, formData).then(function (response) {
             if (response.status === 200) {
               vm.listItems = response.data.data;
@@ -241,7 +279,7 @@ export default {
               vm.$notify({
                 group: "message",
                 type: "success",
-                title: vm.$t("attendance"),
+                title: vm.$t("session"),
                 text: vm.$t("done")
               });
             }
@@ -253,7 +291,7 @@ export default {
           vm.$notify({
             group: "message",
             type: "warning",
-            title: vm.$t("attendance"),
+            title: vm.$t("session"),
             text: vm.$t("validation_failed")
           });
         }
@@ -272,7 +310,7 @@ export default {
     },
     setData() {
       this.form = Object.assign({}, this.formItem);
-      this.form.logo = '/images/attendance/' + this.formItem.image;
+      this.form.logo = '/images/session/' + this.formItem.image;
       this.form.old_logo = this.formItem.image;
     },
     previewFiles() {
@@ -295,6 +333,19 @@ export default {
 
       document.getElementById('image_two').src = window.URL.createObjectURL(this.form.image_two)
       document.getElementById('image_two_tab').href = window.URL.createObjectURL(this.form.image_two)
+    },
+    getStudent(group_id) {
+      let vm = this;
+      const input = {
+        'group_id': group_id
+      }
+      axios.post("/student/getByGroupId", input).then(function (response) {
+        vm.student_list = response.data.data
+
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
   }
 };

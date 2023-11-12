@@ -124,10 +124,10 @@ export default {
           active: false
         },
         {
-          label: "attendance",
-          icon: "fas fa-calendar-check",
-          to: "/student_management/attendance",
-          key: "attendance",
+          label: "session",
+          icon: "fas fa-sync",
+          to: "/student_management/session",
+          key: "session",
           active: false
         },
         {

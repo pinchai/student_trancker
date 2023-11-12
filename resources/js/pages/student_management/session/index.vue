@@ -12,7 +12,7 @@
 
     <b-card no-body class="card-table">
       <b-card-header>
-        <h1>{{ $t("attendance") }}</h1>
+        <h1>{{ $t("session") }}</h1>
         <b-row>
           <b-col cols="12" xl="6">
             <b-button
@@ -93,13 +93,9 @@
               sticky-header='500px'
               small
             >
-              <template v-slot:cell(name)="row">
+              <template v-slot:cell(group)="row">
                 <strong style="font-size: 20px">
-                  {{ row.item.name }} - {{ row.item.latin_name }}
-                  (
-                  <i v-if="row.item.gender =='Male'" class="fas fa-male"></i>
-                  <i v-if="row.item.gender =='Female'" class="fas fa-female"></i>
-                  )
+                  {{ row.item.group }}
                 </strong>
               </template>
               <template v-slot:cell(date_time)="row">
@@ -107,12 +103,7 @@
                   {{ row.item.date_time | dateTimeFormat }}
                 </strong>
               </template>
-              <template v-slot:cell(group)="row">
-                <strong style="font-size: 20px">
-                  {{ row.item.group }}
-                </strong>
-              </template>
-              <template v-slot:cell(attendance)="row">
+              <template v-slot:cell(session)="row">
                 <i
                   v-if="row.item.checked == 0"
                   class="fas fa-times-circle text-danger"
@@ -124,20 +115,6 @@
                   class="fas fa-check-circle text-primary"
                   style="font-size: 20px"
                 > Present</i>
-
-<!--                <b-form-checkbox-->
-<!--                  disabled-->
-<!--                  v-if="row.item.checked == 1"-->
-<!--                  size="lg"-->
-<!--                  v-model="row.item.checked"-->
-<!--                  name="checkbox-1"-->
-<!--                  value="1"-->
-<!--                  unchecked-value="0"-->
-<!--                >-->
-<!--                  Present-->
-<!--                </b-form-checkbox>-->
-
-
               </template>
               <template v-slot:cell(created_at)="row">
                 {{ row.item.created_at| dateTimeFormat("YYYY-MM-DD HH:mm:ss") }}
@@ -164,7 +141,7 @@
 import {mapGetters} from "vuex";
 
 export default {
-  moduleKey: "attendance",
+  moduleKey: "session",
   data() {
     return {
       items: [],
@@ -200,11 +177,11 @@ export default {
     header() {
       let data = [
         {
-          key: "name",
-          label: this.$t("name"),
+          key: "group",
+          label: this.$t("group"),
           sortable: true,
           show_sm: true,
-          thStyle: { width: "15%" },
+          thStyle: { width: "8%" },
         },
         {
           key: "date_time",
@@ -214,15 +191,8 @@ export default {
           thStyle: { width: "10%" },
         },
         {
-          key: "attendance",
-          label: this.$t("attendance"),
-          sortable: true,
-          show_sm: true,
-          thStyle: { width: "8%" },
-        },
-        {
-          key: "group",
-          label: this.$t("group"),
+          key: "session",
+          label: this.$t("session"),
           sortable: true,
           show_sm: true,
           thStyle: { width: "8%" },
@@ -249,7 +219,7 @@ export default {
       let vm = this;
       const input = this.getInput();
       axios
-        .post("/attendance/get", input)
+        .post("/session/get", input)
         .then(function (response) {
           vm.setInput(response.data);
         })
@@ -272,7 +242,7 @@ export default {
         if (result.value) {
           let vm = this;
           axios
-            .post("/attendance/delete", {id: this.selectedItem.id})
+            .post("/session/delete", {id: this.selectedItem.id})
             .then(function (response) {
               if (response.status == 200) {
                 vm.fetchRecord();
