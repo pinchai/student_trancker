@@ -100,24 +100,8 @@
               </template>
               <template v-slot:cell(date_time)="row">
                 <strong style="font-size: 20px">
-                  {{ row.item.date_time | dateTimeFormat }}
+                  {{ row.item.date_time | dateFormat }}
                 </strong>
-              </template>
-              <template v-slot:cell(session)="row">
-                <i
-                  v-if="row.item.checked == 0"
-                  class="fas fa-times-circle text-danger"
-                  style="font-size: 20px"
-                > Absent</i>
-
-                <i
-                  v-if="row.item.checked == 1"
-                  class="fas fa-check-circle text-primary"
-                  style="font-size: 20px"
-                > Present</i>
-              </template>
-              <template v-slot:cell(created_at)="row">
-                {{ row.item.created_at| dateTimeFormat("YYYY-MM-DD HH:mm:ss") }}
               </template>
             </b-table>
           </b-col>
@@ -262,7 +246,6 @@ export default {
       if (event.length > 0) {
         this.selectedItem = event[0];
         this.showDelete = false;
-        console.log(this.selectedItem.id);
       } else {
         this.showDelete = true;
         this.selectedItem = {};

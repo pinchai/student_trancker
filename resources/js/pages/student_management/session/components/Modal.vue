@@ -270,6 +270,7 @@ export default {
           formData.append('image_two', this.form.image_two)
           formData.append('group_id', this.form.group_id)
           formData.append('date_time', this.form.date_time)
+          formData.append('remark', this.form.remark)
           formData.append('student_list', JSON.stringify(this.student_list))
           axios.post(this.url, formData).then(function (response) {
             if (response.status === 200) {
@@ -312,6 +313,8 @@ export default {
       this.form = Object.assign({}, this.formItem);
       this.form.logo = '/images/session/' + this.formItem.image;
       this.form.old_logo = this.formItem.image;
+
+      this.student_list = this.formItem.attendance
     },
     previewFiles() {
       this.form.image_one = this.$refs.imageOne.files[0]

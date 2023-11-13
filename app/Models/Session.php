@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 use Log;
 
 class Session extends Model
@@ -23,8 +24,31 @@ class Session extends Model
     {
         $this->group_id = $data['group_id'];
         $this->date_time = $data['date_time'];
-        $this->remark = $data['remark'];
+        $this->remark = $data['remark'] == 'null' ? null : $data['remark'];
     }
 
+    public static function getList(Request $request)
+    {
+        $data = Session::join('group', 'session.group_id', 'group.id')
+            ->select(
+                'session.*',
+                'group.name as group',
+            )
+            ->with([
+                'attendance'
+            ]);
+        return $data;
+    }
+
+    public function attendance()
+    {
+        return $this->hasMany('App\Models\Attendance', 'session_id', 'id')
+            ->join('student', 'attendance.student_id', 'student.id')
+            ->select(
+                'attendance.*',
+                'student.name',
+                'student.latin_name',
+            );
+    }
 
 }

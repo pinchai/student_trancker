@@ -26,7 +26,6 @@ Route::middleware('auth')->group(function () {
     include 'admin/group.php';
     include 'admin/session.php';
 
-
     include 'admin/position.php';
     include 'admin/telegram_bot.php';
     include 'admin/module.php';
