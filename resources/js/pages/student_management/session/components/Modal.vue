@@ -289,6 +289,7 @@ export default {
           formData.append('group_id', this.form.group_id)
           formData.append('date_time', this.form.date_time)
           formData.append('remark', this.form.remark)
+          formData.append('section_id', this.form.section_id)
           formData.append('student_list', JSON.stringify(this.student_list))
           axios.post(this.url, formData).then(function (response) {
             if (response.status === 200) {

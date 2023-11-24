@@ -23,6 +23,7 @@ class Session extends Model
     public function setData($data)
     {
         $this->group_id = $data['group_id'];
+        $this->section_id = $data['section_id'];
         $this->date_time = $data['date_time'];
         $this->remark = $data['remark'] == 'null' ? null : $data['remark'];
     }
@@ -30,7 +31,7 @@ class Session extends Model
     public static function getList(Request $request)
     {
         $data = Session::join('group', 'session.group_id', 'group.id')
-            ->join('section', 'section.group_id', 'section.id')
+            ->join('section', 'session.section_id', 'section.id')
             ->select(
                 'session.*',
                 'group.name as group',

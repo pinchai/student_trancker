@@ -51,6 +51,7 @@ class SessionController extends Controller
         $group = Group::find($request->group_id)->name;
         $session_data = [
             'group_id'=>$request->group_id,
+            'section_id'=>$request->section_id,
             'date_time'=>$request->date_time,
             'remark'=>$request->remark,
         ];
