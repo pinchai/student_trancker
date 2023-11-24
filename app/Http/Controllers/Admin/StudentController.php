@@ -7,6 +7,7 @@ use App\Enums\IsHasThumbnail;
 use App\Http\Controllers\Controller;
 use App\Helpers\StringHelper;
 use App\Models\Branch;
+use App\Models\Section;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -54,8 +55,18 @@ class StudentController extends Controller
                 'group.name as group',
                 DB::raw("1 as 'checked'")
             )
-            ->where('group_id',$request->group_id)
+            ->where('group_id', $request->group_id)
             ->get();
+        $group_section = Section::where('group_id', $request->group_id)
+            ->select(
+                'section.id as id',
+                'section.name as name',
+                DB::raw('0 as \'checked\''),
+            )
+            ->get();
+        foreach ($data as $item) {
+            $item->group_section = $group_section;
+        }
 
         return $this->responseWithData($data);
     }
@@ -71,18 +82,18 @@ class StudentController extends Controller
 
         DB::beginTransaction();
 
-        foreach(json_decode($request->json) as $item){
+        foreach (json_decode($request->json) as $item) {
 //            dd($item);
             $data = [
-                'name'=>$item->name,
-                'latin_name'=>$item->latin_name,
-                'gender'=>$item->gender,
-                'phone'=>'0000000000',
-                'address'=>null,
-                'position_id'=>1,
-                'status'=>1,
-                'group_id'=>$request->group_id,
-                'description'=>null,
+                'name' => $item->name,
+                'latin_name' => $item->latin_name,
+                'gender' => $item->gender,
+                'phone' => '0000000000',
+                'address' => null,
+                'position_id' => 1,
+                'status' => 1,
+                'group_id' => $request->group_id,
+                'description' => null,
             ];
             $student = new Student();
             $student->setData($data);

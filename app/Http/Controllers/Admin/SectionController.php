@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Group;
 use App\Models\Permission;
 use App\Models\Section;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class GroupController extends Controller
+class SectionController extends Controller
 {
-    const MODULE_KEY = 'group';
+    const MODULE_KEY = 'section';
 
     //lists
     public function get(Request $request){
@@ -30,7 +28,7 @@ class GroupController extends Controller
             $table_size = 10;
         }
 
-        $data = Group::lists()->paginate($table_size);
+        $data = Section::lists()->paginate($table_size);
 
         $response = [
             'pagination' => [
@@ -55,38 +53,15 @@ class GroupController extends Controller
             $this->checkValidation($request);
             DB::beginTransaction();
 
-            $group  = new Group();
-            $group->setData($request);
-            if($group->save()){
-                $section = new Section();
-                $section_data = [
-                  'group_id'=>$group->id,
-                  'name'=>'section 1',
-                  'start_time'=>date('H:i:s'),
-                  'end_time'=>date('H:i:s'),
-                  'remark'=>'',
-                ];
-                $section->setData($section_data);
-                $section->save();
-
-                $section = new Section();
-                $section_data = [
-                    'group_id'=>$group->id,
-                    'name'=>'section 2',
-                    'start_time'=>date('H:i:s'),
-                    'end_time'=>date('H:i:s'),
-                    'remark'=>'',
-                ];
-                $section->setData($section_data);
-                $section->save();
-
-            }
+            $section  = new Section();
+            $section->setData($request);
+            $section->save();
 
             DB::commit();
 
             return response()->json([
-                'data' => $group,
-                'combo_list' => Group::comboList(),
+                'data' => $section,
+                'combo_list' => Section::comboList(),
                 'success' => 1,
                 'message' => 'Your action has been completed successfully.'
             ], 200);
@@ -100,22 +75,22 @@ class GroupController extends Controller
         if (Permission::authorize(self::MODULE_KEY, Permission::getUpdatePermission())) {
 
             $this->validate($request, [
-                'id' => 'required|exists:group,id',
+                'id' => 'required|exists:section,id',
                 'name' => 'required'
             ]);
             $table_size = isset($request['table_size']) ? $request['table_size'] : 10;
 
             DB::beginTransaction();
 
-            $group  = Group::find($request->input('id'));
-            $group->setData($request);
-            $group->save();
+            $section  = Section::find($request->input('id'));
+            $section->setData($request);
+            $section->save();
 
             DB::commit();
 
             return response()->json([
-                'data' => $group,
-                'combo_list' => Group::comboList(),
+                'data' => $section,
+                'combo_list' => Section::comboList(),
                 'success' => 1,
                 'message' => 'Your action has been completed successfully.'
             ], 200);
@@ -129,20 +104,20 @@ class GroupController extends Controller
         if (Permission::authorize(self::MODULE_KEY, Permission::getDeletePermission())) {
 
             $this->validate($request, [
-                'id' => 'required|exists:group,id'
+                'id' => 'required|exists:section,id'
             ]);
             $table_size = isset($request['table_size']) ? $request['table_size'] : 10;
 
             DB::beginTransaction();
 
-            $group  = Group::find($request->input('id'));
-            $group->delete();
+            $section  = Section::find($request->input('id'));
+            $section->delete();
 
             DB::commit();
 
             return response()->json([
-                'data' => $group,
-                'combo_list' => Group::comboList(),
+                'data' => $section,
+                'combo_list' => Section::comboList(),
                 'success' => 1,
                 'message' => 'Your action has been completed successfully.'
             ], 200);

@@ -12,7 +12,7 @@
 
     <b-card no-body class="card-table">
       <b-card-header>
-        <h1>{{ $t("group") }}</h1>
+        <h1>{{ $t("section") }}</h1>
         <b-row>
           <b-col cols="12" xl="6">
             <b-button
@@ -26,7 +26,9 @@
             <b-button
               variant="outline-primary"
               @click="addRecord"
-              v-if="checkAuthorize($store.state.permission.create)"
+              v-if="
+                                checkAuthorize($store.state.permission.create)
+                            "
               class="mb-2"
             >
               <i class="fa fa-plus"></i>
@@ -36,7 +38,9 @@
               :disabled="showDelete"
               @click="editRecord"
               variant="outline-info"
-              v-if="checkAuthorize($store.state.permission.update)"
+              v-if="
+                                checkAuthorize($store.state.permission.update)
+                            "
               class="mb-2"
             >
               <i class="fa fa-edit"></i>
@@ -46,7 +50,9 @@
               :disabled="showDelete"
               @click="deleteItem"
               variant="outline-danger"
-              v-if="checkAuthorize($store.state.permission.delete)"
+              v-if="
+                                checkAuthorize($store.state.permission.delete)
+                            "
               class="mb-2"
             >
               <i class="fa fa-trash"></i>
@@ -68,10 +74,22 @@
               v-model="pagination.table_size"
               @input="fetchRecord"
             >
-              <b-form-select-option value="10">10</b-form-select-option>
-              <b-form-select-option value="50">50</b-form-select-option>
-              <b-form-select-option value="100">100</b-form-select-option>
-              <b-form-select-option value="1000">1000</b-form-select-option>
+              <b-form-select-option value="10"
+              >10
+              </b-form-select-option
+              >
+              <b-form-select-option value="50"
+              >50
+              </b-form-select-option
+              >
+              <b-form-select-option value="100"
+              >100
+              </b-form-select-option
+              >
+              <b-form-select-option value="1000"
+              >1000
+              </b-form-select-option
+              >
             </b-form-select>
           </b-col>
         </b-row>
@@ -93,18 +111,11 @@
               sticky-header='500px'
               small
             >
-              <template v-slot:cell(section)="row">
-                <ul>
-                  <li
-                    v-for="(item, index) in row.item.section"
-                    :key="'section_'+index"
-                  >
-                    {{ item.name }}
-                  </li>
-                </ul>
-              </template>
               <template v-slot:cell(created_at)="row">
-                {{ row.item.created_at | dateTimeFormat("YYYY-MM-DD HH:mm:ss") }}
+                {{
+                  row.item.created_at
+                    | dateTimeFormat("YYYY-MM-DD HH:mm:ss")
+                }}
               </template>
             </b-table>
           </b-col>
@@ -129,7 +140,7 @@ import {mapGetters} from "vuex";
 import store from "../../../store";
 
 export default {
-  moduleKey: "group",
+  moduleKey: "section",
   data() {
     return {
       items: [],
@@ -169,11 +180,6 @@ export default {
           sortable: true
         },
         {
-          key: "section",
-          label: this.$t("section"),
-          sortable: true
-        },
-        {
           key: "remark",
           label: this.$t("remark"),
           sortable: false
@@ -202,7 +208,7 @@ export default {
       const input = this.getInput();
 
       axios
-        .post("/group/get", input)
+        .post("/section/get", input)
         .then(function (response) {
           vm.showOverlay = !vm.showOverlay;
           vm.setInput(response.data.data);
@@ -226,7 +232,7 @@ export default {
         if (result.value) {
           let vm = this;
           axios
-            .post("/group/delete", {id: this.selectedItem.id})
+            .post("/section/delete", {id: this.selectedItem.id})
             .then(function (response) {
               vm.$store.dispatch(
                 "setCustomer",
@@ -237,7 +243,7 @@ export default {
               vm.$notify({
                 group: "message",
                 type: "success",
-                title: vm.$t("group"),
+                title: vm.$t("section"),
                 text: vm.$t("done")
               });
             });

@@ -89,6 +89,22 @@
           </b-select>
         </b-form-group>
       </b-col>
+      <!--section-->
+      <b-col lg="12" xl="12" md="12" sm="12">
+        <b-form-group
+          label="Section"
+        >
+          <b-form-radio
+            v-for="(item, index) in group_section"
+            :key="'group_section'+index"
+            v-model="form.section_id"
+            name="group-section"
+            :value="item.id"
+          >
+            {{ item.name }}
+          </b-form-radio>
+        </b-form-group>
+      </b-col>
       <!--date time-->
       <b-col lg="12" xl="12" md="12" sm="12">
         <b-form-group
@@ -224,11 +240,13 @@ export default {
         checked: 1,
         date_time: moment().format('YYYY-MM-DD'),
         remark: null,
+        section_id: null
       },
       url: null,
       imgUrl: "/images/session/",
       listItems: {},
       student_list: [],
+      group_section: null
     };
   },
   computed: {
@@ -344,6 +362,7 @@ export default {
       }
       axios.post("/student/getByGroupId", input).then(function (response) {
         vm.student_list = response.data.data
+        vm.group_section = response.data.data[0].group_section
 
       })
         .catch(function (error) {

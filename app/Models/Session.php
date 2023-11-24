@@ -30,10 +30,13 @@ class Session extends Model
     public static function getList(Request $request)
     {
         $data = Session::join('group', 'session.group_id', 'group.id')
+            ->join('section', 'section.group_id', 'section.id')
             ->select(
                 'session.*',
                 'group.name as group',
+                'section.name as section',
             )
+            ->groupBy('section.id')
             ->with([
                 'attendance'
             ]);

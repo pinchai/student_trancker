@@ -33,6 +33,9 @@ import position from "../pages/student_management/position";
 //position
 import group from "../pages/student_management/group";
 
+//position
+import section from "../pages/student_management/section";
+
 //User Management
 import user_role from "../pages/user_management/user_role";
 import user_list from "../pages/user_management/user_list";
@@ -108,6 +111,14 @@ const router = new VueRouter({
             component: group,
             meta: {
                 title: "group"
+            }
+        },
+        {
+            path: "/student_management/section",
+            name: "section",
+            component: section,
+            meta: {
+                title: "section"
             }
         },
         {

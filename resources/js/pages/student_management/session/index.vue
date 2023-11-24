@@ -168,6 +168,13 @@ export default {
           thStyle: { width: "8%" },
         },
         {
+          key: "section",
+          label: this.$t("section"),
+          sortable: true,
+          show_sm: true,
+          thStyle: { width: "8%" },
+        },
+        {
           key: "date_time",
           label: this.$t("date_time"),
           sortable: true,

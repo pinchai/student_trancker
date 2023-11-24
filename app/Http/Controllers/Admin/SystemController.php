@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\StringHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Currency;
 use App\Models\CustomUserModulePermission;
 use App\Models\Enum;
 use App\Models\Group;
@@ -40,7 +39,7 @@ class SystemController extends Controller
                 'default_table_size' => Setting::getSettingValueByKey('default_table_size'),
                 'default_sale_status' => Setting::getSettingValueByKey('sale_status'),
                 'position' => Position::select('*')->get(),
-                'group' => Group::select('*')->get(),
+                'group' => Group::lists()->get(),
                 'version' => env('VERSION')
             ],
             'success' => 1,

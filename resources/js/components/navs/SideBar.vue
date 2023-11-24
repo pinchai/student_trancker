@@ -109,6 +109,13 @@ export default {
           key: "group",
           active: false
         },
+        // {
+        //   label: "section",
+        //   icon: "fas fa-dice-d6",
+        //   to: "/student_management/section",
+        //   key: "section",
+        //   active: false
+        // },
         {
           label: "position",
           icon: "fas fa-key",
@@ -124,8 +131,8 @@ export default {
           active: false
         },
         {
-          label: "session",
-          icon: "fas fa-sync",
+          label: "attendance",
+          icon: "fas fa-skull",
           to: "/student_management/session",
           key: "session",
           active: false
