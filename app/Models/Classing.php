@@ -24,6 +24,7 @@ class Classing extends Model
     {
         $this->group_id = $data['group_id'];
         $this->section_id = $data['section_id'];
+        $this->classing_type = $data['classing_type'];
         $this->date_time = $data['date_time'];
         $this->remark = $data['remark'] == 'null' ? null : $data['remark'];
     }
@@ -37,6 +38,7 @@ class Classing extends Model
             ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
                 $query->whereIn('classing.group_id', $group_selected);
             })
+            ->where('classing.classing_type', 'Teaching')
             ->select(
                 'classing.*',
                 'group.name as group',

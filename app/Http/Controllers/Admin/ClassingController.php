@@ -63,6 +63,7 @@ class ClassingController extends Controller
         $classing_data = [
             'group_id'=>$request->group_id,
             'section_id'=>$request->section_id,
+            'classing_type'=>'Teaching',
             'date_time'=>$request->date_time,
             'remark'=>$request->remark,
         ];
@@ -113,6 +114,7 @@ class ClassingController extends Controller
         $classing = Classing::find($request->id);
         $classing_data = [
             'section_id'=>$request->section_id,
+            'classing_type'=>'Teaching',
             'group_id'=>$request->group_id,
             'date_time'=>$request->date_time,
             'remark'=>$request->remark,
