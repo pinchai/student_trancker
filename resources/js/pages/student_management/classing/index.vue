@@ -75,6 +75,22 @@
             </b-form-select>
           </b-col>
         </b-row>
+        <!--group list-->
+        <b-row>
+          <b-col cols="12">
+            <b-form-group>
+              <b-form-checkbox-group
+                @input="fetchRecord"
+                id="checkbox-group"
+                v-model="filter.group_selected"
+                :options="groups"
+                name="group"
+                value-field="id"
+                text-field="name"
+              ></b-form-checkbox-group>
+            </b-form-group>
+          </b-col>
+        </b-row>
       </b-card-header>
       <b-card-body>
         <b-row>
@@ -102,6 +118,61 @@
                 <strong style="font-size: 20px">
                   {{ row.item.date_time | dateFormat }}
                 </strong>
+              </template>
+              <template v-slot:cell(classing)="row">
+                <strong style="font-size: 18px">
+                  Total: {{ row.item.attendance.length }}នាក់<br>
+                  <span class="blue">Absent: {{ getPreset(row.item.attendance).length }}នាក់</span><br>
+                  <span class="red">Absent: {{ getAbsent(row.item.attendance).length }}នាក់</span>
+                </strong>
+              </template>
+              <template v-slot:cell(detail)="row">
+                <a @click="row.toggleDetails">
+                  <i
+                    v-show="!row.detailsShowing"
+                    class="fas fa-angle-double-down text-primary"
+                    style="font-size: 20px"
+                  ></i>
+                  <i
+                    v-show="row.detailsShowing"
+                    class="fas fa-angle-double-up text-danger"
+                    style="font-size: 20px"
+                  ></i>
+                </a>
+              </template>
+              <template #row-details="row">
+                <b-table-simple small hover>
+                  <b-thead>
+                    <b-tr>
+                      <b-th>No.</b-th>
+                      <b-th>Name</b-th>
+                      <b-th>Latin Name</b-th>
+                      <b-th>Check</b-th>
+                    </b-tr>
+                  </b-thead>
+                  <b-tbody>
+                    <b-tr
+                      v-for="(item, index) in row.item.attendance"
+                      :key="'student_'+index"
+                    >
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.name }}</b-td>
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.latin_name }}</b-td>
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                        <i
+                          v-if="item.checked == 1"
+                          class="fas fa-check-circle"
+                          style="font-size: 20px; color: blue"
+                        ></i>
+                        <i
+                          v-else
+                          class="fas fa-times-circle"
+                          style="font-size: 20px;"
+                        ></i>
+                      </b-td>
+                    </b-tr>
+                  </b-tbody>
+                </b-table-simple>
               </template>
             </b-table>
           </b-col>
@@ -146,7 +217,8 @@ export default {
       },
       filter: {
         warehouses: {},
-        txt_src: null
+        txt_src: null,
+        group_selected: []
       },
     };
   },
@@ -157,7 +229,9 @@ export default {
     this.fetchRecord();
   },
   computed: {
-    ...mapGetters({}),
+    ...mapGetters({
+      groups: "getGroup",
+    }),
     header() {
       let data = [
         {
@@ -165,28 +239,35 @@ export default {
           label: this.$t("group"),
           sortable: true,
           show_sm: true,
-          thStyle: { width: "8%" },
+          thStyle: {width: "8%"},
         },
         {
           key: "section",
           label: this.$t("section"),
           sortable: true,
           show_sm: true,
-          thStyle: { width: "8%" },
-        },
-        {
-          key: "date_time",
-          label: this.$t("date_time"),
-          sortable: true,
-          show_sm: true,
-          thStyle: { width: "10%" },
+          thStyle: {width: "8%"},
         },
         {
           key: "classing",
           label: this.$t("classing"),
           sortable: true,
           show_sm: true,
-          thStyle: { width: "8%" },
+          thStyle: {width: "8%"},
+        },
+        {
+          key: "date_time",
+          label: this.$t("date_time"),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "10%"},
+        },
+        {
+          key: 'detail',
+          label: this.$t('detail'),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "10%"},
         },
       ];
       data = data.filter(obj => {
@@ -279,6 +360,18 @@ export default {
       this.pagination.from = data.pagination.from;
       this.pagination.to = data.pagination.to;
     },
+    getPreset(item){
+      let preset = item.filter(obj=>{
+        return obj.checked == 1
+      })
+      return preset
+    },
+    getAbsent(item){
+      let preset = item.filter(obj=>{
+        return obj.checked == 0
+      })
+      return preset
+    }
   }
 };
 </script>

@@ -9,6 +9,7 @@ use App\Helpers\StringHelper;
 use App\Models\Attendance;
 use App\Models\Classing;
 use App\Models\Group;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -25,6 +26,16 @@ class ClassingController extends Controller
             $table_size = 10;
         }
         $data = Classing::getList($request)->paginate($table_size);
+        foreach ($data->items() as $item) {
+            $group_section = Section::where('group_id', $item->group_id)
+                ->select(
+                    'section.id as id',
+                    'section.name as name',
+                    DB::raw('0 as \'checked\''),
+                )
+                ->get();
+            $item->group_section = $group_section;
+        }
         $response = [
             'pagination' => [
                 'total' => $data->total(),
@@ -70,28 +81,14 @@ class ClassingController extends Controller
                 );
                 $classing->image_one = "$image_one_path";
             }
-
-            $image_two = $request->file('image_two');
-            if ($image_two) {
-                $image_two_path = StringHelper::uploadImage(
-                    $image_two,
-                    'classing',
-                    IsHasThumbnail::YES['id'],
-                    IsCropImage::NO['id'],
-                    '',
-                    '',
-                    $group.'_'
-                );
-                $classing->image_two = "$image_two_path";
-            }
             $classing->save();
         }
 
-        foreach (json_decode($request->student_list) as $item) {
+        foreach ($request->student_list as $item) {
             $data = [
-                'student_id' => $item->id,
+                'student_id' => $item['id'],
                 'classing_id' => $classing->id,
-                'checked' => $item->checked,
+                'checked' => $item['checked'],
             ];
             $attendance = new Attendance();
             $attendance->setData($data);
@@ -114,50 +111,21 @@ class ClassingController extends Controller
         DB::beginTransaction();
 
         $classing = Classing::find($request->id);
-        $group = Group::find($request->group_id)->name;
         $classing_data = [
+            'section_id'=>$request->section_id,
             'group_id'=>$request->group_id,
             'date_time'=>$request->date_time,
             'remark'=>$request->remark,
         ];
         $classing->setData($classing_data);
-        if ($classing->save()) {
-            $image_one = $request->file('image_one');
-            if ($image_one) {
-                $image_one_path = StringHelper::uploadImage(
-                    $image_one,
-                    'classing',
-                    IsHasThumbnail::YES['id'],
-                    IsCropImage::NO['id'],
-                    '',
-                    '',
-                    $group.'_'
-                );
-                $classing->image_one = "$image_one_path";
-            }
-
-            $image_two = $request->file('image_two');
-            if ($image_two) {
-                $image_two_path = StringHelper::uploadImage(
-                    $image_two,
-                    'classing',
-                    IsHasThumbnail::YES['id'],
-                    IsCropImage::NO['id'],
-                    '',
-                    '',
-                    $group.'_'
-                );
-                $classing->image_two = "$image_two_path";
-            }
-            $classing->save();
-        }
+        $classing->save();
 
         Attendance::where('classing_id', $request->id)->forceDelete();
-        foreach (json_decode($request->student_list) as $item) {
+        foreach ($request->student_list as $item) {
             $data = [
-                'student_id' => $item->student_id,
+                'student_id' => $item['student_id'],
                 'classing_id' => $classing->id,
-                'checked' => $item->checked,
+                'checked' => $item['checked'],
             ];
             $attendance = new Attendance();
             $attendance->setData($data);
@@ -178,8 +146,9 @@ class ClassingController extends Controller
         DB::beginTransaction();
         $classing = Classing::find($request->id);
         if ($classing->delete()) {
-            //Delete Logo
-            StringHelper::deleteImage($classing->logo, Classing::logoPath, Classing::thumbnailPath);
+            //Delete attendance
+            $attendance = Attendance::where('classing_id', $request->id);
+            $attendance->delete();
         }
         DB::commit();
         return response()->json([
@@ -194,7 +163,7 @@ class ClassingController extends Controller
         $this->validate($data, [
             'group_id' => 'required',
             'section_id' => 'required',
-            'student_list1' => 'required',
+            'student_list' => 'required',
         ]);
     }
 

@@ -30,8 +30,13 @@ class Classing extends Model
 
     public static function getList(Request $request)
     {
+        $filter = $request->filter;
+        $group_selected = isset($filter['group_selected']) ? $filter['group_selected'] : null;
         $data = Classing::join('group', 'classing.group_id', 'group.id')
             ->join('section', 'classing.section_id', 'section.id')
+            ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
+                $query->whereIn('classing.group_id', $group_selected);
+            })
             ->select(
                 'classing.*',
                 'group.name as group',

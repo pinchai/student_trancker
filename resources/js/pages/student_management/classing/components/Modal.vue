@@ -148,40 +148,47 @@
           ></b-textarea>
         </b-form-group>
       </b-col>
+      <!--student_list-->
       <b-col lg="12" xl="12" md="12" sm="12">
-        <div class="table-responsive">
-          <table class="table table-sm table-striped">
-            <thead>
-            <tr>
-              <th>No.</th>
-              <th>Name</th>
-              <th>Latin Name</th>
-              <th>Check</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr
+        <b-table-simple
+          small
+          hover
+          caption-top
+          responsive
+          :filter="txt_src"
+        >
+          <b-thead>
+            <b-tr>
+              <b-th>No.</b-th>
+              <b-th>Name</b-th>
+              <b-th>Latin Name</b-th>
+              <b-th>Check</b-th>
+            </b-tr>
+          </b-thead>
+          <b-tbody>
+            <b-tr
               v-for="(item, index) in student_list"
               :key="'student_'+index"
+              @click="rowClick(item)"
             >
-              <td>{{ index + 1 }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.latin_name }}</td>
-              <td>
-                <b-form-checkbox
-                  size="lg"
-                  v-model="item.checked"
-                  name="checkbox-1"
-                  value="1"
-                  unchecked-value="0"
-                >
-                  Present
-                </b-form-checkbox>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
+              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.name }}</b-td>
+              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.latin_name }}</b-td>
+              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                <i
+                  v-if="item.checked == 1"
+                  class="fas fa-check-circle"
+                  style="font-size: 20px; color: blue"
+                ></i>
+                <i
+                  v-else
+                  class="fas fa-times-circle"
+                  style="font-size: 20px;"
+                ></i>
+              </b-td>
+            </b-tr>
+          </b-tbody>
+        </b-table-simple>
       </b-col>
     </b-row>
 
@@ -246,7 +253,8 @@ export default {
       imgUrl: "/images/classing/",
       listItems: {},
       student_list: [],
-      group_section: null
+      group_section: null,
+      txt_src: null
     };
   },
   computed: {
@@ -282,16 +290,9 @@ export default {
       let vm = this;
       this.$validator.validateAll().then(result => {
         if (result) {
-          const formData = new FormData()
-          formData.append('id', this.form.id)
-          formData.append('image_one', this.form.image_one)
-          formData.append('image_two', this.form.image_two)
-          formData.append('group_id', this.form.group_id)
-          formData.append('date_time', this.form.date_time)
-          formData.append('remark', this.form.remark)
-          formData.append('section_id', this.form.section_id)
-          formData.append('student_list', JSON.stringify(this.student_list))
-          axios.post(this.url, formData).then(function (response) {
+          let input = this.form
+          input.student_list = this.student_list
+          axios.post(this.url, input).then(function (response) {
             if (response.status === 200) {
               vm.listItems = response.data.data;
               vm.clearForm();
@@ -334,6 +335,7 @@ export default {
       this.form.old_logo = this.formItem.image;
 
       this.student_list = this.formItem.attendance
+      this.group_section = this.formItem.group_section
     },
     getStudent(group_id) {
       let vm = this;
@@ -349,7 +351,9 @@ export default {
           console.log(error);
         });
     },
-
+    rowClick(item) {
+      item.checked = !item.checked
+    },
   }
 };
 </script>

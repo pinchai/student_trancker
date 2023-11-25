@@ -14,7 +14,7 @@ class Attendance extends Model
 
     const TABLE_NAME = 'attendance';
     const ID = 'id';
-    const SESSION_ID = 'session_id';
+    const CLASSING_ID = 'classing_id';
     const STUDENT_ID = 'student_id';
     const CHECKED = 'checked';
 
@@ -27,7 +27,7 @@ class Attendance extends Model
 
     public function setData($data)
     {
-        $this->{self::SESSION_ID} = $data[self::SESSION_ID];
+        $this->{self::CLASSING_ID} = $data[self::CLASSING_ID];
         $this->{self::STUDENT_ID} = $data[self::STUDENT_ID];
         $this->{self::CHECKED} = $data[self::CHECKED];
     }

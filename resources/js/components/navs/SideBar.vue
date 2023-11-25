@@ -133,8 +133,8 @@ export default {
         {
           label: "attendance",
           icon: "fas fa-skull",
-          to: "/student_management/session",
-          key: "session",
+          to: "/student_management/classing",
+          key: "classing",
           active: false
         },
         {
