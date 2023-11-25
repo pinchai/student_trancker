@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Classing;
+use App\Models\Group;
 use App\Models\Permission;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -15,10 +18,10 @@ class DashboardController extends Controller
   {
     if (Permission::authorize(self::MODULE_KEY, Permission::getViewPermission())) {
       $response = [
-        'total_blog' => 0,
-        'total_view' => 0,
-        'today_product' => 0,
-        'today_employee' => 0,
+        'total_group' => Group::count(),
+        'total_student' => Student::count(),
+        'total_classing' => Classing::count(),
+        'total_student_view' => 0,
       ];
       return $this->responseWithData($response);
     } else {

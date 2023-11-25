@@ -6,45 +6,45 @@
     >
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
         <div class="row widget-statistic">
-          <!--total_blog-->
+          <!--total_group-->
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
             <div class="widget widget-one_hybrid bg-gradient-success mb-3">
               <div class="widget-heading">
-                <i class="fas fa-newspaper text-primary" style="font-size:50px"></i>
-                <p class="w-value">{{ items.total_blog }}</p>
-                <h5 class="">Total Blog</h5>
+                <i class="fas fa-cubes text-primary" style="font-size:50px"></i>
+                <p class="w-value">{{ items.total_group }}</p>
+                <h5 class="">Total Group</h5>
               </div>
             </div>
           </div>
-          <!--today_view-->
+          <!--total_student-->
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
             <div class="widget widget-one_hybrid bg-gradient-success mb-3">
               <div class="widget-heading">
-                <i class="fas fa-eye text-secondary" style="font-size:50px"></i>
-                <p class="w-value">{{ items.total_view }}</p>
-                <h5 class="">Total View</h5>
+                <i class="fas fa-school text-secondary" style="font-size:50px"></i>
+                <p class="w-value">{{ items.total_student }}</p>
+                <h5 class="">Total Student</h5>
               </div>
             </div>
           </div>
-          <!--today_product-->
+          <!--total_classing-->
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
             <div
               class="widget widget-one_hybrid bg-gradient-secondary mb-3"
             >
               <div class="widget-heading">
-                <i class="fas fa-cubes text-success" style="font-size:50px"></i>
-                <p class="w-value">{{ items.today_product }}</p>
-                <h5 class="">Total Product</h5>
+                <i class="fas fa-table text-success" style="font-size:50px"></i>
+                <p class="w-value">{{ items.total_classing }}</p>
+                <h5 class="">Total Classing</h5>
               </div>
             </div>
           </div>
-          <!--today_employee-->
+          <!--total_student_view-->
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
             <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
               <div class="widget-heading">
-                <i class="fas fa-user text-danger" style="font-size:50px"></i>
-                <p class="w-value">{{ items.today_employee }}</p>
-                <h5 class="">Total Employee</h5>
+                <i class="fas fa-eye text-success" style="font-size:50px"></i>
+                <p class="w-value">{{ items.total_student_view }}</p>
+                <h5 class="">Total Student View</h5>
               </div>
             </div>
           </div>

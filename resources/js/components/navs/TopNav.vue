@@ -14,7 +14,7 @@
           </li>
           <li class="nav-item theme-text">
             <a href="/" class="nav-link text-white">{{
-                this.branch[0] && this.branch[0].name != null ? this.branch[0].name : 'Invoice'
+                this.branch[0] && this.branch[0].name != null ? this.branch[0].name : 'Student Tracker'
               }}</a>
           </li>
         </ul>
