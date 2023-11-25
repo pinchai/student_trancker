@@ -23,6 +23,7 @@ class BranchSeeder extends Seeder
                 'address' => 'Phnom Penh',
                 'status' => 1,
                 'logo' => 'ons.png',
+                'email' => 'zorin@mail.com',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]

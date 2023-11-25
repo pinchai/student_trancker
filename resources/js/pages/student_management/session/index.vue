@@ -12,7 +12,7 @@
 
     <b-card no-body class="card-table">
       <b-card-header>
-        <h1>{{ $t("session") }}</h1>
+        <h1>{{ $t("classing") }}</h1>
         <b-row>
           <b-col cols="12" xl="6">
             <b-button
@@ -125,7 +125,7 @@
 import {mapGetters} from "vuex";
 
 export default {
-  moduleKey: "session",
+  moduleKey: "classing",
   data() {
     return {
       items: [],
@@ -182,8 +182,8 @@ export default {
           thStyle: { width: "10%" },
         },
         {
-          key: "session",
-          label: this.$t("session"),
+          key: "classing",
+          label: this.$t("classing"),
           sortable: true,
           show_sm: true,
           thStyle: { width: "8%" },
@@ -210,7 +210,7 @@ export default {
       let vm = this;
       const input = this.getInput();
       axios
-        .post("/session/get", input)
+        .post("/classing/get", input)
         .then(function (response) {
           vm.setInput(response.data);
         })
@@ -233,7 +233,7 @@ export default {
         if (result.value) {
           let vm = this;
           axios
-            .post("/session/delete", {id: this.selectedItem.id})
+            .post("/classing/delete", {id: this.selectedItem.id})
             .then(function (response) {
               if (response.status == 200) {
                 vm.fetchRecord();

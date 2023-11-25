@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     include 'admin/setting.php';
     include 'admin/student.php';
     include 'admin/group.php';
-    include 'admin/session.php';
+    include 'admin/classing.php';
     include 'admin/section.php';
 
     include 'admin/position.php';

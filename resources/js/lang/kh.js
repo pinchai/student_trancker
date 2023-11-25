@@ -533,5 +533,6 @@ export default {
   student: "សិស្ស",
   student_management: "ការគ្រប់គ្រងសិស្ស",
   group: "ក្រុម",
+  classing: "ថ្នាក់",
 
 };

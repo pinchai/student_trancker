@@ -10,15 +10,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Log;
 
-class Session extends Model
+class Classing extends Model
 {
 
-    protected $table = 'session';
+    protected $table = 'classing';
     use Loggable;
     use HasFactory, SoftDeletes;
 
-    const logoPath = 'images' . DIRECTORY_SEPARATOR . 'session';
-    const thumbnailPath = 'images' . DIRECTORY_SEPARATOR . 'session' . DIRECTORY_SEPARATOR . 'thumbnail';
+    const logoPath = 'images' . DIRECTORY_SEPARATOR . 'classing';
+    const thumbnailPath = 'images' . DIRECTORY_SEPARATOR . 'classing' . DIRECTORY_SEPARATOR . 'thumbnail';
 
     public function setData($data)
     {
@@ -30,10 +30,10 @@ class Session extends Model
 
     public static function getList(Request $request)
     {
-        $data = Session::join('group', 'session.group_id', 'group.id')
-            ->join('section', 'session.section_id', 'section.id')
+        $data = Classing::join('group', 'classing.group_id', 'group.id')
+            ->join('section', 'classing.section_id', 'section.id')
             ->select(
-                'session.*',
+                'classing.*',
                 'group.name as group',
                 'section.name as section',
             )
@@ -46,7 +46,7 @@ class Session extends Model
 
     public function attendance()
     {
-        return $this->hasMany('App\Models\Attendance', 'session_id', 'id')
+        return $this->hasMany('App\Models\Attendance', 'classing_id', 'id')
             ->join('student', 'attendance.student_id', 'student.id')
             ->select(
                 'attendance.*',

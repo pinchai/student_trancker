@@ -7,16 +7,16 @@ use App\Enums\IsHasThumbnail;
 use App\Http\Controllers\Controller;
 use App\Helpers\StringHelper;
 use App\Models\Attendance;
-use App\Models\Session;
+use App\Models\Classing;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Log;
 
-class SessionController extends Controller
+class ClassingController extends Controller
 {
-    const MODULE_KEY = 'session';
+    const MODULE_KEY = 'classing';
 
     public function get(Request $request)
     {
@@ -24,7 +24,7 @@ class SessionController extends Controller
         if (empty($table_size)) {
             $table_size = 10;
         }
-        $data = Session::getList($request)->paginate($table_size);
+        $data = Classing::getList($request)->paginate($table_size);
         $response = [
             'pagination' => [
                 'total' => $data->total(),
@@ -47,50 +47,50 @@ class SessionController extends Controller
         $this->checkValidation($request);
         DB::beginTransaction();
 
-        $session = new Session();
+        $classing = new Classing();
         $group = Group::find($request->group_id)->name;
-        $session_data = [
+        $classing_data = [
             'group_id'=>$request->group_id,
             'section_id'=>$request->section_id,
             'date_time'=>$request->date_time,
             'remark'=>$request->remark,
         ];
-        $session->setData($session_data);
-        if ($session->save()) {
+        $classing->setData($classing_data);
+        if ($classing->save()) {
             $image_one = $request->file('image_one');
             if ($image_one) {
                 $image_one_path = StringHelper::uploadImage(
                     $image_one,
-                    'session',
+                    'classing',
                     IsHasThumbnail::YES['id'],
                     IsCropImage::NO['id'],
                     '',
                     '',
                     $group.'_'
                 );
-                $session->image_one = "$image_one_path";
+                $classing->image_one = "$image_one_path";
             }
 
             $image_two = $request->file('image_two');
             if ($image_two) {
                 $image_two_path = StringHelper::uploadImage(
                     $image_two,
-                    'session',
+                    'classing',
                     IsHasThumbnail::YES['id'],
                     IsCropImage::NO['id'],
                     '',
                     '',
                     $group.'_'
                 );
-                $session->image_two = "$image_two_path";
+                $classing->image_two = "$image_two_path";
             }
-            $session->save();
+            $classing->save();
         }
 
         foreach (json_decode($request->student_list) as $item) {
             $data = [
                 'student_id' => $item->id,
-                'session_id' => $session->id,
+                'classing_id' => $classing->id,
                 'checked' => $item->checked,
             ];
             $attendance = new Attendance();
@@ -100,7 +100,7 @@ class SessionController extends Controller
 
         DB::commit();
         return response()->json([
-            'data' => $session,
+            'data' => $classing,
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);
@@ -113,50 +113,50 @@ class SessionController extends Controller
         $this->checkValidation($request);
         DB::beginTransaction();
 
-        $session = Session::find($request->id);
+        $classing = Classing::find($request->id);
         $group = Group::find($request->group_id)->name;
-        $session_data = [
+        $classing_data = [
             'group_id'=>$request->group_id,
             'date_time'=>$request->date_time,
             'remark'=>$request->remark,
         ];
-        $session->setData($session_data);
-        if ($session->save()) {
+        $classing->setData($classing_data);
+        if ($classing->save()) {
             $image_one = $request->file('image_one');
             if ($image_one) {
                 $image_one_path = StringHelper::uploadImage(
                     $image_one,
-                    'session',
+                    'classing',
                     IsHasThumbnail::YES['id'],
                     IsCropImage::NO['id'],
                     '',
                     '',
                     $group.'_'
                 );
-                $session->image_one = "$image_one_path";
+                $classing->image_one = "$image_one_path";
             }
 
             $image_two = $request->file('image_two');
             if ($image_two) {
                 $image_two_path = StringHelper::uploadImage(
                     $image_two,
-                    'session',
+                    'classing',
                     IsHasThumbnail::YES['id'],
                     IsCropImage::NO['id'],
                     '',
                     '',
                     $group.'_'
                 );
-                $session->image_two = "$image_two_path";
+                $classing->image_two = "$image_two_path";
             }
-            $session->save();
+            $classing->save();
         }
 
-        Attendance::where('session_id', $request->id)->forceDelete();
+        Attendance::where('classing_id', $request->id)->forceDelete();
         foreach (json_decode($request->student_list) as $item) {
             $data = [
                 'student_id' => $item->student_id,
-                'session_id' => $session->id,
+                'classing_id' => $classing->id,
                 'checked' => $item->checked,
             ];
             $attendance = new Attendance();
@@ -166,7 +166,7 @@ class SessionController extends Controller
 
         DB::commit();
         return response()->json([
-            'data' => $session,
+            'data' => $classing,
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);
@@ -176,14 +176,14 @@ class SessionController extends Controller
     public function delete(Request $request)
     {
         DB::beginTransaction();
-        $session = Session::find($request->id);
-        if ($session->delete()) {
+        $classing = Classing::find($request->id);
+        if ($classing->delete()) {
             //Delete Logo
-            StringHelper::deleteImage($session->logo, Session::logoPath, Session::thumbnailPath);
+            StringHelper::deleteImage($classing->logo, Classing::logoPath, Classing::thumbnailPath);
         }
         DB::commit();
         return response()->json([
-            'data' => $session,
+            'data' => $classing,
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);
@@ -193,6 +193,8 @@ class SessionController extends Controller
     {
         $this->validate($data, [
             'group_id' => 'required',
+            'section_id' => 'required',
+            'student_list1' => 'required',
         ]);
     }
 

@@ -11,12 +11,12 @@
     content-class="custom-modal"
   >
     <template slot="modal-header">
-      <h3><i class="fas fa-user-graduate"></i> {{ $t("session") }}</h3>
+      <h3><i class="fas fa-user-graduate"></i> {{ $t("classing") }}</h3>
     </template>
 
     <b-row>
       <!--image_one-->
-      <b-col lg="6" xl="6" md="6" sm="6">
+      <b-col v-if="false" lg="6" xl="6" md="6" sm="6">
         <b-form-group
           label="Referent Image"
           label-class="control-label"
@@ -40,7 +40,7 @@
         </a>
       </b-col>
       <!--image_two-->
-      <b-col lg="6" xl="6" md="6" sm="6">
+      <b-col v-if="false" lg="6" xl="6" md="6" sm="6">
         <b-form-group
           label="Referent Image"
           label-class="control-label"
@@ -243,7 +243,7 @@ export default {
         section_id: null
       },
       url: null,
-      imgUrl: "/images/session/",
+      imgUrl: "/images/classing/",
       listItems: {},
       student_list: [],
       group_section: null
@@ -267,11 +267,11 @@ export default {
       handler(val) {
         if (val == 1) {
           this.modal = true;
-          this.url = "/session/store";
+          this.url = "/classing/store";
         } else if (val == 2) {
           this.modal = true;
           this.setData();
-          this.url = "/session/edit";
+          this.url = "/classing/edit";
         }
       },
       immediate: true
@@ -299,7 +299,7 @@ export default {
               vm.$notify({
                 group: "message",
                 type: "success",
-                title: vm.$t("session"),
+                title: vm.$t("classing"),
                 text: vm.$t("done")
               });
             }
@@ -311,7 +311,7 @@ export default {
           vm.$notify({
             group: "message",
             type: "warning",
-            title: vm.$t("session"),
+            title: vm.$t("classing"),
             text: vm.$t("validation_failed")
           });
         }
@@ -330,31 +330,10 @@ export default {
     },
     setData() {
       this.form = Object.assign({}, this.formItem);
-      this.form.logo = '/images/session/' + this.formItem.image;
+      this.form.logo = '/images/classing/' + this.formItem.image;
       this.form.old_logo = this.formItem.image;
 
       this.student_list = this.formItem.attendance
-    },
-    previewFiles() {
-      this.form.image_one = this.$refs.imageOne.files[0]
-      if (this.form.image_one.type == 'image/heic') {
-        alert('your iphone\'s camera is using .heic please change to .jpg file')
-        this.form.image_one = null
-        return
-      }
-      document.getElementById('image_one_img').src = window.URL.createObjectURL(this.form.image_one)
-      document.getElementById('image_one_tab').href = window.URL.createObjectURL(this.form.image_one)
-    },
-    previewFilesTwo() {
-      this.form.image_two = this.$refs.imageTwo.files[0]
-      if (this.form.image_two.type == 'image/heic') {
-        alert('your iphone\'s camera is using .heic please change to .jpg file')
-        this.form.image_two = null
-        return
-      }
-
-      document.getElementById('image_two').src = window.URL.createObjectURL(this.form.image_two)
-      document.getElementById('image_two_tab').href = window.URL.createObjectURL(this.form.image_two)
     },
     getStudent(group_id) {
       let vm = this;
@@ -370,6 +349,7 @@ export default {
           console.log(error);
         });
     },
+
   }
 };
 </script>

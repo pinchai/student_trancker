@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSessionTable extends Migration
+class CreateClassingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateSessionTable extends Migration
      */
     public function up()
     {
-        Schema::create('session', function (Blueprint $table) {
+        Schema::create('classing', function (Blueprint $table) {
             $table->id();
             $table->dateTime('date_time');
             $table->bigInteger('group_id');
+            $table->string('section_id');
             $table->text('remark')->nullable();
             $table->string('image_one')->nullable();
             $table->string('image_two')->nullable();
@@ -32,6 +33,6 @@ class CreateSessionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('session');
+        Schema::dropIfExists('classing');
     }
 }

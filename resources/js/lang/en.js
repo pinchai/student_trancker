@@ -525,4 +525,5 @@ export default {
   student: "Student",
   student_management: "Student Management",
   group: "Group",
+  classing: "Class",
 };
