@@ -122,7 +122,7 @@
               <template v-slot:cell(classing)="row">
                 <strong style="font-size: 18px">
                   Total: {{ row.item.attendance.length }}នាក់<br>
-                  <span class="blue">Absent: {{ getPreset(row.item.attendance).length }}នាក់</span><br>
+                  <span class="blue">Preset: {{ getPreset(row.item.attendance).length }}នាក់</span><br>
                   <span class="red">Absent: {{ getAbsent(row.item.attendance).length }}នាក់</span>
                 </strong>
               </template>
