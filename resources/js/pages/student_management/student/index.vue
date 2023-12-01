@@ -19,7 +19,6 @@
       ></import-modal>
     </div>
     <!--end import_modal-->
-
     <b-card no-body class="card-table">
       <b-card-header>
         <h1>{{ $t("student") }}</h1>

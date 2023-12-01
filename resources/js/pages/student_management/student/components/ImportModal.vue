@@ -40,28 +40,23 @@
           </b-select>
         </b-form-group>
       </b-col>
-      <!--jsom string-->
-      <b-col cols="4">
+      <b-col cols="12">
         <b-form-group
-          :invalid-feedback="veeErrors.first('json')"
-          label="Json String"
+          label="Excel File"
           label-class="control-label"
           class="text-left"
         >
-          <b-textarea
-            v-validate="'required'"
-            :state="veeErrors.has('json') ? false : null"
-            data-vv-name="json"
-            :data-vv-as="$t('json')"
-            autocomplete="off"
-            v-model="form.json"
-            rows="50"
-            :placeholder="$t('json')"
-          ></b-textarea>
+          <b-form-file
+            type="file"
+            id="input"
+            @input="chate"
+            accept=".xlsx"
+            class="mb-2"
+          ></b-form-file>
         </b-form-group>
       </b-col>
       <!--Preview table-->
-      <b-col cols="8">
+      <b-col cols="12">
         <div class="table-responsive">
           <table class="table table-sm table-striped table-bordered">
             <thead>
@@ -74,7 +69,7 @@
             </thead>
             <tbody>
             <tr
-              v-for="(item, index) in JSON.parse(form.json)"
+              v-for="(item, index) in form.json_string"
               :key="'student_'+index"
             >
               <td>{{ item.no }}</td>
@@ -112,6 +107,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import readXlsxFile from "read-excel-file";
 
 export default {
   name: "Modal",
@@ -132,7 +128,7 @@ export default {
     return {
       modal: true,
       form: {
-        json: null,
+        json_string: [],
         group_id: null,
       },
       url: null,
@@ -144,6 +140,7 @@ export default {
       targetFile: null,
       FILE: null,
       blob: null,
+
     };
   },
   computed: {
@@ -180,7 +177,7 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           const formData = new FormData()
-          formData.append('json', this.form.json)
+          formData.append('json_string', JSON.stringify(this.form.json_string))
           formData.append('group_id', this.form.group_id)
           axios.post(this.url, formData).then(function (response) {
               if (response.status === 200) {
@@ -248,6 +245,27 @@ export default {
       this.form.logo = base64;
       this.closeModalCropperImage();
     },
+    chate(){
+      let vm = this
+      const input = document.getElementById('input')
+      readXlsxFile(input.files[0],
+        {
+          // dateFormat: 'dd/mm/yyyy',
+          // trim: false,
+        }
+      ).then((rows) => {
+        rows.forEach(item=>{
+          vm.form.json_string.push(
+            {
+              'no': item[0],
+              'name': item[1],
+              'latin_name': item[2],
+              'gender': item[3],
+            }
+          )
+        })
+      })
+    }
   }
 };
 </script>

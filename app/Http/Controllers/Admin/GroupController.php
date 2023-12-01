@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Group;
 use App\Models\Permission;
 use App\Models\Section;
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +54,16 @@ class GroupController extends Controller
         if (Permission::authorize(self::MODULE_KEY, Permission::getCreatePermission())) {
             /** check validation */
             $this->checkValidation($request);
+            $dpl = Group::where('name', $request->name)
+                ->first();
+            if ($dpl != null) {
+                return $this->responseCustomValidation([
+                    'code' => '004',
+                    'title' => 'Group Name Is Exist',
+                    'message' => 'មានរួចហើយ',
+                    'i18n_message' => 'expense_category_is_already_exist'
+                ]);
+            }
             DB::beginTransaction();
 
             $group  = new Group();

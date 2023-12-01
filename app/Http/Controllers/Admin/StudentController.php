@@ -7,6 +7,7 @@ use App\Enums\IsHasThumbnail;
 use App\Http\Controllers\Controller;
 use App\Helpers\StringHelper;
 use App\Models\Branch;
+use App\Models\ExpenseCategory;
 use App\Models\Section;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Model;
@@ -77,13 +78,22 @@ class StudentController extends Controller
     {
         $this->validate($request, [
             'group_id' => 'required',
-            'json' => 'required',
+            'json_string' => 'required',
         ]);
 
+        $dpl = Student::where('group_id', $request->group_id)
+            ->first();
+        if ($dpl != null) {
+            return $this->responseCustomValidation([
+                'code' => '004',
+                'title' => 'Group',
+                'message' => 'មានរួចហើយ',
+                'i18n_message' => 'expense_category_is_already_exist'
+            ]);
+        }
         DB::beginTransaction();
 
-        foreach (json_decode($request->json) as $item) {
-//            dd($item);
+        foreach (json_decode($request->json_string) as $item) {
             $data = [
                 'name' => $item->name,
                 'latin_name' => $item->latin_name,
