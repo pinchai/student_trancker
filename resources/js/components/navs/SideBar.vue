@@ -138,6 +138,13 @@ export default {
           active: false
         },
         {
+          label: "score",
+          icon: "fas fa-rocket",
+          to: "/student_management/score",
+          key: "score",
+          active: false
+        },
+        {
           label: "user_management",
           icon: "fas fa-user-lock",
           to: "/user_management",

@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\IsCropImage;
-use App\Enums\IsHasThumbnail;
 use App\Http\Controllers\Controller;
-use App\Helpers\StringHelper;
 use App\Models\Attendance;
-use App\Models\Classing;
-use App\Models\Group;
-use App\Models\Section;
+use App\Models\Score;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Log;
 
-class ClassingController extends Controller
+class ScoreController extends Controller
 {
-    const MODULE_KEY = 'classing';
+    const MODULE_KEY = 'score';
 
     public function get(Request $request)
     {
@@ -25,18 +20,7 @@ class ClassingController extends Controller
         if (empty($table_size)) {
             $table_size = 10;
         }
-        $data = Classing::getList($request)->paginate($table_size);
-        foreach ($data->items() as $item) {
-            $group_section = Section::where('group_id', $item->group_id)
-                ->select(
-                    'section.id as id',
-                    'section.name as name',
-                    DB::raw('0 as \'checked\''),
-                )
-                ->get();
-            $item->group_section = $group_section;
-            $item->score = 0;
-        }
+        $data = Score::getList($request)->paginate($table_size);
         $response = [
             'pagination' => [
                 'total' => $data->total(),
@@ -59,38 +43,15 @@ class ClassingController extends Controller
         $this->checkValidation($request);
         DB::beginTransaction();
 
-        $classing = new Classing();
-        $group = Group::find($request->group_id)->name;
-        $classing_data = [
-            'group_id'=>$request->group_id,
-            'section_id'=>$request->section_id,
-            'classing_type'=>'Teaching',
-            'date_time'=>$request->date_time,
-            'remark'=>$request->remark,
-        ];
-        $classing->setData($classing_data);
-        if ($classing->save()) {
-            $image_one = $request->file('image_one');
-            if ($image_one) {
-                $image_one_path = StringHelper::uploadImage(
-                    $image_one,
-                    'classing',
-                    IsHasThumbnail::YES['id'],
-                    IsCropImage::NO['id'],
-                    '',
-                    '',
-                    $group.'_'
-                );
-                $classing->image_one = "$image_one_path";
-            }
-            $classing->save();
-        }
+        $classing = new Score();
+        $classing->setData($request);
+        $classing->save();
 
         foreach ($request->student_list as $item) {
             $data = [
                 'student_id' => $item['id'],
-                'classing_id' => $classing->id,
-                'checked' => $item['checked'],
+                'score_id' => $classing->id,
+                'score' => 0,
             ];
             $attendance = new Attendance();
             $attendance->setData($data);
@@ -112,7 +73,7 @@ class ClassingController extends Controller
         $this->checkValidation($request);
         DB::beginTransaction();
 
-        $classing = Classing::find($request->id);
+        $classing = Score::find($request->id);
         $classing_data = [
             'section_id'=>$request->section_id,
             'classing_type'=>'Teaching',
@@ -147,7 +108,7 @@ class ClassingController extends Controller
     public function delete(Request $request)
     {
         DB::beginTransaction();
-        $classing = Classing::find($request->id);
+        $classing = Score::find($request->id);
         if ($classing->delete()) {
             //Delete attendance
             $attendance = Attendance::where('classing_id', $request->id);

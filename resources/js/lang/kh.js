@@ -534,5 +534,7 @@ export default {
   student_management: "ការគ្រប់គ្រងសិស្ស",
   group: "ក្រុម",
   classing: "ថ្នាក់",
+  score: "ពិន្ទុ",
+  total_score: "ពិន្ទុសរុប",
 
 };

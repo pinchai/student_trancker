@@ -32,5 +32,35 @@ class Student extends Model
         $this->description = $data['description'];
     }
 
+    public static function lists($request){
+        $filter = $request->input('filter');
+        $group_selected = isset($filter['group_selected']) ? $filter['group_selected'] : null;
+        $data = Student::join('group', 'student.group_id', 'group.id')
+            ->with([
+                'attendance'
+            ])
+            ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
+                $query->whereIn('group.id', $group_selected);
+            })
+            ->select(
+                'student.*',
+                'group.name as group',
+            )
+            ->orderBy('group.id', 'ASC')
+            ->orderBy('student.latin_name', 'ASC');
+
+        return $data;
+    }
+
+    public function attendance()
+    {
+        return $this->hasMany('App\Models\Attendance', 'student_id', 'id')
+            ->join('classing','attendance.classing_id', 'classing.id')
+            ->select(
+                'attendance.*',
+                'classing.date_time as classing_date'
+            );
+    }
+
 
 }

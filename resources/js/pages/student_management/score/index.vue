@@ -10,18 +10,9 @@
     </div>
     <!--end modal-->
 
-    <!--import_modal-->
-    <div v-if="modalImportShow">
-      <import-modal
-        :modalType="modalImportType"
-        :formItem="formItem"
-        @closeModal="closeImportModal"
-      ></import-modal>
-    </div>
-    <!--end import_modal-->
     <b-card no-body class="card-table">
       <b-card-header>
-        <h1>{{ $t("student") }}</h1>
+        <h1>{{ $t("score") }}</h1>
         <b-row>
           <b-col cols="12" xl="6">
             <b-button
@@ -40,15 +31,6 @@
             >
               <i class="fa fa-plus"></i>
               {{ $t("add") }}
-            </b-button>
-            <b-button
-              variant="outline-primary"
-              @click="importRecord"
-              v-if="checkAuthorize($store.state.permission.create)"
-              class="mb-2"
-            >
-              <i class="fa fa-plus"></i>
-              {{ $t("import") }}
             </b-button>
             <b-button
               :disabled="showDelete"
@@ -110,7 +92,6 @@
           </b-col>
         </b-row>
       </b-card-header>
-
       <b-card-body>
         <b-row>
           <b-col cols="12">
@@ -128,64 +109,70 @@
               sticky-header='500px'
               small
             >
-              <template #cell(image)="row">
-                <img
-                  style="width: 40px; height: 60px"
-                  class="img-thumbnail rounded"
-                  v-if="row.item.image == null"
-                  src="/assets/img/no-image.png"
-                >
-                <div v-else>
-                  <img
-                    style="width: 40px; height: 50px"
-                    class="rounded"
-                    :id="row.item.image"
-                    :src="'/images/student/thumbnail/' + row.item.image"
-                    onerror="this.src='/image_error.png';"
-                  >
-                  <b-tooltip
-                    :target="row.item.image"
-                    placement="right"
-                    variant="primary"
-                  >
-                    <img
-                      class="img-thumbnail"
-                      :src="'/images/student/' + row.item.image"
-                      onerror="this.src='/image_error.png';"
-                    >
-                  </b-tooltip>
-                </div>
+              <template v-slot:cell(group)="row">
+                <strong style="font-size: 20px">
+                  {{ row.item.group }}
+                </strong>
               </template>
-              <template v-slot:cell(name)="row">
-                {{ row.item.name }} {{ getAbsent(row.item.attendance).length > 5 ? '⚠️' : '' }}
+              <template v-slot:cell(date_time)="row">
+                <strong style="font-size: 20px">
+                  {{ row.item.date_time | dateFormat }}
+                </strong>
               </template>
-              <template v-slot:cell(status)="row">
-                <b-badge
-                  pill
-                  v-if="row.item.status == 0"
-                  variant="danger"
-                >
-                  {{ $t("disabled") }}
-                </b-badge>
-                <b-badge
-                  pill
-                  v-if="row.item.status == 1"
-                  variant="success"
-                >
-                  {{ $t("active") }}
-                </b-badge>
+              <template v-slot:cell(score)="row">
+                <strong style="font-size: 18px">
+                  Total: {{ row.item.attendance.length }}នាក់<br>
+                  <span class="blue">Preset: {{ getPreset(row.item.attendance).length }}នាក់</span><br>
+                  <span class="red">Absent: {{ getAbsent(row.item.attendance).length }}នាក់</span>
+                </strong>
               </template>
               <template v-slot:cell(detail)="row">
-                <span class="text-primary">
-                  🟢Present: {{ getPreset(row.item.attendance).length }}ដង
-                </span>
-                <br>
-                <span class="text-danger">
-                  🔴Absent: {{ getAbsent(row.item.attendance).length }}ដង
-                </span>
+                <a @click="row.toggleDetails">
+                  <i
+                    v-show="!row.detailsShowing"
+                    class="fas fa-angle-double-down text-primary"
+                    style="font-size: 20px"
+                  ></i>
+                  <i
+                    v-show="row.detailsShowing"
+                    class="fas fa-angle-double-up text-danger"
+                    style="font-size: 20px"
+                  ></i>
+                </a>
               </template>
-              <template v-slot:cell(created_at)="row">
-                {{ row.item.created_at| dateTimeFormat("YYYY-MM-DD HH:mm:ss") }}
+              <template #row-details="row">
+                <b-table-simple small hover>
+                  <b-thead>
+                    <b-tr>
+                      <b-th>No.</b-th>
+                      <b-th>Name</b-th>
+                      <b-th>Latin Name</b-th>
+                      <b-th>Check</b-th>
+                    </b-tr>
+                  </b-thead>
+                  <b-tbody>
+                    <b-tr
+                      v-for="(item, index) in row.item.attendance"
+                      :key="'student_'+index"
+                    >
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.name }}</b-td>
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.latin_name }}</b-td>
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                        <i
+                          v-if="item.checked == 1"
+                          class="fas fa-check-circle"
+                          style="font-size: 20px; color: blue"
+                        ></i>
+                        <i
+                          v-else
+                          class="fas fa-times-circle"
+                          style="font-size: 20px;"
+                        ></i>
+                      </b-td>
+                    </b-tr>
+                  </b-tbody>
+                </b-table-simple>
               </template>
             </b-table>
           </b-col>
@@ -209,7 +196,7 @@
 import {mapGetters} from "vuex";
 
 export default {
-  moduleKey: "student",
+  moduleKey: "score",
   data() {
     return {
       items: [],
@@ -218,8 +205,6 @@ export default {
       showOverlay: false,
       modalShow: false,
       modalType: 0,
-      modalImportShow: false,
-      modalImportType: 0,
       formItem: {},
       pagination: {
         current_page: 1,
@@ -239,7 +224,6 @@ export default {
   },
   components: {
     Modal: () => import("./components/Modal"),
-    ImportModal: () => import("./components/ImportModal"),
   },
   created() {
     this.fetchRecord();
@@ -250,54 +234,41 @@ export default {
     }),
     header() {
       let data = [
-        // {
-        //   key: "image",
-        //   label: this.$t("image"),
-        //   sortable: false,
-        //   show_sm: true
-        // },
-        {
-          key: "name",
-          label: this.$t("name"),
-          sortable: true,
-          show_sm: true
-        },
-        {
-          key: "latin_name",
-          label: this.$t("latin_name"),
-          sortable: true,
-          show_sm: true
-        },
-        {
-          key: "gender",
-          label: this.$t("gender"),
-          sortable: true,
-          show_sm: true
-        },
         {
           key: "group",
           label: this.$t("group"),
           sortable: true,
-          show_sm: true
+          show_sm: true,
+          thStyle: {width: "8%"},
         },
         {
-          key: "detail",
-          label: this.$t("detail"),
+          key: "section",
+          label: this.$t("section"),
           sortable: true,
-          show_sm: true
+          show_sm: true,
+          thStyle: {width: "8%"},
         },
-        // {
-        //   key: "status",
-        //   label: this.$t("status"),
-        //   sortable: true,
-        //   show_sm: true
-        // },
         {
-          key: "created_at",
-          label: this.$t("created_at"),
+          key: "score",
+          label: this.$t("score"),
           sortable: true,
-          show_sm: true
-        }
+          show_sm: true,
+          thStyle: {width: "8%"},
+        },
+        {
+          key: "date_time",
+          label: this.$t("date_time"),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "10%"},
+        },
+        {
+          key: 'detail',
+          label: this.$t('detail'),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "10%"},
+        },
       ];
       data = data.filter(obj => {
         return obj.show_sm == true
@@ -310,10 +281,6 @@ export default {
       this.modalShow = true;
       this.modalType = 1; //set modal type 1 = save
     },
-    importRecord() {
-      this.modalImportShow = true;
-      this.modalImportType = 1; //set modal type 1 = save
-    },
     editRecord() {
       this.modalShow = true;
       this.selectedItem.old_logo = this.selectedItem.logo;
@@ -324,7 +291,7 @@ export default {
       let vm = this;
       const input = this.getInput();
       axios
-        .post("/student/get", input)
+        .post("/score/get", input)
         .then(function (response) {
           vm.setInput(response.data);
         })
@@ -347,7 +314,7 @@ export default {
         if (result.value) {
           let vm = this;
           axios
-            .post("/student/delete", {id: this.selectedItem.id})
+            .post("/score/delete", {id: this.selectedItem.id})
             .then(function (response) {
               if (response.status == 200) {
                 vm.fetchRecord();
@@ -367,7 +334,6 @@ export default {
       if (event.length > 0) {
         this.selectedItem = event[0];
         this.showDelete = false;
-        console.log(this.selectedItem.id);
       } else {
         this.showDelete = true;
         this.selectedItem = {};
@@ -376,14 +342,6 @@ export default {
     closeModal(obj) {
       this.modalType = 0;
       this.modalShow = false;
-
-      if (!this.$helpers.isEmpty(obj)) {
-        this.fetchRecord();
-      }
-    },
-    closeImportModal(obj) {
-      this.modalImportType = 0;
-      this.modalImportShow = false;
 
       if (!this.$helpers.isEmpty(obj)) {
         this.fetchRecord();

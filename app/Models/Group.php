@@ -15,6 +15,7 @@ class Group extends Model
     const TABLE_NAME = 'group';
     const ID = 'id';
     const NAME = 'name';
+    const REMARK = 'remark';
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -35,6 +36,7 @@ class Group extends Model
     public function setData($data)
     {
         $this->{self::NAME} = $data[self::NAME];
+        $this->{self::REMARK} = $data[self::REMARK];
     }
 
     public function section()

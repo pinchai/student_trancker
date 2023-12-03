@@ -526,4 +526,6 @@ export default {
   student_management: "Student Management",
   group: "Group",
   classing: "Class",
+  score: "Score",
+  total_score: "Total Score",
 };

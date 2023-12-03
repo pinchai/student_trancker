@@ -10,21 +10,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Log;
 
-class Classing extends Model
+class Score extends Model
 {
 
-    protected $table = 'classing';
+    protected $table = 'score';
     use Loggable;
     use HasFactory, SoftDeletes;
 
-    const logoPath = 'images' . DIRECTORY_SEPARATOR . 'classing';
-    const thumbnailPath = 'images' . DIRECTORY_SEPARATOR . 'classing' . DIRECTORY_SEPARATOR . 'thumbnail';
-
     public function setData($data)
     {
-        $this->group_id = $data['group_id'];
-        $this->section_id = $data['section_id'];
-        $this->classing_type = $data['classing_type'];
+        $this->group_id = $data['start_date'];
+        $this->section_id = $data['end_date'];
+        $this->classing_type = $data['group_id'];
+        $this->classing_type = $data['section_id'];
+        $this->classing_type = $data['score_type'];
+        $this->classing_type = $data['total_score'];
         $this->date_time = $data['date_time'];
         $this->remark = $data['remark'] == 'null' ? null : $data['remark'];
     }
@@ -33,30 +33,26 @@ class Classing extends Model
     {
         $filter = $request->filter;
         $group_selected = isset($filter['group_selected']) ? $filter['group_selected'] : null;
-        $data = Classing::join('group', 'classing.group_id', 'group.id')
-            ->join('section', 'classing.section_id', 'section.id')
+        $data = self::join('group', 'score.group_id', 'group.id')
             ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
-                $query->whereIn('classing.group_id', $group_selected);
+                $query->whereIn('score.group_id', $group_selected);
             })
-            ->where('classing.classing_type', 'Teaching')
             ->select(
-                'classing.*',
+                'score.*',
                 'group.name as group',
-                'section.name as section',
             )
-            ->groupBy('section.id')
             ->with([
-                'attendance'
+                'studentScore'
             ]);
         return $data;
     }
 
-    public function attendance()
+    public function studentScore()
     {
-        return $this->hasMany('App\Models\Attendance', 'classing_id', 'id')
-            ->join('student', 'attendance.student_id', 'student.id')
+        return $this->hasMany('App\Models\StudentScore', 'score_id', 'id')
+            ->join('student', 'student_score.student_id', 'student.id')
             ->select(
-                'attendance.*',
+                'student_score.*',
                 'student.name',
                 'student.latin_name',
             )

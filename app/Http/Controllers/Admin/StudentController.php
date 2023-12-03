@@ -10,7 +10,6 @@ use App\Models\Branch;
 use App\Models\ExpenseCategory;
 use App\Models\Section;
 use App\Models\Student;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -23,15 +22,7 @@ class StudentController extends Controller
     public function get(Request $request)
     {
         $table_size = $request->input('table_size');
-        if (empty($table_size)) {
-            $table_size = 10;
-        }
-        $data = Student::join('group', 'student.group_id', 'group.id')
-            ->select(
-                'student.*',
-                'group.name as group',
-            )
-            ->paginate($table_size);
+        $data = Student::lists($request)->paginate($table_size);
         $response = [
             'pagination' => [
                 'total' => $data->total(),
@@ -67,11 +58,11 @@ class StudentController extends Controller
             ->get();
         foreach ($data as $item) {
             $item->group_section = $group_section;
+            $item->score = 0;
         }
 
         return $this->responseWithData($data);
     }
-
 
     //import
     public function import(Request $request)

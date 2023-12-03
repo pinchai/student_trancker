@@ -27,6 +27,9 @@ import student from "../pages/student_management/student";
 //Attendance
 import classing from "../pages/student_management/classing";
 
+//Score
+import score from "../pages/student_management/score";
+
 //position
 import position from "../pages/student_management/position";
 
@@ -103,6 +106,14 @@ const router = new VueRouter({
             component: classing,
             meta: {
                 title: "classing"
+            }
+        },
+        {
+            path: "/student_management/score",
+            name: "score",
+            component: score,
+            meta: {
+                title: "score"
             }
         },
         {
