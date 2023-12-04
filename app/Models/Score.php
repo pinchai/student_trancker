@@ -19,13 +19,11 @@ class Score extends Model
 
     public function setData($data)
     {
-        $this->group_id = $data['start_date'];
-        $this->section_id = $data['end_date'];
-        $this->classing_type = $data['group_id'];
-        $this->classing_type = $data['section_id'];
-        $this->classing_type = $data['score_type'];
-        $this->classing_type = $data['total_score'];
-        $this->date_time = $data['date_time'];
+        $this->group_id = $data['group_id'];
+        $this->start_date = $data['start_date'];
+        $this->end_date = $data['end_date'];
+        $this->score_type = $data['score_type'];
+        $this->total_score = $data['total_score'];
         $this->remark = $data['remark'] == 'null' ? null : $data['remark'];
     }
 

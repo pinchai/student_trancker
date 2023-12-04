@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Score;
+use App\Models\StudentScore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -43,24 +44,23 @@ class ScoreController extends Controller
         $this->checkValidation($request);
         DB::beginTransaction();
 
-        $classing = new Score();
-        $classing->setData($request);
-        $classing->save();
-
+        $score = new Score();
+        $score->setData($request);
+        $score->save();
         foreach ($request->student_list as $item) {
             $data = [
                 'student_id' => $item['id'],
-                'score_id' => $classing->id,
+                'score_id' => $score->id,
                 'score' => 0,
             ];
-            $attendance = new Attendance();
-            $attendance->setData($data);
-            $attendance->save();
+            $student_score = new StudentScore();
+            $student_score->setData($data);
+            $student_score->save();
         }
 
         DB::commit();
         return response()->json([
-            'data' => $classing,
+            'data' => $score,
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);
@@ -126,8 +126,8 @@ class ScoreController extends Controller
     {
         $this->validate($data, [
             'group_id' => 'required',
-            'section_id' => 'required',
             'student_list' => 'required',
+            'score_type' => 'required',
         ]);
     }
 

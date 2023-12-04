@@ -114,18 +114,28 @@
                   {{ row.item.group }}
                 </strong>
               </template>
-              <template v-slot:cell(date_time)="row">
+              <template v-slot:cell(start_date)="row">
                 <strong style="font-size: 20px">
-                  {{ row.item.date_time | dateFormat }}
+                  {{ row.item.start_date | dateFormat }}
                 </strong>
               </template>
-              <template v-slot:cell(score)="row">
-                <strong style="font-size: 18px">
-                  Total: {{ row.item.attendance.length }}នាក់<br>
-                  <span class="blue">Preset: {{ getPreset(row.item.attendance).length }}នាក់</span><br>
-                  <span class="red">Absent: {{ getAbsent(row.item.attendance).length }}នាក់</span>
+              <template v-slot:cell(end_date)="row">
+                <strong style="font-size: 20px">
+                  {{ row.item.end_date | dateFormat }}
                 </strong>
               </template>
+              <template v-slot:cell(total_score)="row">
+                <strong style="font-size: 20px; color: red">
+                  {{ row.item.total_score }}
+                </strong>
+              </template>
+<!--              <template v-slot:cell(score)="row">-->
+<!--                <strong style="font-size: 18px">-->
+<!--                  Total: {{ row.item.attendance.length }}នាក់<br>-->
+<!--                  <span class="blue">Preset: {{ getPreset(row.item.attendance).length }}នាក់</span><br>-->
+<!--                  <span class="red">Absent: {{ getAbsent(row.item.attendance).length }}នាក់</span>-->
+<!--                </strong>-->
+<!--              </template>-->
               <template v-slot:cell(detail)="row">
                 <a @click="row.toggleDetails">
                   <i
@@ -147,29 +157,18 @@
                       <b-th>No.</b-th>
                       <b-th>Name</b-th>
                       <b-th>Latin Name</b-th>
-                      <b-th>Check</b-th>
+                      <b-th>Score</b-th>
                     </b-tr>
                   </b-thead>
                   <b-tbody>
                     <b-tr
-                      v-for="(item, index) in row.item.attendance"
+                      v-for="(item, index) in row.item.student_score"
                       :key="'student_'+index"
                     >
                       <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
                       <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.name }}</b-td>
                       <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.latin_name }}</b-td>
-                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
-                        <i
-                          v-if="item.checked == 1"
-                          class="fas fa-check-circle"
-                          style="font-size: 20px; color: blue"
-                        ></i>
-                        <i
-                          v-else
-                          class="fas fa-times-circle"
-                          style="font-size: 20px;"
-                        ></i>
-                      </b-td>
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.score }}</b-td>
                     </b-tr>
                   </b-tbody>
                 </b-table-simple>
@@ -242,25 +241,25 @@ export default {
           thStyle: {width: "8%"},
         },
         {
-          key: "section",
-          label: this.$t("section"),
-          sortable: true,
-          show_sm: true,
-          thStyle: {width: "8%"},
-        },
-        {
-          key: "score",
-          label: this.$t("score"),
-          sortable: true,
-          show_sm: true,
-          thStyle: {width: "8%"},
-        },
-        {
-          key: "date_time",
-          label: this.$t("date_time"),
+          key: "start_date",
+          label: this.$t("start_date"),
           sortable: true,
           show_sm: true,
           thStyle: {width: "10%"},
+        },
+        {
+          key: "end_date",
+          label: this.$t("end_date"),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "10%"},
+        },
+        {
+          key: "total_score",
+          label: this.$t("total_score"),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "8%"},
         },
         {
           key: 'detail',
