@@ -172,21 +172,10 @@
               :key="'student_'+index"
               @click="rowClick(item)"
             >
-              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
-              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.name }}</b-td>
-              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.latin_name }}</b-td>
-              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
-                <i
-                  v-if="item.checked == 1"
-                  class="fas fa-check-circle"
-                  style="font-size: 20px; color: blue"
-                ></i>
-                <i
-                  v-else
-                  class="fas fa-times-circle"
-                  style="font-size: 20px;"
-                ></i>
-              </b-td>
+              <b-td :class="item.checked > 0 ? 'bg-danger': ''">{{ index + 1 }}</b-td>
+              <b-td :class="item.checked > 0 ? 'bg-danger': ''">{{ item.name }}</b-td>
+              <b-td :class="item.checked > 0 ? 'bg-danger': ''">{{ item.latin_name }}</b-td>
+              <b-td :class="item.checked > 0 ? 'bg-danger': ''">{{ item.score }}</b-td>
             </b-tr>
           </b-tbody>
         </b-table-simple>
@@ -339,7 +328,7 @@ export default {
       this.form.logo = '/images/score/' + this.formItem.image;
       this.form.old_logo = this.formItem.image;
 
-      this.student_list = this.formItem.attendance
+      this.student_list = this.formItem.student_score
       this.group_section = this.formItem.group_section
     },
     getStudent(group_id) {

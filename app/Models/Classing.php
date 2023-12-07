@@ -44,7 +44,8 @@ class Classing extends Model
                 'group.name as group',
                 'section.name as section',
             )
-            ->groupBy('section.id')
+            //->groupBy('section.id')
+            ->orderBy('classing.date_time', 'DESC')
             ->with([
                 'attendance'
             ]);

@@ -165,10 +165,10 @@
                       v-for="(item, index) in row.item.student_score"
                       :key="'student_'+index"
                     >
-                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
-                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.name }}</b-td>
-                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.latin_name }}</b-td>
-                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.score }}</b-td>
+                      <b-td :class="item.score > 0 ? 'bg-danger': ''">{{ index + 1 }}</b-td>
+                      <b-td :class="item.score > 0 ? 'bg-danger': ''">{{ item.name }}</b-td>
+                      <b-td :class="item.score > 0 ? 'bg-danger': ''">{{ item.latin_name }}</b-td>
+                      <b-td :class="item.score > 0 ? 'bg-danger': ''">{{ item.score }}</b-td>
                     </b-tr>
                   </b-tbody>
                 </b-table-simple>
