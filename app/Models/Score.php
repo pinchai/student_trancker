@@ -41,7 +41,7 @@ class Score extends Model
             )
             ->with([
                 'studentScore'
-            ]);
+            ])->orderBy('start_date', 'desc');
         return $data;
     }
 

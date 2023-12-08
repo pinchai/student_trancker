@@ -172,10 +172,23 @@
               :key="'student_'+index"
               @click="rowClick(item)"
             >
-              <b-td :class="item.checked > 0 ? 'bg-danger': ''">{{ index + 1 }}</b-td>
-              <b-td :class="item.checked > 0 ? 'bg-danger': ''">{{ item.name }}</b-td>
-              <b-td :class="item.checked > 0 ? 'bg-danger': ''">{{ item.latin_name }}</b-td>
-              <b-td :class="item.checked > 0 ? 'bg-danger': ''">{{ item.score }}</b-td>
+              <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ index + 1 }}</b-td>
+              <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ item.name }}</b-td>
+              <b-td>{{ item.latin_name }}</b-td>
+              <b-td>
+                <b-form-input
+                  style='border-radius: 5px'
+                  v-model='item.score'
+                  v-validate="'required|min_value:0|max_value:5'"
+                  :state="veeErrors.has('score_'+index) ? false : null"
+                  :data-vv-name="'score_'+index"
+                  :data-vv-as="$t('score')"
+                  type='number'
+                  required
+                  :placeholder="$t('score')"
+                  autocomplete="off"
+                ></b-form-input>
+              </b-td>
             </b-tr>
           </b-tbody>
         </b-table-simple>
@@ -359,5 +372,17 @@ export default {
 
 /deep/ .ql-editor {
   min-height: 180px !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 </style>

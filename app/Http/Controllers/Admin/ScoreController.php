@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Attendance;
 use App\Models\Score;
 use App\Models\StudentScore;
 use Illuminate\Http\Request;
@@ -73,32 +72,24 @@ class ScoreController extends Controller
         $this->checkValidation($request);
         DB::beginTransaction();
 
-        $classing = Score::find($request->id);
-        $classing_data = [
-            'section_id'=>$request->section_id,
-            'classing_type'=>'Teaching',
-            'group_id'=>$request->group_id,
-            'date_time'=>$request->date_time,
-            'remark'=>$request->remark,
-        ];
-        $classing->setData($classing_data);
-        $classing->save();
-
-        Attendance::where('classing_id', $request->id)->forceDelete();
+        $score = Score::find($request->id);
+        $score->setData($request);
+        $score->save();
+        StudentScore::where('score_id', $request->id)->forceDelete();
         foreach ($request->student_list as $item) {
             $data = [
                 'student_id' => $item['student_id'],
-                'classing_id' => $classing->id,
-                'checked' => $item['checked'],
+                'score_id' => $score->id,
+                'score' => $item['score'],
             ];
-            $attendance = new Attendance();
-            $attendance->setData($data);
-            $attendance->save();
+            $student_score = new StudentScore();
+            $student_score->setData($data);
+            $student_score->save();
         }
 
         DB::commit();
         return response()->json([
-            'data' => $classing,
+            'data' => $score,
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);
@@ -108,15 +99,15 @@ class ScoreController extends Controller
     public function delete(Request $request)
     {
         DB::beginTransaction();
-        $classing = Score::find($request->id);
-        if ($classing->delete()) {
-            //Delete attendance
-            $attendance = Attendance::where('classing_id', $request->id);
-            $attendance->delete();
+        $score = Score::find($request->id);
+        if ($score->delete()) {
+            //Delete student_score
+            $student_score = StudentScore::where('score_id', $request->id);
+            $student_score->delete();
         }
         DB::commit();
         return response()->json([
-            'data' => $classing,
+            'data' => $score,
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);

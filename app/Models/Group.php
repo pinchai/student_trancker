@@ -22,7 +22,8 @@ class Group extends Model
     protected $table = self::TABLE_NAME;
 
     public static function lists(){
-        return self::orderBy('id', 'desc')
+        return self::orderByRaw("CAST(name as UNSIGNED) ASC")
+//            ->orderBy('name', 'ASC')
             ->with([
                 'section'
             ])

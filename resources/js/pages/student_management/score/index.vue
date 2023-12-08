@@ -129,13 +129,11 @@
                   {{ row.item.total_score }}
                 </strong>
               </template>
-<!--              <template v-slot:cell(score)="row">-->
-<!--                <strong style="font-size: 18px">-->
-<!--                  Total: {{ row.item.attendance.length }}នាក់<br>-->
-<!--                  <span class="blue">Preset: {{ getPreset(row.item.attendance).length }}នាក់</span><br>-->
-<!--                  <span class="red">Absent: {{ getAbsent(row.item.attendance).length }}នាក់</span>-->
-<!--                </strong>-->
-<!--              </template>-->
+              <template v-slot:cell(score_type)="row">
+                <strong style="font-size: 18px">
+                  {{ row.item.score_type }}<br>
+                </strong>
+              </template>
               <template v-slot:cell(detail)="row">
                 <a @click="row.toggleDetails">
                   <i
@@ -165,10 +163,12 @@
                       v-for="(item, index) in row.item.student_score"
                       :key="'student_'+index"
                     >
-                      <b-td :class="item.score > 0 ? 'bg-danger': ''">{{ index + 1 }}</b-td>
-                      <b-td :class="item.score > 0 ? 'bg-danger': ''">{{ item.name }}</b-td>
-                      <b-td :class="item.score > 0 ? 'bg-danger': ''">{{ item.latin_name }}</b-td>
-                      <b-td :class="item.score > 0 ? 'bg-danger': ''">{{ item.score }}</b-td>
+                      <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ index + 1 }}</b-td>
+                      <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ item.name }}</b-td>
+                      <b-td>{{ item.latin_name }}</b-td>
+                      <b-td>
+                        <span style="color: red; font-size: 18px; font-weight: bolder">{{ item.score }}</span>
+                      </b-td>
                     </b-tr>
                   </b-tbody>
                 </b-table-simple>
@@ -255,8 +255,22 @@ export default {
           thStyle: {width: "10%"},
         },
         {
+          key: "score_type",
+          label: this.$t("score_type"),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "8%"},
+        },
+        {
           key: "total_score",
           label: this.$t("total_score"),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "8%"},
+        },
+        {
+          key: "remark",
+          label: this.$t("remark"),
           sortable: true,
           show_sm: true,
           thStyle: {width: "8%"},

@@ -536,5 +536,6 @@ export default {
   classing: "ថ្នាក់",
   score: "ពិន្ទុ",
   total_score: "ពិន្ទុសរុប",
+  score_type: "ប្រភេទពិន្ទុ",
 
 };
