@@ -157,7 +157,7 @@
                 </div>
               </template>
               <template v-slot:cell(name)="row">
-                {{ row.item.name }} {{ getAbsent(row.item.attendance).length > 5 ? '⚠️' : '' }}
+                {{ row.item.name }} {{ getAbsent(row.item.attendance).length >=3 ? '⚠️' : '' }}
               </template>
               <template v-slot:cell(status)="row">
                 <b-badge
