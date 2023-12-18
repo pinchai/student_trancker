@@ -11,7 +11,9 @@
     content-class="custom-modal"
   >
     <template slot="modal-header">
-      <h3><i class="fas fa-user-graduate"></i> {{ $t("classing") }}</h3>
+      <h3>
+        <i class="fas fa-walking"></i> {{ $t("attendance") }}
+      </h3>
     </template>
 
     <b-row>

@@ -10,6 +10,16 @@
     </div>
     <!--end modal-->
 
+    <!--score modal-->
+    <div v-if="modalScoreShow">
+      <score-modal
+        :modalType="modalScoreType"
+        :formItem="formItem"
+        @closeModal="closeModalScore"
+      ></score-modal>
+    </div>
+    <!--end score modal-->
+
     <b-card no-body class="card-table">
       <b-card-header>
         <h1>{{ $t("score") }}</h1>
@@ -162,6 +172,7 @@
                     <b-tr
                       v-for="(item, index) in row.item.student_score"
                       :key="'student_'+index"
+                      @click="updateScore(item, row.item.end_date)"
                     >
                       <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ index + 1 }}</b-td>
                       <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ item.name }}</b-td>
@@ -193,6 +204,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import moment from "moment";
 
 export default {
   moduleKey: "score",
@@ -203,7 +215,9 @@ export default {
       showDelete: true,
       showOverlay: false,
       modalShow: false,
+      modalScoreShow: false,
       modalType: 0,
+      modalScoreType: 0,
       formItem: {},
       pagination: {
         current_page: 1,
@@ -223,6 +237,7 @@ export default {
   },
   components: {
     Modal: () => import("./components/Modal"),
+    ScoreModal: () => import("./components/ScoreModal"),
   },
   created() {
     this.fetchRecord();
@@ -294,6 +309,12 @@ export default {
       this.modalShow = true;
       this.modalType = 1; //set modal type 1 = save
     },
+    updateScore(item, end_date) {
+      this.formItem = item
+      this.formItem.end_date = end_date
+      this.modalScoreShow = true;
+      this.modalScoreType = 1; //set modal type 1 = save
+    },
     editRecord() {
       this.modalShow = true;
       this.selectedItem.old_logo = this.selectedItem.logo;
@@ -355,6 +376,14 @@ export default {
     closeModal(obj) {
       this.modalType = 0;
       this.modalShow = false;
+
+      if (!this.$helpers.isEmpty(obj)) {
+        this.fetchRecord();
+      }
+    },
+    closeModalScore(obj) {
+      this.modalScoreType = 0;
+      this.modalScoreShow = false;
 
       if (!this.$helpers.isEmpty(obj)) {
         this.fetchRecord();

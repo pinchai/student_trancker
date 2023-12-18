@@ -3,83 +3,38 @@
     id="modal"
     v-model="modal"
     scrollable
-    top
+    centered
     no-close-on-backdrop
     no-close-on-esc
     hide-header-close
-    size="lg"
+    size="md"
     content-class="custom-modal"
   >
     <template slot="modal-header">
-      <h3><i class="fas fa-user-graduate"></i> {{ $t("score") }}</h3>
+      <h6><i class="fas fa-medal"></i> {{ $t("score") }}របស់:
+        <span class="bg-warning text-danger">{{ form.name }}-{{ form.latin_name }}</span>
+      </h6>
     </template>
 
     <b-row>
-      <!--group-->
-      <b-col lg="12" xl="12" md="12" sm="12">
-        <b-form-group
-          :invalid-feedback="veeErrors.first('group_id')"
-          :label="$t('group')"
-          label-class="control-label"
-          class="text-left"
-        >
-          <b-select
-            v-validate="'required'"
-            :state="veeErrors.has('group_id') ? false : null"
-            data-vv-name="group_id"
-            :data-vv-as="$t('group')"
-            v-model="form.group_id"
-            @input="getStudent(form.group_id)"
-          >
-            <b-form-select-option value="null">{{ $t('group') }}</b-form-select-option>
-            <b-form-select-option
-              v-for="(item, index) in groups"
-              :key="'group_'+index"
-              :value="item.id"
-            >
-              {{ item.name }}
-            </b-form-select-option>
-          </b-select>
-        </b-form-group>
-      </b-col>
-      <!--start date-->
-      <b-col lg="12" xl="12" md="12" sm="12">
-        <b-form-group
-          size="sm"
-          :invalid-feedback="veeErrors.first('start_date')"
-          :state="veeErrors.has('start_date') ? false : null"
-          :label="$t('start_date') + ' *'"
-          label-class="control-label"
-          class="text-left"
-        >
-          <b-form-datepicker
-            reset-button
-            close-button
-            today-button
-            locale='en'
-            required
-            size='sm'
-            hide-header
-            v-model='form.start_date'
-            :date-format-options="{year: 'numeric',month: 'short',day: '2-digit'}"
-            v-validate="'required'"
-            :state="veeErrors.has('start_date') ? false : null"
-            :data-vv-name="'start_date'"
-            :data-vv-as="$t('start_date')"
-          ></b-form-datepicker>
-        </b-form-group>
-      </b-col>
+      <div class="col-12">
+        <center>
+          <h1 v-if="form.late_submit_days > 0" class="text-danger rounded-lg">យឺត{{ form.late_submit_days | currencyFormat}}ថ្ងៃ⚠️</h1>
+          <h1 v-else class="bg-primary rounded-lg">ទាន់ពេល✅</h1>
+        </center>
+      </div>
       <!--end date-->
       <b-col lg="12" xl="12" md="12" sm="12">
         <b-form-group
           size="sm"
           :invalid-feedback="veeErrors.first('end_date')"
           :state="veeErrors.has('end_date') ? false : null"
-          :label="$t('end_date') + ' *'"
+          label="ផុតកំណត់"
           label-class="control-label"
           class="text-left"
         >
           <b-form-datepicker
+            disabled
             reset-button
             close-button
             today-button
@@ -96,40 +51,51 @@
           ></b-form-datepicker>
         </b-form-group>
       </b-col>
-      <!--score_type-->
+      <!--submit date-->
       <b-col lg="12" xl="12" md="12" sm="12">
         <b-form-group
-          label="Section"
+          size="sm"
+          :invalid-feedback="veeErrors.first('submit_date')"
+          :state="veeErrors.has('submit_date') ? false : null"
+          label="Submit Date"
+          label-class="control-label"
+          class="text-left"
         >
-          <b-form-radio
-            v-for="(item, index) in score_types"
-            :key="'score_type_'+index"
-            v-model="form.score_type"
-            name="group-section"
-            :value="item.name"
-          >
-            {{ item.name }}
-          </b-form-radio>
+          <b-form-datepicker
+            reset-button
+            close-button
+            today-button
+            locale='en'
+            required
+            size='sm'
+            hide-header
+            v-model='form.submit_date'
+            :date-format-options="{year: 'numeric',month: 'short',day: '2-digit'}"
+            v-validate="'required'"
+            :state="veeErrors.has('submit_date') ? false : null"
+            :data-vv-name="'submit_date'"
+            :data-vv-as="$t('submit_date')"
+          ></b-form-datepicker>
         </b-form-group>
       </b-col>
-      <!--total_score-->
+      <!--score-->
       <b-col cols="12">
         <b-form-group
-          :label="$t('total_score')+ '*'"
-          :invalid-feedback="veeErrors.first('total_score')"
+          :label="$t('score')+ '*'"
+          :invalid-feedback="veeErrors.first('score')"
           label-class="control-label"
           class="text-left"
         >
           <b-form-input
             autocomplete="off"
-            v-model="form.total_score"
+            v-model="form.score"
             type="number"
-            :placeholder="$t('total_score')"
+            :placeholder="$t('score')"
             @keydown.enter.prevent="onSubmit"
             v-validate="'required'"
-            :state="veeErrors.has('total_score') ? false : null"
-            data-vv-name="total_score"
-            :data-vv-as="$t('total_score')"
+            :state="veeErrors.has('score') ? false : null"
+            data-vv-name="score"
+            :data-vv-as="$t('score')"
           ></b-form-input>
         </b-form-group>
       </b-col>
@@ -149,50 +115,6 @@
           ></b-textarea>
         </b-form-group>
       </b-col>
-      <!--student_list-->
-      <b-col lg="12" xl="12" md="12" sm="12">
-        <b-table-simple
-          small
-          hover
-          caption-top
-          responsive
-          :filter="txt_src"
-        >
-          <b-thead>
-            <b-tr>
-              <b-th>No.</b-th>
-              <b-th>Name</b-th>
-              <b-th>Latin Name</b-th>
-              <b-th>Check</b-th>
-            </b-tr>
-          </b-thead>
-          <b-tbody>
-            <b-tr
-              v-for="(item, index) in student_list"
-              :key="'student_'+index"
-              @click="rowClick(item)"
-            >
-              <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ index + 1 }}</b-td>
-              <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ item.name }}</b-td>
-              <b-td>{{ item.latin_name }}</b-td>
-              <b-td>
-                <b-form-input
-                  style='border-radius: 5px'
-                  v-model='item.score'
-                  v-validate="`required|min_value:0|max_value:${form.total_score}`"
-                  :state="veeErrors.has('score_'+index) ? false : null"
-                  :data-vv-name="'score_'+index"
-                  :data-vv-as="$t('score')"
-                  type='number'
-                  required
-                  :placeholder="$t('score')"
-                  autocomplete="off"
-                ></b-form-input>
-              </b-td>
-            </b-tr>
-          </b-tbody>
-        </b-table-simple>
-      </b-col>
     </b-row>
 
     <template slot="modal-footer">
@@ -203,8 +125,7 @@
       >
         <i class="fas fa-times-circle mr-1"></i>
         {{ $t("close") }}
-      </b-button
-      >
+      </b-button>
       <b-button
         type="submit"
         variant="outline-primary"
@@ -244,12 +165,11 @@ export default {
       modal: true,
       form: {
         id: null,
-        group_id: null,
-        score_type: 'lab',
-        total_score: 0,
-        start_date: moment().format('YYYY-MM-DD'),
-        end_date: moment().format('YYYY-MM-DD'),
+        score: null,
         remark: null,
+        end_date: null,
+        submit_date: moment().format('YYYY-MM-DD'),
+        late_submit_days: 0
       },
       score_types: [
         {'name': 'lab'},
@@ -257,11 +177,6 @@ export default {
         {'name': 'final'}
       ],
       url: null,
-      imgUrl: "/images/score/",
-      listItems: {},
-      student_list: [],
-      group_section: null,
-      txt_src: null
     };
   },
   computed: {
@@ -282,11 +197,12 @@ export default {
       handler(val) {
         if (val == 1) {
           this.modal = true;
-          this.url = "/score/store";
+          this.setData();
+          this.url = "/score/update_student_score";
         } else if (val == 2) {
           this.modal = true;
           this.setData();
-          this.url = "/score/edit";
+          this.url = "/score/update_student_score";
         }
       },
       immediate: true
@@ -298,7 +214,6 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           let input = this.form
-          input.student_list = this.student_list
           axios.post(this.url, input).then(function (response) {
             if (response.status === 200) {
               vm.listItems = response.data.data;
@@ -338,28 +253,13 @@ export default {
     },
     setData() {
       this.form = Object.assign({}, this.formItem);
-      this.form.logo = '/images/score/' + this.formItem.image;
-      this.form.old_logo = this.formItem.image;
+      this.form.submit_date = moment().format('YYYY-MM-DD')
 
-      this.student_list = this.formItem.student_score
-      this.group_section = this.formItem.group_section
-    },
-    getStudent(group_id) {
-      let vm = this;
-      const input = {
-        'group_id': group_id
-      }
-      axios.post("/student/getByGroupId", input).then(function (response) {
-        vm.student_list = response.data.data
-        vm.group_section = response.data.data[0].group_section
-
-      })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    rowClick(item) {
-      item.checked = !item.checked
+      let end_date = moment().format(this.form.end_date)
+      let now = moment(new Date()); //todays date
+      let end = moment(end_date); // another date
+      let duration = moment.duration(now.diff(end));
+      this.form.late_submit_days = duration.asDays();
     },
   }
 };
