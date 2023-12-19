@@ -48,7 +48,7 @@ class StudentController extends Controller
                 DB::raw("1 as 'checked'")
             )
             ->where('group_id', $request->group_id)
-            ->orderBy('student.name', 'asc')
+            ->orderBy('student.latin_name', 'asc')
             ->get();
         $group_section = Section::where('group_id', $request->group_id)
             ->select(

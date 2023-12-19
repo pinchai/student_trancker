@@ -157,7 +157,22 @@
                 </div>
               </template>
               <template v-slot:cell(name)="row">
-                {{ row.item.name }} {{ getAbsent(row.item.attendance).length >=3 ? '⚠️' : '' }}
+                <span
+                  :class="getAbsent(row.item.attendance).length >=3 ? 'text-danger bg-warning' : ''"
+                >{{ row.item.name }}</span>
+                <template v-if="getAbsent(row.item.attendance).length >=3">
+                  <img src="/alert.gif" style="width: 20px; margin-top: -12px; margin-left: 1px">
+                </template>
+              <!-- {{ getAbsent(row.item.attendance).length >=3 ? '⚠️' : '' }}-->
+              </template>
+              <template v-slot:cell(detail)="row">
+                <span class="text-primary">
+                  🟢Present: {{ getPreset(row.item.attendance).length }}ដង
+                </span>
+                <br>
+                <span class="text-danger">
+                  🔴Absent: {{ getAbsent(row.item.attendance).length }}ដង
+                </span>
               </template>
               <template v-slot:cell(status)="row">
                 <b-badge
@@ -174,15 +189,6 @@
                 >
                   {{ $t("active") }}
                 </b-badge>
-              </template>
-              <template v-slot:cell(detail)="row">
-                <span class="text-primary">
-                  🟢Present: {{ getPreset(row.item.attendance).length }}ដង
-                </span>
-                <br>
-                <span class="text-danger">
-                  🔴Absent: {{ getAbsent(row.item.attendance).length }}ដង
-                </span>
               </template>
               <template v-slot:cell(created_at)="row">
                 {{ row.item.created_at| dateTimeFormat("YYYY-MM-DD HH:mm:ss") }}
@@ -207,6 +213,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import TextEditor from "../../../components/sharing/TextEditor";
 
 export default {
   moduleKey: "student",
@@ -238,6 +245,7 @@ export default {
     };
   },
   components: {
+    TextEditor,
     Modal: () => import("./components/Modal"),
     ImportModal: () => import("./components/ImportModal"),
   },
@@ -269,20 +277,20 @@ export default {
           show_sm: true
         },
         {
-          key: "gender",
-          label: this.$t("gender"),
+          key: "detail",
+          label: this.$t("detail"),
           sortable: true,
           show_sm: true
         },
+        // {
+        //   key: "gender",
+        //   label: this.$t("gender"),
+        //   sortable: true,
+        //   show_sm: true
+        // },
         {
           key: "group",
           label: this.$t("group"),
-          sortable: true,
-          show_sm: true
-        },
-        {
-          key: "detail",
-          label: this.$t("detail"),
           sortable: true,
           show_sm: true
         },
