@@ -59,7 +59,7 @@ class Student extends Model
             ->select(
                 'attendance.*',
                 'classing.date_time as classing_date'
-            )->orderBy('student.name', 'asc');
+            );
     }
 
 
