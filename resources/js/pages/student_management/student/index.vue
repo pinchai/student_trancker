@@ -175,12 +175,12 @@
                 </span>
               </template>
               <template v-slot:cell(score)="row">
-                <span class="text-primary">
+                <span>
                   <template v-if="sumScore(row.item.score) < 50">
-                    🥬 {{ $t('total_score') }}: {{ sumScore(row.item.score) }}
+                    {{ $t('total_score') }}: {{ sumScore(row.item.score) | currencyFormat }}🥬
                   </template>
-                    <template v-else>
-                    ☕️🍰 { $t('total_score') }}: {{ sumScore(row.item.score) }}
+                  <template v-else>
+                    { $t('total_score') }}: {{ sumScore(row.item.score) }}☕️
                   </template>
                 </span>
               </template>
