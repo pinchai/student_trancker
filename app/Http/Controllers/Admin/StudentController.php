@@ -130,7 +130,7 @@ class StudentController extends Controller
         DB::commit();
         return response()->json([
             'data' => $student,
-            'combo_list' => Branch::comboList(),
+            'combo_list' => [],
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);
@@ -155,7 +155,7 @@ class StudentController extends Controller
         DB::commit();
         return response()->json([
             'data' => $student,
-            'combo_list' => Branch::comboList(),
+            'combo_list' => [],
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);
@@ -165,15 +165,15 @@ class StudentController extends Controller
     public function delete(Request $request)
     {
         DB::beginTransaction();
-        $student = Branch::find($request->id);
+        $student = Student::find($request->id);
         if ($student->delete()) {
             //Delete Logo
-            StringHelper::deleteImage($student->logo, Branch::logoPath, Branch::thumbnailPath);
+            StringHelper::deleteImage($student->logo, Student::logoPath, Student::thumbnailPath);
         }
         DB::commit();
         return response()->json([
             'data' => $student,
-            'combo_list' => Branch::comboList(),
+            'combo_list' => [],
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ], 200);

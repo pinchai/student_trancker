@@ -37,7 +37,8 @@ class Student extends Model
         $group_selected = isset($filter['group_selected']) ? $filter['group_selected'] : null;
         $data = Student::join('group', 'student.group_id', 'group.id')
             ->with([
-                'attendance'
+                'attendance',
+                'score'
             ])
             ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
                 $query->whereIn('group.id', $group_selected);
@@ -59,6 +60,17 @@ class Student extends Model
             ->select(
                 'attendance.*',
                 'classing.date_time as classing_date'
+            );
+    }
+
+    public function score()
+    {
+        return $this->hasMany('App\Models\StudentScore', 'student_id', 'id')
+            ->join('score','student_score.score_id', 'score.id')
+            ->select(
+                'student_score.*',
+                'score.score_type as score_type',
+                'score.total_score as lab_total_score',
             );
     }
 

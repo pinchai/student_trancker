@@ -163,7 +163,7 @@
                 <template v-if="getAbsent(row.item.attendance).length >=3">
                   <img src="/alert.gif" style="width: 20px; margin-top: -12px; margin-left: 1px">
                 </template>
-              <!-- {{ getAbsent(row.item.attendance).length >=3 ? '⚠️' : '' }}-->
+                <!-- {{ getAbsent(row.item.attendance).length >=3 ? '⚠️' : '' }}-->
               </template>
               <template v-slot:cell(detail)="row">
                 <span class="text-primary">
@@ -172,6 +172,16 @@
                 <br>
                 <span class="text-danger">
                   🔴Absent: {{ getAbsent(row.item.attendance).length }}ដង
+                </span>
+              </template>
+              <template v-slot:cell(score)="row">
+                <span class="text-primary">
+                  <template v-if="sumScore(row.item.score) < 50">
+                    🥬 {{ $t('total_score') }}: {{ sumScore(row.item.score) }}
+                  </template>
+                    <template v-else>
+                    ☕️🍰 { $t('total_score') }}: {{ sumScore(row.item.score) }}
+                  </template>
                 </span>
               </template>
               <template v-slot:cell(status)="row">
@@ -279,6 +289,12 @@ export default {
         {
           key: "detail",
           label: this.$t("detail"),
+          sortable: true,
+          show_sm: true
+        },
+        {
+          key: "score",
+          label: this.$t("score"),
           sortable: true,
           show_sm: true
         },
@@ -410,17 +426,25 @@ export default {
       this.pagination.from = data.pagination.from;
       this.pagination.to = data.pagination.to;
     },
-    getPreset(item){
-      let preset = item.filter(obj=>{
+    getPreset(item) {
+      let preset = item.filter(obj => {
         return obj.checked == 1
       })
       return preset
     },
-    getAbsent(item){
-      let preset = item.filter(obj=>{
+    getAbsent(item) {
+      let preset = item.filter(obj => {
         return obj.checked == 0
       })
       return preset
+    },
+    sumScore(item) {
+      let total = 0
+      item.forEach(obj => {
+        total += parseFloat(obj.score)
+      })
+
+      return total
     }
   }
 };
