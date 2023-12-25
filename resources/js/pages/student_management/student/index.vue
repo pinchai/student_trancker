@@ -180,7 +180,7 @@
                     {{ $t('total_score') }}: {{ sumScore(row.item.score) | currencyFormat }}🥬
                   </template>
                   <template v-else>
-                    { $t('total_score') }}: {{ sumScore(row.item.score) }}☕️
+                    {{ $t('total_score') }}: {{ sumScore(row.item.score) }}🍻🥜
                   </template>
                 </span>
               </template>
