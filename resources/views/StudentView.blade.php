@@ -36,6 +36,7 @@
                         {{ $item->name }} | {{ $item->latin_name }} | {{ $item->gender }}
                         <br>
                         <span>🟢 មករៀន{{ $item->total_present }}ដង</span>
+                        <br>
                         <strong>❌ ឈប់{{ $item->total_absent }}ដង</strong>
                         <br>
                         {{ $item->total_score }}ពិន្ទុ
