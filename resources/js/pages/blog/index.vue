@@ -1,6 +1,5 @@
 <template>
   <div style="width: 99%">
-    <!--modal-->
     <div v-if="modalShow">
       <modal
               :modalType="modalType"
@@ -8,7 +7,6 @@
               @closeModal="closeModal"
       ></modal>
     </div>
-    <!--end modal-->
 
     <b-card no-body class="card-table">
       <b-card-header>
