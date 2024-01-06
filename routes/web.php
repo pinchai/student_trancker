@@ -33,6 +33,11 @@ Route::middleware('auth')->group(function () {
     include 'admin/module.php';
 });
 
+
+//Front block
+Route::get('/view', 'App\Http\Controllers\StudentViewController@index')
+    ->name('student_view');
+
 Route::get('/{vue_capture}', function () {
     return view('pages.welcome');
 })->where('vue_capture', '.*')->middleware('auth');

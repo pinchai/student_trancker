@@ -172,12 +172,12 @@ export default {
       formItem: {},
       pagination: {
         current_page: 1,
-        per_page: this.$store.getters.getTableSize,
+        per_page: 10,
         total: 0,
         to: 0,
         from: 0,
         last_page: 0,
-        table_size: this.$store.getters.getTableSize
+        table_size: 10
       },
       filter: {
         warehouses: {},

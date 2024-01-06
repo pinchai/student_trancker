@@ -50,6 +50,7 @@ class ClassingController extends Controller
             'success' => 1,
             'message' => 'Your action has been completed successfully.'
         ];
+
         return response()->json($response, 200);
     }
 

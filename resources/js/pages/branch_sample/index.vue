@@ -237,12 +237,12 @@ export default {
       items: [],
       pagination: {
         current_page: 1,
-        per_page: this.$store.getters.getTableSize,
+        per_page: 10,
         total: 0,
         to: 0,
         from: 0,
         last_page: 0,
-        table_size: this.$store.getters.getTableSize
+        table_size: 10
       },
       pageOptions: [10, 20, 50, 100],
       modalType: 0,

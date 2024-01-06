@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container">
-  <h2>Laravel File Manager Tutorial Example - ItSolutionStuff.Com</h2>
+  <h2>File Manager</h2>
   <div class="row">
     <div class="col-md-12" id="fm-main-block">
       <div id="fm"></div>

@@ -147,6 +147,7 @@
                       <b-th>No.</b-th>
                       <b-th>Name</b-th>
                       <b-th>Latin Name</b-th>
+                      <b-th>Remark</b-th>
                       <b-th>Check</b-th>
                     </b-tr>
                   </b-thead>
@@ -158,6 +159,7 @@
                       <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
                       <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.name }}</b-td>
                       <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.latin_name }}</b-td>
+                      <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.remark }}</b-td>
                       <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
                         <i
                           v-if="item.checked == 1"
@@ -208,12 +210,12 @@ export default {
       formItem: {},
       pagination: {
         current_page: 1,
-        per_page: this.$store.getters.getTableSize,
+        per_page: 10,
         total: 0,
         to: 0,
         from: 0,
         last_page: 0,
-        table_size: this.$store.getters.getTableSize
+        table_size: 10
       },
       filter: {
         warehouses: {},
@@ -261,6 +263,13 @@ export default {
           sortable: true,
           show_sm: true,
           thStyle: {width: "10%"},
+        },
+        {
+          key: "remark",
+          label: this.$t("remark"),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "8%"},
         },
         {
           key: 'detail',

@@ -47,7 +47,7 @@ class Student extends Model
                 'student.*',
                 'group.name as group',
             )
-            ->orderBy('group.id', 'ASC')
+            ->orderBy('group.id', 'DESC')
             ->orderBy('student.latin_name', 'ASC');
 
         return $data;
@@ -74,5 +74,21 @@ class Student extends Model
             );
     }
 
+    public static function listsByGroup($request){
+        $group_name = $request->input('group_name');
+        $data = Student::join('group', 'student.group_id', 'group.id')
+            ->where('group.name', $group_name)
+            ->with([
+                'attendance',
+                'score'
+            ])
+            ->select(
+                'student.*',
+                'group.name as group',
+            )
+            ->orderBy('group.id', 'DESC')
+            ->orderBy('student.latin_name', 'ASC');
+        return $data;
+    }
 
 }

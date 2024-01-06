@@ -70,6 +70,15 @@
               <i class="fa fa-trash"></i>
               {{ $t("delete") }}
             </b-button>
+            <a href="/view?group_name=st8.9" target="_blank">
+              <b-button
+                variant="outline-primary"
+                class="mb-2"
+              >
+                <i class="fa fa-trash"></i>
+                Student View
+              </b-button>
+            </a>
           </b-col>
           <b-col cols="6" md="5" lg="5" xl="5" class="mb-2">
             <b-input-group>
@@ -165,7 +174,7 @@
                 </template>
                 <!-- {{ getAbsent(row.item.attendance).length >=3 ? '⚠️' : '' }}-->
               </template>
-              <template v-slot:cell(detail)="row">
+              <template v-slot:cell(attendance)="row">
                 <span class="text-primary">
                   🟢Present: {{ getPreset(row.item.attendance).length }}ដង
                 </span>
@@ -202,6 +211,88 @@
               </template>
               <template v-slot:cell(created_at)="row">
                 {{ row.item.created_at| dateTimeFormat("YYYY-MM-DD HH:mm:ss") }}
+              </template>
+              <template v-slot:cell(detail)="row">
+                <a @click="row.toggleDetails">
+                  <i
+                    v-show="!row.detailsShowing"
+                    class="fas fa-angle-double-down text-primary"
+                    style="font-size: 20px"
+                  ></i>
+                  <i
+                    v-show="row.detailsShowing"
+                    class="fas fa-angle-double-up text-danger"
+                    style="font-size: 20px"
+                  ></i>
+                </a>
+              </template>
+              <template #row-details="row">
+                <div class="row">
+                  <!--Present Details-->
+                  <div class="col-lg-6 col-md-12 col-sm-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <h3>Present Details ✅</h3>
+                      </div>
+                      <div class="card-body">
+                        <b-table-simple small hover>
+                          <b-thead>
+                            <b-tr>
+                              <b-th>No.</b-th>
+                              <b-th>Date</b-th>
+                              <b-th>Remark</b-th>
+                            </b-tr>
+                          </b-thead>
+                          <b-tbody>
+                            <b-tr
+                              v-for="(item, index) in getPreset(row.item.attendance)"
+                              :key="'student_'+index"
+                            >
+                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                                {{ index + 1 }}
+                              </b-td>
+                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                                {{ item.classing_date | dateFormat }}
+                              </b-td>
+                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.remark }}</b-td>
+                            </b-tr>
+                          </b-tbody>
+                        </b-table-simple>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Absent Details-->
+                  <div class="col-lg-6 col-md-12 col-sm-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <h3>Absent Details ❌</h3>
+                      </div>
+                      <div class="card-body">
+                        <b-table-simple small hover>
+                          <b-thead>
+                            <b-tr>
+                              <b-th>No.</b-th>
+                              <b-th>Date</b-th>
+                              <b-th>Remark</b-th>
+                            </b-tr>
+                          </b-thead>
+                          <b-tbody>
+                            <b-tr
+                              v-for="(item, index) in getAbsent(row.item.attendance)"
+                              :key="'student_'+index"
+                            >
+                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
+                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                                {{ item.classing_date | dateFormat }}
+                              </b-td>
+                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.remark }}</b-td>
+                            </b-tr>
+                          </b-tbody>
+                        </b-table-simple>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </template>
             </b-table>
           </b-col>
@@ -240,12 +331,12 @@ export default {
       formItem: {},
       pagination: {
         current_page: 1,
-        per_page: this.$store.getters.getTableSize,
+        per_page: 10,
         total: 0,
         to: 0,
         from: 0,
         last_page: 0,
-        table_size: this.$store.getters.getTableSize
+        table_size: 10
       },
       filter: {
         warehouses: {},
@@ -268,12 +359,12 @@ export default {
     }),
     header() {
       let data = [
-        // {
-        //   key: "image",
-        //   label: this.$t("image"),
-        //   sortable: false,
-        //   show_sm: true
-        // },
+        {
+          key: "image",
+          label: this.$t("image"),
+          sortable: false,
+          show_sm: true
+        },
         {
           key: "name",
           label: this.$t("name"),
@@ -287,8 +378,8 @@ export default {
           show_sm: true
         },
         {
-          key: "detail",
-          label: this.$t("detail"),
+          key: "attendance",
+          label: this.$t("attendance"),
           sortable: true,
           show_sm: true
         },
@@ -321,7 +412,13 @@ export default {
           label: this.$t("created_at"),
           sortable: true,
           show_sm: true
-        }
+        },
+        {
+          key: 'detail',
+          label: this.$t('detail'),
+          sortable: true,
+          show_sm: true,
+        },
       ];
       data = data.filter(obj => {
         return obj.show_sm == true
