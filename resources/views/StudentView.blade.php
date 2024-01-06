@@ -24,9 +24,9 @@
 <body class="form">
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 mt-2">
+        <div class="col-12 mt-2 mb-2">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header mb-3">
                     <center>
                         <h3 style="text-transform: uppercase">Group {{ $group }}</h3>
                     </center>
