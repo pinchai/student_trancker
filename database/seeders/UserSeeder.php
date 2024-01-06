@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'id' => 1,
             'name' => 'dev',
             'email' => 'dev@gmail.com',
-            'password' => Hash::make('$dev168$'),
+            'password' => Hash::make('12345678'),
             'role_id' => 1,
             'user_type_id' => 1,
             'branch_id' => 1,
