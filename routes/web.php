@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     include 'admin/classing.php';
     include 'admin/section.php';
     include 'admin/score.php';
+    include 'admin/subject.php';
 
     include 'admin/position.php';
     include 'admin/telegram_bot.php';

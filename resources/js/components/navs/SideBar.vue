@@ -109,6 +109,13 @@ export default {
           key: "group",
           active: false
         },
+        {
+          label: "subject",
+          icon: "fas fa-dice-d6",
+          to: "/subject",
+          key: "subject",
+          active: false
+        },
         // {
         //   label: "section",
         //   icon: "fas fa-dice-d6",

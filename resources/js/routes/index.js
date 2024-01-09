@@ -30,6 +30,10 @@ import classing from "../pages/student_management/classing";
 //Score
 import score from "../pages/student_management/score";
 
+//subject
+import subject from "../pages/subject";
+
+
 //position
 import position from "../pages/student_management/position";
 
@@ -122,6 +126,14 @@ const router = new VueRouter({
             component: group,
             meta: {
                 title: "group"
+            }
+        },
+        {
+            path: "/subject",
+            name: "subject",
+            component: subject,
+            meta: {
+                title: "subject"
             }
         },
         {
