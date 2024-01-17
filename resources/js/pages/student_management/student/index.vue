@@ -165,6 +165,9 @@
                   </b-tooltip>
                 </div>
               </template>
+              <template v-slot:cell(no)="row">
+                <strong>{{ row.index + 1 }}</strong>
+              </template>
               <template v-slot:cell(name)="row">
                 <span
                   :class="getAbsent(row.item.attendance).length >=3 ? 'text-danger bg-warning' : ''"
@@ -331,12 +334,12 @@ export default {
       formItem: {},
       pagination: {
         current_page: 1,
-        per_page: 10,
+        per_page: 50,
         total: 0,
         to: 0,
         from: 0,
         last_page: 0,
-        table_size: 10
+        table_size: 50
       },
       filter: {
         warehouses: {},
@@ -359,9 +362,15 @@ export default {
     }),
     header() {
       let data = [
+        // {
+        //   key: "image",
+        //   label: this.$t("image"),
+        //   sortable: false,
+        //   show_sm: true
+        // },
         {
-          key: "image",
-          label: this.$t("image"),
+          key: "no",
+          label: this.$t("no"),
           sortable: false,
           show_sm: true
         },
