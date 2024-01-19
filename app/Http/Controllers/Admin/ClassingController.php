@@ -168,6 +168,7 @@ class ClassingController extends Controller
             'group_id' => 'required',
             'section_id' => 'required',
             'student_list' => 'required',
+            'remark' => 'required',
         ]);
     }
 
