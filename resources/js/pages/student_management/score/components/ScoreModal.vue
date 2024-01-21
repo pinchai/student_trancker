@@ -261,7 +261,7 @@ export default {
       let duration = moment.duration(now.diff(end));
       this.form.late_submit_days = duration.asDays();
     },
-  }
+  },
 };
 </script>
 

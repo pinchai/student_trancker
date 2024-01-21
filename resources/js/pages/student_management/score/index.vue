@@ -144,6 +144,13 @@
                   {{ row.item.score_type }}<br>
                 </strong>
               </template>
+              <template v-slot:cell(submit)="row">
+                <strong>
+                  submitted: {{ getNoneZeroScore(row.item.student_score).length }}នាក់
+                  <br>
+                  none submit: {{ getZeroScore(row.item.student_score).length }}នាក់
+                </strong>
+              </template>
               <template v-slot:cell(detail)="row">
                 <a @click="row.toggleDetails">
                   <i
@@ -166,19 +173,35 @@
                       <b-th>Name</b-th>
                       <b-th>Latin Name</b-th>
                       <b-th>Score</b-th>
+                      <b-th>Action</b-th>
                     </b-tr>
                   </b-thead>
                   <b-tbody>
                     <b-tr
                       v-for="(item, index) in row.item.student_score"
                       :key="'student_'+index"
-                      @click="updateScore(item, row.item.end_date)"
                     >
                       <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ index + 1 }}</b-td>
                       <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ item.name }}</b-td>
                       <b-td>{{ item.latin_name }}</b-td>
                       <b-td>
                         <span style="color: red; font-size: 18px; font-weight: bolder">{{ item.score }}</span>
+                      </b-td>
+                      <b-td>
+                        <button
+                          class="btn btn-sm btn-outline-dark"
+                          @click="updateScore(item, row.item.end_date)"
+                        >
+                          <i class="far fa-edit"></i>
+                          Edit Score
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-primary ml-3"
+                          @click="updateFullScore(item, row.item)"
+                        >
+                          <i class="far fa-check-circle"></i>
+                          Full Score
+                        </button>
                       </b-td>
                     </b-tr>
                   </b-tbody>
@@ -231,7 +254,7 @@ export default {
       filter: {
         warehouses: {},
         txt_src: null,
-        group_selected: []
+        group_selected: [18]
       },
     };
   },
@@ -284,6 +307,13 @@ export default {
           thStyle: {width: "8%"},
         },
         {
+          key: "submit",
+          label: this.$t("submit"),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "8%"},
+        },
+        {
           key: "remark",
           label: this.$t("remark"),
           sortable: true,
@@ -314,6 +344,46 @@ export default {
       this.formItem.end_date = end_date
       this.modalScoreShow = true;
       this.modalScoreType = 1; //set modal type 1 = save
+    },
+    updateFullScore(item, row_item) {
+      let score_id = row_item.id
+      let student_id = item.student_id
+      let student_score_id = item.id
+      let max_score = row_item.total_score
+
+      this.$fire({
+        title: `${item.name}`,
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, set to full score!",
+        allowOutsideClick: false,
+        allowEscapeKey: false
+      }).then(result => {
+        if (result.value) {
+          let vm = this;
+          axios
+            .post("/score/update_student_full_score",
+              {
+                student_id: student_id,
+                student_score_id: student_score_id,
+                max_score: max_score,
+              })
+            .then(function (response) {
+              if (response.status == 200) {
+                vm.fetchRecord()
+                vm.$notify({
+                  group: "message",
+                  type: "success",
+                  title: vm.$t("branch"),
+                  text: vm.$t("done")
+                });
+              }
+            });
+        }
+      });
     },
     editRecord() {
       this.modalShow = true;
@@ -402,17 +472,17 @@ export default {
       this.pagination.from = data.pagination.from;
       this.pagination.to = data.pagination.to;
     },
-    getPreset(item){
-      let preset = item.filter(obj=>{
-        return obj.checked == 1
+    getZeroScore(item){
+      let zero = item.filter(obj=>{
+        return obj.score == 0
       })
-      return preset
+      return zero
     },
-    getAbsent(item){
-      let preset = item.filter(obj=>{
-        return obj.checked == 0
+    getNoneZeroScore(item){
+      let none_zero = item.filter(obj=>{
+        return obj.score != 0
       })
-      return preset
+      return none_zero
     }
   }
 };

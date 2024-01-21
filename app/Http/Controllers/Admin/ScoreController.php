@@ -131,6 +131,23 @@ class ScoreController extends Controller
         ], 200);
     }
 
+    //updateStudentScore
+    public function updateStudentFullScore(Request $request)
+    {
+        DB::beginTransaction();
+        $student_score = StudentScore::find($request->student_score_id);
+        if ($student_score) {
+            $student_score->score = $request->max_score;
+            $student_score->save();
+        }
+        DB::commit();
+        return response()->json([
+            'data' => $student_score,
+            'success' => 1,
+            'message' => 'Your action has been completed successfully.'
+        ], 200);
+    }
+
     public function checkValidation($data)
     {
         $this->validate($data, [
