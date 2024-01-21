@@ -25,15 +25,101 @@
                     </center>
                 </div>
                 @foreach($data as $item)
-                    <button class="btn btn-outline-secondary mb-3">
-                        {{ $item->name }} | {{ $item->latin_name }} | {{ $item->gender }}
-                        <br>
-                        <span>🟢 មករៀន{{ $item->total_present }}ដង</span>
-                        <br>
-                        <strong>❌ ឈប់{{ $item->total_absent }}ដង</strong>
-                        <br>
-                        {{ $item->total_score }}ពិន្ទុ
-                    </button>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <center>
+                                {{ $item->name }} | {{ $item->latin_name }} | {{ $item->gender }}
+                                <br>
+                                <span>🟢 មករៀន{{ $item->total_present }}ដង</span>
+                                <br>
+                                <strong>❌ ឈប់{{ $item->total_absent }}ដង</strong>
+                                <br>
+                                {{ $item->total_score }}ពិន្ទុ
+                            </center>
+                        </div>
+                        <div class="card-footer">
+                            <center
+                                    data-toggle="collapse"
+                                    href="#collapseExample{{ $item->id }}"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExample"
+                            >
+                                <a>See more...</a>
+                            </center>
+                            <div class="collapse" id="collapseExample{{ $item->id }}">
+                                <div class="card card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <center>
+                                                <h4>Present Details ✅</h4>
+                                            </center>
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Date</th>
+                                                        <th>Remark</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($item->attendance as $att)
+                                                        <tr class="{{ $att->checked == 1 ? '' : 'bg-danger' }}">
+                                                            <th>{{ $loop->iteration }}</th>
+                                                            <th>
+                                                                {{ \Carbon\Carbon::parse($att->classing_date)->format('D d-m-Y')}}
+                                                            </th>
+                                                            <th>
+                                                                {{ $att->checked == 1 ? 'មករៀន' : 'មិនខ្ចីមករៀន' }}
+                                                            </th>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr>
+                                            <center>
+                                                <h4>Score Details 🥬</h4>
+                                            </center>
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Type</th>
+                                                        <th>Score</th>
+                                                        <th>Remark</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php $sum_score = 0 ?>
+                                                    @foreach($item->score as $sc)
+                                                        <tr class="{{ $sc->score > 0 ? '' : 'bg-gray' }}">
+                                                            <th>{{ $loop->iteration }}</th>
+                                                            <th>{{ $sc->score_type }}</th>
+                                                            <th>{{ $sc->score }}</th>
+                                                            <th>{{ $sc->remark }}</th>
+                                                        </tr>
+                                                        <?php $sum_score+=$sc->score ?>
+                                                    @endforeach
+                                                    <tr class="bg-gradient-dark">
+                                                        <td colspan="4">
+                                                            <center>
+                                                                <span class="text-danger">
+                                                                     Total Score: {{ $sum_score }}
+                                                                </span>
+                                                            </center>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             </div>
 

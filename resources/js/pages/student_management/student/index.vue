@@ -231,70 +231,107 @@
               </template>
               <template #row-details="row">
                 <div class="row">
-                  <!--Present Details-->
-                  <div class="col-lg-6 col-md-12 col-sm-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <h3>Present Details ✅</h3>
-                      </div>
-                      <div class="card-body">
-                        <b-table-simple small hover>
-                          <b-thead>
-                            <b-tr>
-                              <b-th>No.</b-th>
-                              <b-th>Date</b-th>
-                              <b-th>Remark</b-th>
-                            </b-tr>
-                          </b-thead>
-                          <b-tbody>
-                            <b-tr
-                              v-for="(item, index) in getPreset(row.item.attendance)"
-                              :key="'student_'+index"
-                            >
-                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
-                                {{ index + 1 }}
-                              </b-td>
-                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
-                                {{ item.classing_date | dateFormat }}
-                              </b-td>
-                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.remark }}</b-td>
-                            </b-tr>
-                          </b-tbody>
-                        </b-table-simple>
-                      </div>
-                    </div>
-                  </div>
-                  <!--Absent Details-->
-                  <div class="col-lg-6 col-md-12 col-sm-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <h3>Absent Details ❌</h3>
-                      </div>
-                      <div class="card-body">
-                        <b-table-simple small hover>
-                          <b-thead>
-                            <b-tr>
-                              <b-th>No.</b-th>
-                              <b-th>Date</b-th>
-                              <b-th>Remark</b-th>
-                            </b-tr>
-                          </b-thead>
-                          <b-tbody>
-                            <b-tr
-                              v-for="(item, index) in getAbsent(row.item.attendance)"
-                              :key="'student_'+index"
-                            >
-                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
-                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
-                                {{ item.classing_date | dateFormat }}
-                              </b-td>
-                              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.remark }}</b-td>
-                            </b-tr>
-                          </b-tbody>
-                        </b-table-simple>
+                  <b-col cols="6">
+                    <!--Present Details-->
+                    <div class="col-lg-12 col-md-12 col-sm-6">
+                      <div class="card">
+                        <div class="card-header">
+                          <h3>Present Details ✅</h3>
+                        </div>
+                        <div class="card-body">
+                          <b-table-simple small hover>
+                            <b-thead>
+                              <b-tr>
+                                <b-th>No.</b-th>
+                                <b-th>Date</b-th>
+                                <b-th>Remark</b-th>
+                              </b-tr>
+                            </b-thead>
+                            <b-tbody>
+                              <b-tr
+                                v-for="(item, index) in getPreset(row.item.attendance)"
+                                :key="'student_'+index"
+                              >
+                                <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                                  {{ index + 1 }}
+                                </b-td>
+                                <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                                  {{ item.classing_date | dateFormat }}
+                                </b-td>
+                                <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.remark }}</b-td>
+                              </b-tr>
+                            </b-tbody>
+                          </b-table-simple>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                    <!--Absent Details-->
+                    <div class="col-lg-12 col-md-12 col-sm-6">
+                      <div class="card">
+                        <div class="card-header">
+                          <h3>Absent Details ❌</h3>
+                        </div>
+                        <div class="card-body">
+                          <b-table-simple small hover>
+                            <b-thead>
+                              <b-tr>
+                                <b-th>No.</b-th>
+                                <b-th>Date</b-th>
+                                <b-th>Remark</b-th>
+                              </b-tr>
+                            </b-thead>
+                            <b-tbody>
+                              <b-tr
+                                v-for="(item, index) in getAbsent(row.item.attendance)"
+                                :key="'student_'+index"
+                              >
+                                <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
+                                <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                                  {{ item.classing_date | dateFormat }}
+                                </b-td>
+                                <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.remark }}</b-td>
+                              </b-tr>
+                            </b-tbody>
+                          </b-table-simple>
+                        </div>
+                      </div>
+                    </div>
+                  </b-col>
+                  <b-col cols="6">
+                    <!--Score list-->
+                    <div class="col-lg-12 col-md-12 col-sm-6">
+                      <div class="card">
+                        <div class="card-header">
+                          <h3>Score list ✅</h3>
+                        </div>
+                        <div class="card-body">
+                          <b-table-simple small hover>
+                            <b-thead>
+                              <b-tr>
+                                <b-th>No.</b-th>
+                                <b-th>Date</b-th>
+                                <b-th>Score Type</b-th>
+                                <b-th>Score</b-th>
+                                <b-th>Remark</b-th>
+                              </b-tr>
+                            </b-thead>
+                            <b-tbody>
+                              <b-tr
+                                v-for="(item, index) in row.item.score"
+                                :key="'score_'+index"
+                              >
+                                <b-td>{{ index + 1 }}</b-td>
+                                <b-td>{{ item.updated_at | dateFormat }}</b-td>
+                                <b-td>{{ item.score_type }}</b-td>
+                                <b-td>{{ item.score }}</b-td>
+                                <b-td>{{ item.remark }}</b-td>
+                              </b-tr>
+                            </b-tbody>
+                          </b-table-simple>
+                        </div>
+                      </div>
+                    </div>
+                  </b-col>
                 </div>
               </template>
             </b-table>

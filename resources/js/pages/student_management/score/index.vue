@@ -254,7 +254,7 @@ export default {
       filter: {
         warehouses: {},
         txt_src: null,
-        group_selected: [18]
+        group_selected: []
       },
     };
   },

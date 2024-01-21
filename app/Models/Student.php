@@ -71,6 +71,7 @@ class Student extends Model
                 'student_score.*',
                 'score.score_type as score_type',
                 'score.total_score as lab_total_score',
+                'score.remark as remark',
             );
     }
 
