@@ -111,7 +111,7 @@ export default {
         },
         {
           label: "subject",
-          icon: "fas fa-dice-d6",
+          icon: "fas fa-theater-masks",
           to: "/subject",
           key: "subject",
           active: false

@@ -529,4 +529,5 @@ export default {
   score: "Score",
   total_score: "Total Score",
   score_type: "Score Type",
+  subject: "Subject",
 };
