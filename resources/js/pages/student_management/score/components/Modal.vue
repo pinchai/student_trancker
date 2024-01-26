@@ -253,6 +253,7 @@ export default {
       },
       score_types: [
         {'name': 'lab'},
+        {'name': 'lab_final'},
         {'name': 'midterm'},
         {'name': 'final'}
       ],
