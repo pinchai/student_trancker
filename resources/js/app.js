@@ -95,6 +95,9 @@ interceptorsSetup()
 import VueFormulate from '@braid/vue-formulate'
 Vue.use(VueFormulate)
 
+import excel from 'vue-excel-export'
+Vue.use(excel)
+
 import Cookies from 'js-cookie'
 
 const app = new Vue({

@@ -79,6 +79,16 @@
                 Student View
               </b-button>
             </a>
+            <export-excel
+              class="btn btn-outline-dark"
+              style="cursor: pointer"
+              :data="export_excel"
+              name="student_score.xls"
+              :title="selectedGroup"
+              :worksheet="selectedGroup"
+            >
+              Export Excel
+            </export-excel>
           </b-col>
           <b-col cols="6" md="5" lg="5" xl="5" class="mb-2">
             <b-input-group>
@@ -355,12 +365,14 @@
 <script>
 import {mapGetters} from "vuex";
 import TextEditor from "../../../components/sharing/TextEditor";
+import group from "../../../store/group";
 
 export default {
   moduleKey: "student",
   data() {
     return {
       items: [],
+      export_excel:[],
       selectedItem: {},
       showDelete: true,
       showOverlay: false,
@@ -470,6 +482,15 @@ export default {
         return obj.show_sm == true
       })
       return data;
+    },
+    selectedGroup(){
+      if (this.filter.group_selected.length > 0){
+        let current_group = this.groups.find(item=>{
+          return item.id == this.filter.group_selected[0]
+        })
+        return current_group.name
+      }
+
     }
   },
   methods: {
@@ -490,9 +511,23 @@ export default {
     fetchRecord() {
       let vm = this;
       const input = this.getInput();
+      this.export_excel = []
       axios
         .post("/student/get", input)
         .then(function (response) {
+          response.data.data.forEach((item, index)=>{
+            //score
+            let total_score = 0
+            item.score.forEach(obj=>{
+              total_score+=obj.score
+            })
+            vm.export_excel.push({
+              no: index+1,
+              name: item.name,
+              latin_name: item.latin_name,
+              total_score: total_score,
+            })
+          })
           vm.setInput(response.data);
         })
         .catch(function (error) {
