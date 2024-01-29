@@ -70,6 +70,7 @@ class ClassingController extends Controller
             'remark'=>$request->remark,
         ];
         $classing->setData($classing_data);
+        $classing->on_going = $request->on_going;
         if ($classing->save()) {
             $image_one = $request->file('image_one');
             if ($image_one) {
@@ -95,6 +96,7 @@ class ClassingController extends Controller
             ];
             $attendance = new Attendance();
             $attendance->setData($data);
+            $attendance->on_going = $classing->on_going;
             $attendance->save();
         }
 
@@ -122,6 +124,7 @@ class ClassingController extends Controller
             'remark'=>$request->remark,
         ];
         $classing->setData($classing_data);
+        $classing->on_going = $request->on_going;
         $classing->save();
 
         Attendance::where('classing_id', $request->id)->forceDelete();
@@ -133,6 +136,7 @@ class ClassingController extends Controller
             ];
             $attendance = new Attendance();
             $attendance->setData($data);
+            $attendance->on_going = $classing->on_going;
             $attendance->save();
         }
 

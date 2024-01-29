@@ -119,6 +119,15 @@
                   {{ row.item.date_time | dateFormat }}
                 </strong>
               </template>
+              <template v-slot:cell(section)="row">
+                <strong style="font-size: 15px; text-transform: capitalize; color: red">
+                  {{ row.item.on_going}}
+                </strong>
+                <br>
+                <strong style="font-size: 15px">
+                  {{ row.item.section }}
+                </strong>
+              </template>
               <template v-slot:cell(classing)="row">
                 <strong style="font-size: 18px">
                   Total: {{ row.item.attendance.length }}នាក់<br>

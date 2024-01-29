@@ -107,6 +107,27 @@
           </b-form-radio>
         </b-form-group>
       </b-col>
+      <!--on_going-->
+      <b-col lg="12" xl="12" md="12" sm="12">
+        <b-form-group
+          label="Section"
+        >
+          <b-form-radio
+            v-model="form.on_going"
+            name="on_going"
+            value="midterm"
+          >
+            Midterm
+          </b-form-radio>
+          <b-form-radio
+            v-model="form.on_going"
+            name="on_going"
+            value="final"
+          >
+            Final
+          </b-form-radio>
+        </b-form-group>
+      </b-col>
       <!--date time-->
       <b-col lg="12" xl="12" md="12" sm="12">
         <b-form-group
@@ -249,7 +270,8 @@ export default {
         checked: 1,
         date_time: moment().format('YYYY-MM-DD'),
         remark: null,
-        section_id: null
+        section_id: null,
+        on_going: 'midterm'
       },
       url: null,
       imgUrl: "/images/classing/",

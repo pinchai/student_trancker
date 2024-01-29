@@ -112,6 +112,27 @@
           </b-form-radio>
         </b-form-group>
       </b-col>
+      <!--on_going-->
+      <b-col lg="12" xl="12" md="12" sm="12">
+        <b-form-group
+          label="Section"
+        >
+          <b-form-radio
+            v-model="form.on_going"
+            name="on_going"
+            value="midterm"
+          >
+            Midterm
+          </b-form-radio>
+          <b-form-radio
+            v-model="form.on_going"
+            name="on_going"
+            value="final"
+          >
+            Final
+          </b-form-radio>
+        </b-form-group>
+      </b-col>
       <!--total_score-->
       <b-col cols="12">
         <b-form-group
@@ -250,6 +271,7 @@ export default {
         start_date: moment().format('YYYY-MM-DD'),
         end_date: moment().format('YYYY-MM-DD'),
         remark: null,
+        on_going: 'midterm'
       },
       score_types: [
         {'name': 'lab'},

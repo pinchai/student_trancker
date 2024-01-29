@@ -45,6 +45,7 @@ class ScoreController extends Controller
 
         $score = new Score();
         $score->setData($request);
+        $score->on_going = $request->on_going;
         $score->save();
         foreach ($request->student_list as $item) {
             $data = [
@@ -54,6 +55,7 @@ class ScoreController extends Controller
             ];
             $student_score = new StudentScore();
             $student_score->setData($data);
+            $student_score->on_going = $score->on_going;
             $student_score->save();
         }
 
@@ -74,6 +76,7 @@ class ScoreController extends Controller
 
         $score = Score::find($request->id);
         $score->setData($request);
+        $score->on_going = $request->on_going;
         $score->save();
         StudentScore::where('score_id', $request->id)->forceDelete();
         foreach ($request->student_list as $item) {
@@ -84,6 +87,7 @@ class ScoreController extends Controller
             ];
             $student_score = new StudentScore();
             $student_score->setData($data);
+            $student_score->on_going = $score->on_going;
             $student_score->save();
         }
 

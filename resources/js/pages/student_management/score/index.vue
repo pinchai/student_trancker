@@ -120,7 +120,8 @@
               small
             >
               <template v-slot:cell(group)="row">
-                <strong style="font-size: 20px">
+
+                <strong style="font-size: 16px">
                   {{ row.item.group }}
                 </strong>
               </template>
@@ -140,7 +141,11 @@
                 </strong>
               </template>
               <template v-slot:cell(score_type)="row">
-                <strong style="font-size: 18px">
+                <strong style="font-size: 16px; color: red; text-transform: capitalize">
+                  {{ row.item.on_going }}
+                </strong>
+                <br>
+                <strong style="font-size: 16px">
                   {{ row.item.score_type }}<br>
                 </strong>
               </template>
