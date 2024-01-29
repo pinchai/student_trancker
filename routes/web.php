@@ -9,7 +9,7 @@ Route::post('/do_login', 'App\Http\Controllers\Admin\LoginController@do_login')-
 Route::get('/logout', 'App\Http\Controllers\Admin\LoginController@logout')->name('logout');
 
 //error log viewer
-Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->middleware('auth');
 
 Route::get('filemanager', [FileManagerController::class, 'index'])->middleware('auth');
 
