@@ -519,7 +519,7 @@ export default {
             //score
             let total_score = 0
             item.score.forEach(obj=>{
-              total_score+=obj.score
+              total_score+=parseFloat(obj.score)
             })
             vm.export_excel.push({
               no: index+1,
