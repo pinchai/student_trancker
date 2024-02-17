@@ -156,6 +156,10 @@
                   none submit: {{ getZeroScore(row.item.student_score).length }}នាក់
                 </strong>
               </template>
+              <template v-slot:cell(is_close)="row">
+                <b-badge v-if="row.item.is_close == 1" variant="danger">ឈប់ទទួល🔴</b-badge>
+                <b-badge v-else variant="success">នៅទទួល🟢</b-badge>
+              </template>
               <template v-slot:cell(detail)="row">
                 <a @click="row.toggleDetails">
                   <i
@@ -193,20 +197,25 @@
                         <span style="color: red; font-size: 18px; font-weight: bolder">{{ item.score }}</span>
                       </b-td>
                       <b-td>
-                        <button
-                          class="btn btn-sm btn-outline-dark"
-                          @click="updateScore(item, row.item.end_date)"
-                        >
-                          <i class="far fa-edit"></i>
-                          Edit Score
-                        </button>
-                        <button
-                          class="btn btn-sm btn-outline-primary ml-3"
-                          @click="updateFullScore(item, row.item)"
-                        >
-                          <i class="far fa-check-circle"></i>
-                          Full Score
-                        </button>
+                        <template v-if="row.item.is_close == 0">
+                          <button
+                            class="btn btn-sm btn-outline-dark"
+                            @click="updateScore(item, row.item.end_date)"
+                          >
+                            <i class="far fa-edit"></i>
+                            Edit Score
+                          </button>
+                          <button
+                            class="btn btn-sm btn-outline-primary ml-3"
+                            @click="updateFullScore(item, row.item)"
+                          >
+                            <i class="far fa-check-circle"></i>
+                            Full Score
+                          </button>
+                        </template>
+                        <template v-else>
+                          <b-badge variant="danger">ឈប់ទទួល</b-badge>
+                        </template>
                       </b-td>
                     </b-tr>
                   </b-tbody>
@@ -281,56 +290,63 @@ export default {
           label: this.$t("group"),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "8%"},
+          thStyle: {width: "4%"},
         },
         {
           key: "start_date",
           label: this.$t("start_date"),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "10%"},
+          thStyle: {width: "6%"},
         },
         {
           key: "end_date",
           label: this.$t("end_date"),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "10%"},
+          thStyle: {width: "6%"},
         },
         {
           key: "score_type",
           label: this.$t("score_type"),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "8%"},
+          thStyle: {width: "4%"},
         },
         {
           key: "total_score",
           label: this.$t("total_score"),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "8%"},
+          thStyle: {width: "2%"},
         },
         {
           key: "submit",
           label: this.$t("submit"),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "8%"},
+          thStyle: {width: "6%"},
+        },
+        {
+          key: "is_close",
+          label: this.$t("status"),
+          sortable: true,
+          show_sm: true,
+          thStyle: {width: "3%"},
         },
         {
           key: "remark",
           label: this.$t("remark"),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "8%"},
+          thStyle: {width: "12%"},
         },
         {
           key: 'detail',
           label: this.$t('detail'),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "10%"},
+          thStyle: {width: "3%"},
         },
       ];
       data = data.filter(obj => {

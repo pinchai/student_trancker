@@ -11,7 +11,7 @@
     content-class="custom-modal"
   >
     <template slot="modal-header">
-      <h3><i class="fas fa-user-graduate"></i> {{ $t("score") }}</h3>
+      <h3><i class="fas fa-rocket"></i> {{ $t("score") }}</h3>
     </template>
 
     <b-row>
@@ -96,42 +96,68 @@
           ></b-form-datepicker>
         </b-form-group>
       </b-col>
-      <!--score_type-->
+      <!--radio block-->
       <b-col lg="12" xl="12" md="12" sm="12">
-        <b-form-group
-          label="Section"
-        >
-          <b-form-radio
-            v-for="(item, index) in score_types"
-            :key="'score_type_'+index"
-            v-model="form.score_type"
-            name="group-section"
-            :value="item.name"
-          >
-            {{ item.name }}
-          </b-form-radio>
-        </b-form-group>
-      </b-col>
-      <!--on_going-->
-      <b-col lg="12" xl="12" md="12" sm="12">
-        <b-form-group
-          label="Section"
-        >
-          <b-form-radio
-            v-model="form.on_going"
-            name="on_going"
-            value="midterm"
-          >
-            Midterm
-          </b-form-radio>
-          <b-form-radio
-            v-model="form.on_going"
-            name="on_going"
-            value="final"
-          >
-            Final
-          </b-form-radio>
-        </b-form-group>
+        <b-row>
+          <!--score_type-->
+          <b-col lg="4" xl="4" md="12" sm="12">
+            <b-form-group
+              label="Section"
+            >
+              <b-form-radio
+                v-for="(item, index) in score_types"
+                :key="'score_type_'+index"
+                v-model="form.score_type"
+                name="group-section"
+                :value="item.name"
+              >
+                {{ item.name }}
+              </b-form-radio>
+            </b-form-group>
+          </b-col>
+          <!--on_going-->
+          <b-col lg="4" xl="4" md="12" sm="12">
+            <b-form-group
+              label="Section"
+            >
+              <b-form-radio
+                v-model="form.on_going"
+                name="on_going"
+                value="midterm"
+              >
+                Midterm
+              </b-form-radio>
+              <b-form-radio
+                v-model="form.on_going"
+                name="on_going"
+                value="final"
+              >
+                Final
+              </b-form-radio>
+            </b-form-group>
+          </b-col>
+          <!--is_close-->
+          <b-col lg="4" xl="4" md="12" sm="12">
+            <b-form-group
+              label="Is Close"
+            >
+              <b-form-radio
+                v-model="form.is_close"
+                name="is_close"
+                value="1"
+              >
+                ឈប់ទទួល
+              </b-form-radio>
+              <b-form-radio
+                v-model="form.is_close"
+                name="is_close"
+                value="0"
+              >
+                នៅទទួល
+              </b-form-radio>
+            </b-form-group>
+          </b-col>
+        </b-row>
       </b-col>
       <!--total_score-->
       <b-col cols="12">
@@ -271,7 +297,8 @@ export default {
         start_date: moment().format('YYYY-MM-DD'),
         end_date: moment().format('YYYY-MM-DD'),
         remark: null,
-        on_going: 'midterm'
+        on_going: 'midterm',
+        is_close: 0,
       },
       score_types: [
         {'name': 'lab'},
