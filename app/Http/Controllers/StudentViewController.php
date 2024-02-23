@@ -10,7 +10,7 @@ class StudentViewController extends Controller
     public function index(Request $request)
     {
         $group_name = $request->input('group_name');
-        if (strlen($group_name) > 7) {
+        if (strlen($group_name) > 10) {
             return view('errors.404');
         } else {
             $data = Student::listsByGroup($request)->get();
