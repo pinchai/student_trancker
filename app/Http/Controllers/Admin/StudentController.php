@@ -23,6 +23,22 @@ class StudentController extends Controller
     {
         $table_size = $request->input('table_size');
         $data = Student::lists($request)->paginate($table_size);
+        foreach($data->items() as $item){
+            $total_midterm = 0;
+            $total_final = 0;
+            foreach($item->score as $sc){
+                if ($sc->on_going == 'midterm'){
+                    $total_midterm+=$sc->score;
+                }
+                if ($sc->on_going == 'final'){
+                    $total_final+=$sc->score;
+                }
+            }
+            $item->total_midterm = $total_midterm;
+            $item->total_final = $total_final;
+        }
+
+
         $response = [
             'pagination' => [
                 'total' => $data->total(),

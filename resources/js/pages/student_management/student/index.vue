@@ -197,14 +197,22 @@
                 </span>
               </template>
               <template v-slot:cell(score)="row">
-                <span>
-                  <template v-if="sumScore(row.item.score) < 50">
-                    {{ $t('total_score') }}: {{ sumScore(row.item.score) | currencyFormat }}💸
-                  </template>
-                  <template v-else>
-                    {{ $t('total_score') }}: {{ sumScore(row.item.score) }}😎
-                  </template>
-                </span>
+                <b-badge variant="primary" style="font-size: 12px">
+                  MT: {{ (row.item.total_midterm) | currencyFormat }}
+                </b-badge>
+                <b-badge variant="secondary" style="font-size: 12px">
+                  FT: {{ (row.item.total_final) | currencyFormat }}
+                </b-badge>
+                <b-badge variant="danger" style="font-size: 12px">
+                  <span>
+                    <template v-if="sumScore(row.item.score) < 50">
+                      {{ $t('total_score') }}: {{ sumScore(row.item.score) | currencyFormat }}💸
+                    </template>
+                    <template v-else>
+                      {{ $t('total') }}: {{ sumScore(row.item.score) }}😎
+                    </template>
+                  </span>
+                </b-badge>
               </template>
               <template v-slot:cell(status)="row">
                 <b-badge
@@ -372,7 +380,7 @@ export default {
   data() {
     return {
       items: [],
-      export_excel:[],
+      export_excel: [],
       selectedItem: {},
       showDelete: true,
       showOverlay: false,
@@ -421,31 +429,36 @@ export default {
           key: "no",
           label: this.$t("no"),
           sortable: false,
-          show_sm: true
+          show_sm: true,
+          thStyle: {width: "3%"},
         },
         {
           key: "name",
           label: this.$t("name"),
           sortable: true,
-          show_sm: true
+          show_sm: true,
+          thStyle: {width: "8%"},
         },
         {
           key: "latin_name",
           label: this.$t("latin_name"),
           sortable: true,
-          show_sm: true
+          show_sm: true,
+          thStyle: {width: "8%"},
         },
         {
           key: "attendance",
           label: this.$t("attendance"),
           sortable: true,
-          show_sm: true
+          show_sm: true,
+          thStyle: {width: "8%"},
         },
         {
           key: "score",
           label: this.$t("score"),
           sortable: true,
-          show_sm: true
+          show_sm: true,
+          thStyle: {width: "20%"},
         },
         // {
         //   key: "gender",
@@ -457,7 +470,8 @@ export default {
           key: "group",
           label: this.$t("group"),
           sortable: true,
-          show_sm: true
+          show_sm: true,
+          thStyle: {width: "8%"},
         },
         // {
         //   key: "status",
@@ -469,7 +483,8 @@ export default {
           key: "created_at",
           label: this.$t("created_at"),
           sortable: true,
-          show_sm: true
+          show_sm: true,
+          thStyle: {width: "8%"},
         },
         {
           key: 'detail',
@@ -483,9 +498,9 @@ export default {
       })
       return data;
     },
-    selectedGroup(){
-      if (this.filter.group_selected.length > 0){
-        let current_group = this.groups.find(item=>{
+    selectedGroup() {
+      if (this.filter.group_selected.length > 0) {
+        let current_group = this.groups.find(item => {
           return item.id == this.filter.group_selected[0]
         })
         return current_group.name
@@ -515,16 +530,18 @@ export default {
       axios
         .post("/student/get", input)
         .then(function (response) {
-          response.data.data.forEach((item, index)=>{
+          response.data.data.forEach((item, index) => {
             //score
             let total_score = 0
-            item.score.forEach(obj=>{
-              total_score+=parseFloat(obj.score)
+            item.score.forEach(obj => {
+              total_score += parseFloat(obj.score)
             })
             vm.export_excel.push({
-              no: index+1,
+              no: index + 1,
               name: item.name,
               latin_name: item.latin_name,
+              total_midterm: item.total_midterm,
+              total_final: item.total_final,
               total_score: total_score,
             })
           })

@@ -91,42 +91,75 @@
           </b-select>
         </b-form-group>
       </b-col>
-      <!--section-->
+      <!--radio block-->
       <b-col lg="12" xl="12" md="12" sm="12">
-        <b-form-group
-          label="Section"
-        >
-          <b-form-radio
-            v-for="(item, index) in group_section"
-            :key="'group_section'+index"
-            v-model="form.section_id"
-            name="group-section"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </b-form-radio>
-        </b-form-group>
-      </b-col>
-      <!--on_going-->
-      <b-col lg="12" xl="12" md="12" sm="12">
-        <b-form-group
-          label="Section"
-        >
-          <b-form-radio
-            v-model="form.on_going"
-            name="on_going"
-            value="midterm"
-          >
-            Midterm
-          </b-form-radio>
-          <b-form-radio
-            v-model="form.on_going"
-            name="on_going"
-            value="final"
-          >
-            Final
-          </b-form-radio>
-        </b-form-group>
+        <b-row>
+          <!--on_going-->
+          <b-col lg="4" xl="4" md="12" sm="12">
+            <b-form-group
+              label="On Going"
+            >
+              <b-form-radio
+                v-model="form.on_going"
+                name="on_going"
+                value="midterm"
+              >
+                Midterm
+              </b-form-radio>
+              <b-form-radio
+                v-model="form.on_going"
+                name="on_going"
+                value="final"
+              >
+                Final
+              </b-form-radio>
+            </b-form-group>
+          </b-col>
+          <!--classing_type-->
+          <b-col lg="4" xl="4" md="12" sm="12">
+            <b-form-group
+              label="Classing Type"
+            >
+              <b-form-radio
+                v-model="form.classing_type"
+                name="group-section"
+                value="normal"
+              >
+                Normal
+              </b-form-radio>
+              <b-form-radio
+                v-model="form.classing_type"
+                name="group-section"
+                value="rep"
+              >
+                REPLACEMENT
+              </b-form-radio>
+              <b-form-radio
+                v-model="form.classing_type"
+                name="group-section"
+                value="to"
+              >
+                Take Over
+              </b-form-radio>
+            </b-form-group>
+          </b-col>
+          <!--section-->
+          <b-col lg="4" xl="4" md="12" sm="12">
+            <b-form-group
+              label="Section"
+            >
+              <b-form-radio
+                v-for="(item, index) in group_section"
+                :key="'group_section'+index"
+                v-model="form.section_id"
+                name="group-section"
+                :value="item.id"
+              >
+                {{ item.name }}
+              </b-form-radio>
+            </b-form-group>
+          </b-col>
+        </b-row>
       </b-col>
       <!--date time-->
       <b-col lg="12" xl="12" md="12" sm="12">
@@ -271,7 +304,8 @@ export default {
         date_time: moment().format('YYYY-MM-DD'),
         remark: null,
         section_id: null,
-        on_going: 'midterm'
+        on_going: 'midterm',
+        classing_type: null
       },
       url: null,
       imgUrl: "/images/classing/",
