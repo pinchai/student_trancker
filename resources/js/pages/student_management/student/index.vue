@@ -451,7 +451,7 @@ export default {
           label: this.$t("attendance"),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "20%"},
+          thStyle: {width: "30%"},
         },
         {
           key: "score",
