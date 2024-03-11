@@ -102,7 +102,7 @@
           <!--score_type-->
           <b-col lg="4" xl="4" md="12" sm="12">
             <b-form-group
-              label="Section"
+              label="Score Type"
             >
               <b-form-radio
                 v-for="(item, index) in score_types"
@@ -118,7 +118,7 @@
           <!--on_going-->
           <b-col lg="4" xl="4" md="12" sm="12">
             <b-form-group
-              label="Section"
+              label="On Going"
             >
               <b-form-radio
                 v-model="form.on_going"
@@ -292,12 +292,12 @@ export default {
       form: {
         id: null,
         group_id: null,
-        score_type: 'lab',
+        score_type: null,
         total_score: 0,
         start_date: moment().format('YYYY-MM-DD'),
         end_date: moment().format('YYYY-MM-DD'),
         remark: null,
-        on_going: 'midterm',
+        on_going: null,
         is_close: 0,
       },
       score_types: [

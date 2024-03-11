@@ -160,6 +160,7 @@ class ScoreController extends Controller
             'group_id' => 'required',
             'student_list' => 'required',
             'score_type' => 'required',
+            'on_going' => 'required',
         ]);
     }
 
