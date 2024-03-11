@@ -169,8 +169,10 @@ class ClassingController extends Controller
     public function checkValidation($data)
     {
         $this->validate($data, [
-            'group_id' => 'required',
+            'on_going' => 'required',
+            'classing_type' => 'required',
             'section_id' => 'required',
+            'group_id' => 'required',
             'student_list' => 'required',
             'remark' => 'required',
         ]);

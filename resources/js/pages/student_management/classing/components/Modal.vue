@@ -122,14 +122,14 @@
             >
               <b-form-radio
                 v-model="form.classing_type"
-                name="group-section"
+                name="classing_type"
                 value="normal"
               >
                 Normal
               </b-form-radio>
               <b-form-radio
                 v-model="form.classing_type"
-                name="group-section"
+                name="classing_type"
                 value="rep"
               >
                 REPLACEMENT
@@ -304,7 +304,7 @@ export default {
         date_time: moment().format('YYYY-MM-DD'),
         remark: null,
         section_id: null,
-        on_going: 'midterm',
+        on_going: null,
         classing_type: null
       },
       url: null,
