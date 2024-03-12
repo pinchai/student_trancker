@@ -391,12 +391,12 @@ export default {
       formItem: {},
       pagination: {
         current_page: 1,
-        per_page: 50,
+        per_page: 100,
         total: 0,
         to: 0,
         from: 0,
         last_page: 0,
-        table_size: 50
+        table_size: 100
       },
       filter: {
         warehouses: {},
