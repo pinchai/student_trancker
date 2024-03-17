@@ -376,6 +376,11 @@ export default {
       });
     },
     clearForm() {
+      let dig = confirm("Do Your want to close ?");
+      if (dig === false){
+        return;
+      }
+
       this.form = {};
 
       this.$nextTick(() => {
