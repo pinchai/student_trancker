@@ -234,6 +234,7 @@
                   required
                   :placeholder="$t('score')"
                   autocomplete="off"
+                  @change="something_change = true"
                 ></b-form-input>
               </b-td>
             </b-tr>
@@ -311,7 +312,8 @@ export default {
       listItems: {},
       student_list: [],
       group_section: null,
-      txt_src: null
+      txt_src: null,
+      something_change: false
     };
   },
   computed: {
@@ -340,7 +342,7 @@ export default {
         }
       },
       immediate: true
-    }
+    },
   },
   methods: {
     onSubmit() {
@@ -376,9 +378,11 @@ export default {
       });
     },
     clearForm() {
-      let dig = confirm("Do Your want to close ?");
-      if (dig === false){
-        return;
+      if (this.url == "/score/edit" && this.something_change == true) {
+        let dig = confirm("Do Your want to close ?");
+        if (dig === false) {
+          return;
+        }
       }
 
       this.form = {};
