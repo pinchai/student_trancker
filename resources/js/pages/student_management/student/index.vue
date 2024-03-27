@@ -180,12 +180,12 @@
               </template>
               <template v-slot:cell(name)="row">
                 <span
-                  :class="getAbsent(row.item.attendance).length >=3 ? 'text-danger bg-warning' : ''"
+                  :class="getAbsent(row.item.attendance).length >=6 ? 'text-danger bg-warning' : ''"
                 >{{ row.item.name }}</span>
-                <template v-if="getAbsent(row.item.attendance).length >=3">
+                <template v-if="getAbsent(row.item.attendance).length >=6">
                   <img src="/alert.gif" style="width: 20px; margin-top: -12px; margin-left: 1px">
                 </template>
-                <!-- {{ getAbsent(row.item.attendance).length >=3 ? '⚠️' : '' }}-->
+                <!-- {{ getAbsent(row.item.attendance).length >=6 ? '⚠️' : '' }}-->
               </template>
               <template v-slot:cell(attendance)="row">
                 <span class="text-primary">
