@@ -78,8 +78,8 @@ class StudentController extends Controller
             ->get();
         foreach ($data as $item) {
             $att = Attendance::getAttendanceByStudentID($item->student_id);
-            $item->total_absent = $att->total_absent;
-            $item->total_present = $att->total_present;
+            $item->total_absent = $att == null ? 0 : $att->total_absent;
+            $item->total_present = $att == null ? 0 : $att->total_present;
             $item->group_section = $group_section;
             $item->score = 0;
         }
