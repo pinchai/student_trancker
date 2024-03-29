@@ -220,7 +220,9 @@
               @click="rowClick(item)"
             >
               <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ index + 1 }}</b-td>
-              <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ item.name }}</b-td>
+              <b-td :class="item.score <= 0 ? 'bg-warning': ''">
+                {{ item.name }}
+              </b-td>
               <b-td>{{ item.latin_name }}</b-td>
               <b-td>
                 <b-form-input
@@ -236,6 +238,8 @@
                   autocomplete="off"
                   @change="something_change = true"
                 ></b-form-input>
+                <b class="mt-2 text-danger">ឈប់:{{ item.total_absent }}ដង</b> |
+                <span class="text-primary">មករៀន:{{ item.total_present }}ដង</span>
               </b-td>
             </b-tr>
           </b-tbody>
@@ -410,6 +414,7 @@ export default {
       }
       axios.post("/student/getByGroupId", input).then(function (response) {
         vm.student_list = response.data.data
+        console.log(vm.student_list)
         vm.group_section = response.data.data[0].group_section
 
       })

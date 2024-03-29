@@ -6,6 +6,7 @@ use App\Enums\IsCropImage;
 use App\Enums\IsHasThumbnail;
 use App\Http\Controllers\Controller;
 use App\Helpers\StringHelper;
+use App\Models\Attendance;
 use App\Models\Branch;
 use App\Models\ExpenseCategory;
 use App\Models\Section;
@@ -55,11 +56,13 @@ class StudentController extends Controller
         return response()->json($response, 200);
     }
 
+
     public function getByGroupId(Request $request)
     {
         $data = Student::join('group', 'student.group_id', 'group.id')
             ->select(
                 'student.*',
+                'student.id as student_id',
                 'group.name as group',
                 DB::raw("1 as 'checked'")
             )
@@ -74,6 +77,9 @@ class StudentController extends Controller
             )
             ->get();
         foreach ($data as $item) {
+            $att = Attendance::getAttendanceByStudentID($item->student_id);
+            $item->total_absent = $att->total_absent;
+            $item->total_present = $att->total_present;
             $item->group_section = $group_section;
             $item->score = 0;
         }
