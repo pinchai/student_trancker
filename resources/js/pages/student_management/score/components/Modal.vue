@@ -203,6 +203,7 @@
           hover
           caption-top
           responsive
+          striped
           :filter="txt_src"
         >
           <b-thead>
@@ -238,7 +239,12 @@
                   autocomplete="off"
                   @change="something_change = true"
                 ></b-form-input>
-                <b class="mt-2 text-danger">ឈប់:{{ item.total_absent }}ដង</b> |
+                <b
+                  class="mt-4"
+                  :class="item.total_absent > 0 ? 'text-danger' : 'text-success'"
+                >
+                  {{ item.total_absent == null ? 'សិស្សល្អ ⏰' : 'ឈប់: '+item.total_absent+'ដង' }}
+                </b> |
                 <span class="text-primary">មករៀន:{{ item.total_present }}ដង</span>
               </b-td>
             </b-tr>

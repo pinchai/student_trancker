@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attendance;
 use App\Models\Score;
 use App\Models\StudentScore;
 use Illuminate\Http\Request;
@@ -21,6 +22,21 @@ class ScoreController extends Controller
             $table_size = 10;
         }
         $data = Score::getList($request)->paginate($table_size);
+        foreach ($data->items() as $item){
+            foreach($item->studentScore as $student){
+                $att = Attendance::getAttendanceByStudentID($student->student_id);
+                $student->total_absent = $att->total_absent;
+                $student->total_present = $att->total_present;
+            }
+        }
+
+//        $itemsPaginated = $this->items()->paginate(15);
+//        $itemsPaginated = json_encode($itemsPaginated);
+//        foreach ($itemsPaginated->data as $key => $item) {
+//            $results->data[$key]; //Modify
+//        }
+//        $itemsPaginated = json_encode($results);
+
         $response = [
             'pagination' => [
                 'total' => $data->total(),

@@ -36,7 +36,6 @@ class Attendance extends Model
     public static function getAttendanceByStudentID($student_id){
         $data = Attendance::where('student_id', $student_id)
             ->select(
-                'attendance.*',
                 DB::raw("SUM(IF(checked = '0', 1, NULL)) AS total_absent"),
                 DB::raw("SUM(IF(checked = '1', 1, NULL)) AS total_present")
             )
