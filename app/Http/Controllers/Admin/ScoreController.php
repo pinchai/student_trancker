@@ -25,8 +25,8 @@ class ScoreController extends Controller
         foreach ($data->items() as $item){
             foreach($item->studentScore as $student){
                 $att = Attendance::getAttendanceByStudentID($student->student_id);
-                $student->total_absent = $att->total_absent;
-                $student->total_present = $att->total_present;
+                $student->total_absent = $att->total_absent == null ? 0 : $att->total_absent;
+                $student->total_present = $att->total_present == null ? 0 : $att->total_present;
             }
         }
 
