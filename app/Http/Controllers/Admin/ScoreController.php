@@ -135,6 +135,25 @@ class ScoreController extends Controller
         ], 200);
     }
 
+    //setScoreToAll
+    public function setScoreToAll(Request $request)
+    {
+//        $this->checkValidation($request);
+        DB::beginTransaction();
+
+        $res = StudentScore::where('score_id', $request->id)
+            ->update([
+                'score' => $request->total_score
+            ]);
+
+        DB::commit();
+        return response()->json([
+            'data' => [],
+            'success' => 1,
+            'message' => 'Your action has been completed successfully.'
+        ], 200);
+    }
+
     //updateStudentScore
     public function updateStudentScore(Request $request)
     {

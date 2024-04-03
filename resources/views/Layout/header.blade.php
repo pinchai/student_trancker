@@ -104,4 +104,8 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #0b650b;
   }
+
+  .img_loading {
+    border-radius: 10%;
+  }
 </style>

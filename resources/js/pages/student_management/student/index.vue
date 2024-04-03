@@ -23,7 +23,7 @@
       <b-card-header>
         <h1>{{ $t("student") }}</h1>
         <b-row>
-          <b-col cols="12" xl="6">
+          <b-col cols="8">
             <b-button
               variant="outline-secondary"
               @click="fetchRecord"
@@ -70,18 +70,9 @@
               <i class="fa fa-trash"></i>
               {{ $t("delete") }}
             </b-button>
-            <a href="/view?group_name=st8.9" target="_blank">
-              <b-button
-                variant="outline-primary"
-                class="mb-2"
-              >
-                <i class="fa fa-trash"></i>
-                Student View
-              </b-button>
-            </a>
             <export-excel
               class="btn btn-outline-dark"
-              style="cursor: pointer"
+              style="cursor: pointer; margin-top: -8px"
               :data="export_excel"
               name="student_score.xls"
               :title="selectedGroup"
@@ -89,8 +80,20 @@
             >
               Export Excel
             </export-excel>
+            <a
+              href="/view?group_name=st8.9"
+              target="_blank"
+            >
+              <b-button
+                style="margin-top: -8px"
+                variant="outline-primary"
+              >
+                <i class="fa fa-trash"></i>
+                Student View
+              </b-button>
+            </a>
           </b-col>
-          <b-col cols="6" md="5" lg="5" xl="5" class="mb-2">
+          <b-col cols="2">
             <b-input-group>
               <b-form-input
                 id="filter-input"
@@ -100,7 +103,7 @@
               ></b-form-input>
             </b-input-group>
           </b-col>
-          <b-col cols="3" md="2" lg="2" xl="1">
+          <b-col cols="2" md="2" lg="2" xl="1">
             <b-form-select
               v-model="pagination.table_size"
               @input="fetchRecord"

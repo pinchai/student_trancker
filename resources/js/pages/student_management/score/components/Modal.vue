@@ -178,6 +178,13 @@
             data-vv-name="total_score"
             :data-vv-as="$t('total_score')"
           ></b-form-input>
+          <a
+            href="#"
+            class="float-right"
+            @click="setToAll"
+          >
+            set to all
+          </a>
         </b-form-group>
       </b-col>
       <!--remark-->
@@ -430,6 +437,37 @@ export default {
     },
     rowClick(item) {
       item.checked = !item.checked
+    },
+    setToAll() {
+      this.$fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, set to all!",
+        allowOutsideClick: false,
+        allowEscapeKey: false
+      }).then(result => {
+        if (result.value) {
+          let vm = this;
+          let input = this.form
+          axios
+            .post("/score/setToAll", input)
+            .then(function (response) {
+              if (response.status == 200) {
+                vm.fetchRecord();
+                vm.$notify({
+                  group: "message",
+                  type: "success",
+                  title: vm.$t("branch"),
+                  text: vm.$t("done")
+                });
+              }
+            });
+        }
+      });
     },
   }
 };
