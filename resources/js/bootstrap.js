@@ -77,10 +77,10 @@ axios.interceptors.request.use(function (config) {
 
 
 axios.interceptors.response.use(function (response) {
-    // $.LoadingOverlay('hide');
+    $.LoadingOverlay('hide');
     return response;
 }, function (error) {
-    // $.LoadingOverlay('hide');
+    $.LoadingOverlay('hide');
     const {status} = error.response
     if (status === 422) {
         //general custom error from api
