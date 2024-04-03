@@ -36,17 +36,6 @@ axios.interceptors.request.use(function (config) {
     }
 
     if (loading) {
-        // Custom
-        var customElement = $("<div>", {
-            "css": {
-                "border": "4px dashed gold",
-                "font-size": "40px",
-                "text-align": "center",
-                "padding": "10px"
-            },
-            "class": "your-custom-class",
-            "text": "Custom!"
-        });
         $.LoadingOverlay("show", {
             image: "/cat.gif",
             imageAnimation: "0ms rotate_right",        // String/Boolean
