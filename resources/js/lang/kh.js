@@ -538,5 +538,7 @@ export default {
   total_score: "ពិន្ទុសរុប",
   score_type: "ប្រភេទពិន្ទុ",
   subject: "វគ្គសិក្សា",
+  color: "ពណ៌",
+  order_no: "លេខលំដាប់",
 
 };

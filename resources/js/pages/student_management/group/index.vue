@@ -93,13 +93,27 @@
               sticky-header='500px'
               small
             >
+              <template v-slot:cell(name)="row">
+                <span
+                  :style="'color: '+row.item.color"
+                >
+                  {{ row.item.name }}
+                </span>
+              </template>
+              <template v-slot:cell(order_no)="row">
+                <span
+                  :style="'color: '+row.item.color"
+                >
+                  {{ row.item.order_no }}
+                </span>
+              </template>
               <template v-slot:cell(section)="row">
                 <ul>
                   <li
                     v-for="(item, index) in row.item.section"
                     :key="'section_'+index"
                   >
-                    {{ item.name }}
+                    <span>{{ item.name }}</span>
                   </li>
                 </ul>
               </template>
@@ -172,6 +186,11 @@ export default {
           key: "section",
           label: this.$t("section"),
           sortable: true
+        },
+        {
+          key: "order_no",
+          label: this.$t("order_no"),
+          sortable: false
         },
         {
           key: "remark",
@@ -270,6 +289,7 @@ export default {
     },
     setInput(data) {
       this.items = data.data;
+      console.log(this.items)
       this.pagination.total = data.pagination.total;
       this.pagination.from = data.pagination.from;
       this.pagination.to = data.pagination.to;

@@ -120,6 +120,7 @@
           <b-col cols="12">
             <b-form-group>
               <b-form-checkbox-group
+                style="color: red"
                 @input="fetchRecord"
                 id="checkbox-group"
                 v-model="filter.group_selected"
@@ -212,7 +213,7 @@
                       {{ $t('total_score') }}: {{ sumScore(row.item.score) | currencyFormat }}💸
                     </template>
                     <template v-else>
-                      {{ $t('total') }}: {{ sumScore(row.item.score) }}😎
+                      {{ $t('total_score') }}: {{ sumScore(row.item.score) }}😎
                     </template>
                   </span>
                 </b-badge>

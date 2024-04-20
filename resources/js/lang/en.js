@@ -530,4 +530,6 @@ export default {
   total_score: "Total Score",
   score_type: "Score Type",
   subject: "Subject",
+  color: "color",
+  order_no: "Order No.",
 };

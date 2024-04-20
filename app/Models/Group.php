@@ -27,6 +27,7 @@ class Group extends Model
             ->with([
                 'section'
             ])
+            ->orderBy('order_no','desc')
             ->select('*');
     }
 

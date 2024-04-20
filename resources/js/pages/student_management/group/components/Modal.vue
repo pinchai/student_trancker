@@ -37,6 +37,48 @@
                                 ></b-form-input>
                             </b-form-group>
                         </b-col>
+                       <!--order_no-->
+                       <b-col cols="12">
+                         <b-form-group
+                           :label="$t('order_no')+ '*'"
+                           :invalid-feedback="veeErrors.first('name')"
+                           label-class="control-label"
+                           class="text-left"
+                         >
+                           <b-form-input
+                             autocomplete="off"
+                             v-model="form.order_no"
+                             type="number"
+                             :placeholder="$t('order_no')"
+                             @keydown.enter.prevent="onSubmit"
+                             v-validate="'required'"
+                             :state="veeErrors.has('order_no') ? false : null"
+                             data-vv-name="order_no"
+                             :data-vv-as="$t('order_no')"
+                           ></b-form-input>
+                         </b-form-group>
+                       </b-col>
+                       <!--color-->
+                       <b-col cols="12">
+                         <b-form-group
+                           :label="$t('color')+ '*'"
+                           :invalid-feedback="veeErrors.first('color')"
+                           label-class="control-label"
+                           class="text-left"
+                         >
+                           <b-form-input
+                             autocomplete="off"
+                             v-model="form.color"
+                             type="color"
+                             :placeholder="$t('color')"
+                             @keydown.enter.prevent="onSubmit"
+                             v-validate="'required'"
+                             :state="veeErrors.has('color') ? false : null"
+                             data-vv-name="color"
+                             :data-vv-as="$t('color')"
+                           ></b-form-input>
+                         </b-form-group>
+                       </b-col>
                         <!--remark-->
                         <b-col cols="12">
                             <b-form-group
@@ -89,6 +131,8 @@
                 form: {
                     id: null,
                     name: null,
+                    order_no: 0,
+                    color: '#217104',
                 },
                 url: null,
                 listItems: {}

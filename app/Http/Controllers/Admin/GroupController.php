@@ -68,6 +68,8 @@ class GroupController extends Controller
 
             $group  = new Group();
             $group->setData($request);
+            $group->order_no = $request->order_no;
+            $group->color = $request->color;
             if($group->save()){
                 $section = new Section();
                 $section_data = [
@@ -105,6 +107,7 @@ class GroupController extends Controller
             return response()->json(['success' => 0, 'message' => 'Insufficient permission.'], 403);
         }
     }
+
     //update
     public function update(Request $request)
     {
@@ -120,6 +123,8 @@ class GroupController extends Controller
 
             $group  = Group::find($request->input('id'));
             $group->setData($request);
+            $group->order_no = $request->order_no;
+            $group->color = $request->color;
             $group->save();
 
             DB::commit();
