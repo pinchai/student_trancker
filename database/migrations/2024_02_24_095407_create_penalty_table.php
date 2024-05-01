@@ -16,10 +16,10 @@ class CreatePenaltyTable extends Migration
         Schema::create('penalty', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('group_id');
-            $table->dateTime('session_date');
-            $table->string('type');
+            $table->dateTime('date');
+            $table->string('type')->comment('លេង Game, ពាក់កាស Original, ពាក់កាស Fake, រឡូរឡា');
             $table->integer('score');
+            $table->text('remark')->nullable();
             $table->timestamps();
         });
     }
