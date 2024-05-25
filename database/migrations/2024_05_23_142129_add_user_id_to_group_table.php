@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddClassingIdToAttendanceTable extends Migration
+class AddUserIdToGroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddClassingIdToAttendanceTable extends Migration
      */
     public function up()
     {
-        Schema::table('attendance', function (Blueprint $table) {
+        Schema::table('group', function (Blueprint $table) {
             //
-//            $table->unsignedBigInteger('classing_id')->after('id');
+            $table->unsignedBigInteger('user_id')->default(1);
         });
     }
 
@@ -26,9 +26,9 @@ class AddClassingIdToAttendanceTable extends Migration
      */
     public function down()
     {
-        Schema::table('attendance', function (Blueprint $table) {
+        Schema::table('group', function (Blueprint $table) {
             //
-            $table->dropColumn('classing_id');
+            $table->dropColumn('user_id');
         });
     }
 }

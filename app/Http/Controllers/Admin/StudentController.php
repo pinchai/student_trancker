@@ -23,7 +23,8 @@ class StudentController extends Controller
     public function get(Request $request)
     {
         $table_size = $request->input('table_size');
-        $data = Student::lists($request)->paginate($table_size);
+        $data = Student::lists($request)
+            ->paginate($table_size);
         foreach($data->items() as $item){
             $total_midterm = 0;
             $total_final = 0;
@@ -67,6 +68,7 @@ class StudentController extends Controller
                 DB::raw("1 as 'checked'")
             )
             ->where('group_id', $request->group_id)
+            ->where('student.user_id', auth()->user()->id)
             ->orderBy('student.latin_name', 'asc')
             ->get();
         $group_section = Section::where('group_id', $request->group_id)
@@ -96,6 +98,7 @@ class StudentController extends Controller
         ]);
 
         $dpl = Student::where('group_id', $request->group_id)
+            ->where('user_id', auth()->user()->id)
             ->first();
         if ($dpl != null) {
             return $this->responseCustomValidation([

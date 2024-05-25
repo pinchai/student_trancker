@@ -39,6 +39,7 @@ class Classing extends Model
                 $query->whereIn('classing.group_id', $group_selected);
             })
             ->where('classing.classing_type', 'Teaching')
+            ->where('group.user_id', auth()->user()->id)
             ->select(
                 'classing.*',
                 'group.name as group',

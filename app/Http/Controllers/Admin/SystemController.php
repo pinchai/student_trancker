@@ -39,7 +39,7 @@ class SystemController extends Controller
                 'default_table_size' => Setting::getSettingValueByKey('default_table_size'),
                 'default_sale_status' => Setting::getSettingValueByKey('sale_status'),
                 'position' => Position::select('*')->get(),
-                'group' => Group::lists()->get(),
+                'group' => Group::lists()->where('user_id', auth()->user()->id)->get(),
                 'version' => env('VERSION')
             ],
             'success' => 1,

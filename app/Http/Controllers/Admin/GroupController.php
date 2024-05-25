@@ -7,6 +7,7 @@ use App\Models\Group;
 use App\Models\Permission;
 use App\Models\Section;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,9 @@ class GroupController extends Controller
             $table_size = 10;
         }
 
-        $data = Group::lists()->paginate($table_size);
+        $data = Group::lists()
+            ->where('user_id', auth()->user()->id)
+            ->paginate($table_size);
 
         $response = [
             'pagination' => [

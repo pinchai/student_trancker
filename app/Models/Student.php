@@ -43,6 +43,7 @@ class Student extends Model
             ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
                 $query->whereIn('group.id', $group_selected);
             })
+            ->where('student.user_id', auth()->user()->id)
             ->select(
                 'student.*',
                 'group.name as group',

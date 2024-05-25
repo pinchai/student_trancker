@@ -35,6 +35,7 @@ class Score extends Model
             ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
                 $query->whereIn('score.group_id', $group_selected);
             })
+            ->where('group.user_id', auth()->user()->id)
             ->select(
                 'score.*',
                 'group.name as group',
