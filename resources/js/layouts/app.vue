@@ -41,7 +41,7 @@
                     <div class="footer-section f-section-1">
                         <p class="">
                             {{ $t("copy_right") }} © {{  currentYear  }}
-                            <a target="_blank" href="#">PP</a>,
+                            <a target="_blank" href="#">Zorin</a>,
                             {{ $t("all_rights_reserved") }}
                         </p>
                     </div>
