@@ -87,17 +87,16 @@
         </b-row>
         <!--group list-->
         <b-row>
-          <b-col cols="12">
+          <b-col cols="12 mb-lt-0 mt-sm-2">
             <b-form-group>
-              <b-form-checkbox-group
-                @input="fetchRecord"
-                id="checkbox-group"
-                v-model="filter.group_selected"
+              <v-select
+                multiple
                 :options="groups"
-                name="group"
-                value-field="id"
-                text-field="name"
-              ></b-form-checkbox-group>
+                v-model="filter.group_selected"
+                :reduce="(option) => option.id"
+                label="name"
+                @input="fetchRecord"
+              />
             </b-form-group>
           </b-col>
         </b-row>

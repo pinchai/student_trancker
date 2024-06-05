@@ -67,28 +67,19 @@
       <!--group-->
       <b-col lg="12" xl="12" md="12" sm="12">
         <b-form-group
-          :invalid-feedback="veeErrors.first('group_id')"
           :label="$t('group')"
           label-class="control-label"
           class="text-left"
         >
-          <b-select
-            v-validate="'required'"
-            :state="veeErrors.has('group_id') ? false : null"
-            data-vv-name="group_id"
-            :data-vv-as="$t('group')"
-            v-model="form.group_id"
-            @input="getStudent(form.group_id)"
-          >
-            <b-form-select-option value="null">{{ $t('group') }}</b-form-select-option>
-            <b-form-select-option
-              v-for="(item, index) in groups"
-              :key="'group_'+index"
-              :value="item.id"
-            >
-              {{ item.name }}
-            </b-form-select-option>
-          </b-select>
+          <b-form-group>
+            <v-select
+              :options="groups"
+              v-model="form.group_id"
+              :reduce="(option) => option.id"
+              label="name"
+              @input="getStudent(form.group_id)"
+            />
+          </b-form-group>
         </b-form-group>
       </b-col>
       <!--radio block-->

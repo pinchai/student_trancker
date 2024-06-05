@@ -12,7 +12,7 @@
 
     <b-card no-body class="card-table">
       <b-card-header>
-        <h1>{{ $t("classing") }}</h1>
+        <h1>{{ $t("attendance") }}</h1>
         <b-row>
           <b-col cols="12" xl="6">
             <b-button
@@ -53,7 +53,7 @@
               {{ $t("delete") }}
             </b-button>
           </b-col>
-          <b-col cols="6" md="5" lg="5" xl="5" class="mb-2">
+          <b-col sm="12" md="5" lg="5" xl="5" class="mb-2 mb-lg-0 mb-sm-2">
             <b-input-group>
               <b-form-input
                 id="filter-input"
@@ -63,7 +63,7 @@
               ></b-form-input>
             </b-input-group>
           </b-col>
-          <b-col cols="3" md="2" lg="2" xl="1">
+          <b-col sm="12" md="2" lg="2" xl="1">
             <b-form-select
               v-model="pagination.table_size"
               @input="fetchRecord"
@@ -77,17 +77,16 @@
         </b-row>
         <!--group list-->
         <b-row>
-          <b-col cols="12">
+          <b-col cols="12 mb-lt-0 mt-sm-2">
             <b-form-group>
-              <b-form-checkbox-group
-                @input="fetchRecord"
-                id="checkbox-group"
-                v-model="filter.group_selected"
+              <v-select
+                multiple
                 :options="groups"
-                name="group"
-                value-field="id"
-                text-field="name"
-              ></b-form-checkbox-group>
+                v-model="filter.group_selected"
+                :reduce="(option) => option.id"
+                label="name"
+                @input="fetchRecord"
+              />
             </b-form-group>
           </b-col>
         </b-row>
@@ -231,6 +230,13 @@ export default {
         txt_src: null,
         group_selected: []
       },
+      data_:{
+        country: 'canada',
+        meta: {
+          code: 'ca',
+          provinces: []
+        }
+      }
     };
   },
   components: {

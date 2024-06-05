@@ -98,6 +98,10 @@ Vue.use(VueFormulate)
 import excel from 'vue-excel-export'
 Vue.use(excel)
 
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
+import 'vue-select/dist/vue-select.css';
+
 import Cookies from 'js-cookie'
 
 const app = new Vue({
