@@ -58,6 +58,7 @@ class GroupController extends Controller
             /** check validation */
             $this->checkValidation($request);
             $dpl = Group::where('name', $request->name)
+                ->where('user_id', auth()->user()->id)
                 ->first();
             if ($dpl != null) {
                 return $this->responseCustomValidation([
