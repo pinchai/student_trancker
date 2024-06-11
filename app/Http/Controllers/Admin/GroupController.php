@@ -73,6 +73,7 @@ class GroupController extends Controller
             $group->setData($request);
             $group->order_no = $request->order_no;
             $group->color = $request->color;
+            $group->user_id = auth()->user()->id;
             if($group->save()){
                 $section = new Section();
                 $section_data = [

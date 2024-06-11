@@ -114,7 +114,7 @@ class StudentController extends Controller
             $data = [
                 'name' => $item->name,
                 'latin_name' => $item->latin_name,
-                'gender' => $item->gender,
+                'gender' => $item->gender ?? 'male',
                 'phone' => '0000000000',
                 'address' => null,
                 'position_id' => 1,
@@ -124,6 +124,7 @@ class StudentController extends Controller
             ];
             $student = new Student();
             $student->setData($data);
+            $student->user_id = auth()->user()->id;
             $student->save();
         }
 
@@ -144,6 +145,7 @@ class StudentController extends Controller
 
         $student = new Student();
         $student->setData($request);
+        $student->user_id = auth()->user()->id;
         if ($student->save()) {
             $image = $request->file('cropped_logo');
             if ($image) {
