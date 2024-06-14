@@ -34,7 +34,7 @@
               <div class="widget-heading">
                 <i class="fas fa-table text-success" style="font-size:50px"></i>
                 <p class="w-value">{{ items.total_classing }}</p>
-                <h5 class="">Total Classing</h5>
+                <h5 class="">Total Classing This month</h5>
               </div>
             </div>
           </div>

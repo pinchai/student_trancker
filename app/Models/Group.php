@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Haruncpi\LaravelUserActivity\Traits\Loggable;
+use Illuminate\Support\Facades\DB;
 
 class Group extends Model
 {
@@ -21,17 +22,19 @@ class Group extends Model
 
     protected $table = self::TABLE_NAME;
 
-    public static function lists(){
+    public static function lists()
+    {
         return self::orderByRaw("CAST(name as UNSIGNED) ASC")
 //            ->orderBy('name', 'ASC')
             ->with([
                 'section'
             ])
-            ->orderBy('order_no','desc')
+            ->orderBy('order_no', 'desc')
             ->select('*');
     }
 
-    public static function comboList(){
+    public static function comboList()
+    {
         return self::orderBy('id', 'desc')->get();
     }
 
@@ -45,6 +48,23 @@ class Group extends Model
     {
         return $this->hasMany('App\Models\Section', 'group_id', 'id')
             ->select('*');
+    }
+
+    public static function countStudent()
+    {
+        $count = DB::SELECT("SELECT
+                student.group_id as 'group_id',
+                `group`.`name` as 'group_name',
+                COUNT(student.`name`) as 'total_student'
+            FROM
+                student
+                INNER JOIN `group` ON student.group_id = `group`.id
+                WHERE `group`.user_id = :user_id
+                GROUP BY student.group_id
+                ORDER BY COUNT(student.`name`) DESC
+            
+        ", ['user_id'=>auth()->user()->id]);
+        return $count;
     }
 
 }
