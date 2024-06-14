@@ -48,6 +48,21 @@
               </div>
             </div>
           </div>
+
+          <div class="col-7">
+            <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
+              <div class="widget-heading">
+                <h4>ចំនួនសិស្សតាមថ្នាក់</h4>
+                <hr>
+              </div>
+              <apexchart
+                height="290"
+                type="bar"
+                :options="columnChartProductBestSale.chartOptions"
+                :series="columnChartProductBestSale.series"
+              ></apexchart>
+            </div>
+          </div>
         </div>
       </div>
     </template>
@@ -239,10 +254,23 @@ export default {
         .post("/dashboard/get", {loading: loading})
         .then(function (response) {
           vm.items = response.data.data;
+          //get product best_sale
+          vm.setCountStudentByGroup(response.data.data.total_student_by_group);
         })
         .catch(function (error) {
           console.log(error);
         });
+    },
+    setCountStudentByGroup(item) {
+      this.columnChartProductBestSale.series[0].data = [];
+      this.columnChartProductBestSale.chartOptions.xaxis.categories = [];
+
+      item.forEach(obj=>{
+        this.columnChartProductBestSale.series[0].name = obj.group_name;
+        this.columnChartProductBestSale.series[0].data.push(obj.total_student);
+        this.columnChartProductBestSale.chartOptions.xaxis.categories.push(obj.group_name);
+      })
+
     },
   }
 };
