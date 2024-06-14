@@ -49,7 +49,7 @@
             </div>
           </div>
 
-          <div class="col-7">
+          <div class="col-12">
             <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
               <div class="widget-heading">
                 <h4>ចំនួនសិស្សតាមថ្នាក់</h4>
