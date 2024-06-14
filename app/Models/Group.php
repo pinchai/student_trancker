@@ -60,6 +60,7 @@ class Group extends Model
                 student
                 INNER JOIN `group` ON student.group_id = `group`.id
                 WHERE `group`.user_id = :user_id
+                AND `group`.deleted_at IS NULL
                 GROUP BY student.group_id
                 ORDER BY COUNT(student.`name`) DESC
             
