@@ -93,4 +93,20 @@ class Student extends Model
         return $data;
     }
 
+    public static function getDetailByID($id){
+        $data = Student::join('group', 'student.group_id', 'group.id')
+            ->with([
+                'attendance',
+                'score'
+            ])
+            ->where('student.id', $id)
+            ->select(
+                'student.*',
+                'group.name as group',
+            )
+            ->first();
+
+        return $data;
+    }
+
 }

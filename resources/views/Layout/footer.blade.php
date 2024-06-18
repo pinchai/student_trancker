@@ -11,6 +11,10 @@
 {{--<script src="{{ asset('js/app.js')}} "></script>--}}
 <script src="{{ asset('js/main/app.js') }}"></script>
 
+<!-- 2. Link VCalendar Javascript (Plugin automatically installed) -->
+{{--<script src='https://unpkg.com/v-calendar'></script>--}}
+<script src='{{ asset('plugins/vCalendar.js')  }}'></script>
+
 {{-- PWA --}}
 <script src="{{ asset('/sw.js') }}"></script>
 <script type="text/javascript">

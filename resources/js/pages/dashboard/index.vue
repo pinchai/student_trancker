@@ -49,7 +49,8 @@
             </div>
           </div>
 
-          <div class="col-12">
+          <!--count student by group-->
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
             <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
               <div class="widget-heading">
                 <h4>ចំនួនសិស្សតាមថ្នាក់</h4>
@@ -58,9 +59,45 @@
               <apexchart
                 height="290"
                 type="bar"
-                :options="columnChartProductBestSale.chartOptions"
-                :series="columnChartProductBestSale.series"
+                :options="columnChartCountStudentByGroup.chartOptions"
+                :series="columnChartCountStudentByGroup.series"
               ></apexchart>
+            </div>
+          </div>
+
+          <!--Calendar-->
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
+              <div class="widget-heading" style="height: 405px">
+                <h4>Calendar</h4>
+                <hr>
+                <v-calendar
+                  :columns="$screens({ default: 1, lg: 1 })"
+                  :rows="$screens({ default: 1, lg: 1 })"
+                  :is-expanded="$screens({ default: true, lg: 1 })"
+                  title-position="right"
+                  :attributes="calendar_attributes"
+                  @dayclick="onDayClickHandler"
+                />
+                <b-alert
+                  :show="todayClickedEventShow == true"
+                  dismissible
+                  class="mt-2"
+                >
+                  <ul>
+                    <li
+                      v-for="(item,index) in todayClickedEvent"
+                      :key="'todayClickedEvent_'+index"
+                    >
+                      <strong>{{ item }}</strong>
+                      <b-badge variant="primary">Meeting ☕️</b-badge>
+                      <b-badge variant="secondary">Pending Approve 😅</b-badge>
+                      <b-badge variant="success">Completed ✅</b-badge>
+                      <b-badge variant="danger">Cancel ❌</b-badge>
+                    </li>
+                  </ul>
+                </b-alert>
+              </div>
             </div>
           </div>
         </div>
@@ -70,16 +107,14 @@
 </template>
 
 <script>
+
 import {mapGetters} from "vuex";
-import moment from "moment";
-import store from "../../store";
-import Swal from "sweetalert2";
-import {currencyFormat} from "../../plugins/utils/string";
 
 export default {
   moduleKey: "dashboard",
   data() {
     return {
+      showDate: new Date(),
       items: null,
       columnChart: {
         series: [
@@ -105,7 +140,7 @@ export default {
               colors: ['#3b3636']
             },
             textAnchor: 'start',
-            formatter: function(val, opt) {
+            formatter: function (val, opt) {
               return `$` + val.toLocaleString()
             },
           },
@@ -129,7 +164,7 @@ export default {
           // ]
         }
       },
-      columnChartProductBestSale: {
+      columnChartCountStudentByGroup: {
         series: [
           {
             data: []
@@ -170,60 +205,15 @@ export default {
           // ]
         }
       },
-      showLastSaleChart: false,
-      showProductBestSaleChart: false,
-      pieChartMostSaleCategory: {
-        series: [],
-        chartOptions: {
-          chart: {
-            width: 400,
-            type: "donut"
-          },
-          labels: [],
-          responsive: [
-            {
-              breakpoint: 1880,
-              options: {
-                chart: {
-                  width: 400
-                },
-                legend: {
-                  position: "bottom"
-                }
-              }
-            }
-          ]
-        }
-      },
-      showPieChartMostSaleCategory: false,
-      pieChartAgencyByMostSale: {
-        series: [],
-        chartOptions: {
-          chart: {
-            width: 400,
-            type: "donut"
-          },
-          labels: [],
-          responsive: [
-            {
-              breakpoint: 1880,
-              options: {
-                chart: {
-                  width: 400
-                },
-                legend: {
-                  position: "bottom"
-                }
-              }
-            }
-          ]
-        }
-      },
-      showPieChartAgencyByMostSale: false,
-      annual_leave: [],
+      calendar_attributes: [],
+      todayClickedEvent: [],
+      todayClickedEventShow: false,
+      attendance: []
     };
   },
-  created() {},
+  components: {},
+  created() {
+  },
   computed: {
     ...mapGetters({
       currencies: "getCurrency",
@@ -231,13 +221,6 @@ export default {
       brand: "getBrand",
       default_currency: 'getDefaultCurrency',
     }),
-    totalLeave(){
-      let total_leave = 0
-      this.annual_leave.forEach(item=>{
-        total_leave += parseFloat(item.total_duration)
-      })
-      return total_leave
-    }
   },
   watch: {
     "$i18n.locale": {
@@ -248,6 +231,16 @@ export default {
     }
   },
   methods: {
+    onDayClickHandler(e) {
+      let popover = e.popovers[0]
+      if (popover != undefined) {
+        this.todayClickedEventShow = !(this.todayClickedEventShow)
+        this.todayClickedEvent = (popover.label).split(' | ')
+      }
+    },
+    setShowDate(d) {
+      this.showDate = d;
+    },
     getDashboardData(loading = true) {
       let vm = this;
       axios
@@ -256,22 +249,46 @@ export default {
           vm.items = response.data.data;
           //get product best_sale
           vm.setCountStudentByGroup(response.data.data.total_student_by_group);
+          vm.attendance = response.data.data.student.attendance
+          vm.setAttributeCalendar(vm.attendance)
         })
         .catch(function (error) {
           console.log(error);
         });
     },
     setCountStudentByGroup(item) {
-      this.columnChartProductBestSale.series[0].data = [];
-      this.columnChartProductBestSale.chartOptions.xaxis.categories = [];
+      this.columnChartCountStudentByGroup.series[0].data = [];
+      this.columnChartCountStudentByGroup.chartOptions.xaxis.categories = [];
 
-      item.forEach(obj=>{
-        this.columnChartProductBestSale.series[0].name = obj.group_name;
-        this.columnChartProductBestSale.series[0].data.push(obj.total_student);
-        this.columnChartProductBestSale.chartOptions.xaxis.categories.push(obj.group_name);
+      item.forEach(obj => {
+        this.columnChartCountStudentByGroup.series[0].name = obj.group_name;
+        this.columnChartCountStudentByGroup.series[0].data.push(obj.total_student);
+        this.columnChartCountStudentByGroup.chartOptions.xaxis.categories.push(obj.group_name);
       })
 
     },
+    setAttributeCalendar(attendance) {
+      let vm = this
+      attendance.forEach(obj => {
+        let dt = new Date(obj.classing_date)
+        let att = {
+          highlight: {
+            color: obj.checked == 1 ? 'green' : 'red',
+            fillMode: 'outline',
+          },
+          popover: {
+            label: obj.on_going,
+            visibility: 'click',
+            transition: 'slide-fade',
+          },
+          dates: [],
+        }
+        att.dates.push(
+          new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()),
+        )
+        vm.calendar_attributes.push(att)
+      })
+    }
   }
 };
 </script>
@@ -281,6 +298,7 @@ i {
   font-size: 18px;
   padding: 5px;
 }
+
 .shake:hover {
   /* Start the shake animation and make the animation last for 0.5 seconds */
   animation: shake 1s;
@@ -288,6 +306,7 @@ i {
   /* When the animation is finished, start again */
   animation-iteration-count: infinite;
 }
+
 @keyframes shake {
   0% {
     transform: translate(1px, 1px) rotate(0deg);
