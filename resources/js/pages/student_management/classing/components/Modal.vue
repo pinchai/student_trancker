@@ -209,28 +209,39 @@
               <b-th>No.</b-th>
               <b-th>Name</b-th>
               <b-th>Latin Name</b-th>
-              <b-th>Check</b-th>
+              <b-th>Status</b-th>
             </b-tr>
           </b-thead>
           <b-tbody>
             <b-tr
               v-for="(item, index) in student_list"
               :key="'student_'+index"
-              @click="rowClick(item)"
             >
-              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
-              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.name }}</b-td>
-              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.latin_name }}</b-td>
-              <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+              <b-td :class="getBgColor(item.checked)">{{ index + 1 }}</b-td>
+              <b-td :class="getBgColor(item.checked)">
+                <b-button variant="primary" size="sm" @click="rowClick(item, 1)">មក</b-button>
+                <b-button variant="danger" size="sm" @click="rowClick(item, 0)">មិនមក</b-button>
+                <b-button variant="warning" size="sm" class="text-dark" @click="rowClick(item, 2)">ច្បាប់</b-button>
+                {{ item.name }}
+              </b-td>
+              <b-td :class="getBgColor(item.checked)">
+                {{ item.latin_name }}
+              </b-td>
+              <b-td :class="getBgColor(item.checked)">
                 <i
                   v-if="item.checked == 1"
                   class="fas fa-check-circle"
                   style="font-size: 20px; color: blue"
                 ></i>
                 <i
-                  v-else
+                  v-if="item.checked == 0"
                   class="fas fa-times-circle"
                   style="font-size: 20px;"
+                ></i>
+                <i
+                  v-if="item.checked == 2"
+                  class="fas fa-user-injured"
+                  style="font-size: 20px;color: deeppink"
                 ></i>
               </b-td>
             </b-tr>
@@ -400,9 +411,27 @@ export default {
           console.log(error);
         });
     },
-    rowClick(item) {
-      item.checked = !item.checked
+    rowClick(item, status) {
+      item.checked = status
     },
+    getBgColor(checked){
+      let color = ''
+      //absent
+      if (checked == 0){
+        color = 'bg-danger text-warning'
+      }
+
+      //present
+      if (checked == 1){
+        color = ''
+      }
+
+      //permission
+      if (checked == 2){
+        color = 'bg-warning text-dark'
+      }
+      return color
+    }
   }
 };
 </script>
