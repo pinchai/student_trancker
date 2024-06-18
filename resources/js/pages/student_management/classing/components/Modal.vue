@@ -219,9 +219,9 @@
             >
               <b-td :class="getBgColor(item.checked)">{{ index + 1 }}</b-td>
               <b-td :class="getBgColor(item.checked)">
-                <b-button variant="primary" size="sm" @click="rowClick(item, 1)">មក</b-button>
-                <b-button variant="danger" size="sm" @click="rowClick(item, 0)">មិនមក</b-button>
-                <b-button variant="warning" size="sm" class="text-dark" @click="rowClick(item, 2)">ច្បាប់</b-button>
+                <b-button v-if="item.checked != 1" variant="primary" size="sm" @click="rowClick(item, 1)">មក</b-button>
+                <b-button v-if="item.checked != 0" variant="danger" size="sm" @click="rowClick(item, 0)">មិនមក</b-button>
+                <b-button v-if="item.checked != 2" variant="warning" size="sm" class="text-dark" @click="rowClick(item, 2)">ច្បាប់</b-button>
                 {{ item.name }}
               </b-td>
               <b-td :class="getBgColor(item.checked)">
