@@ -141,7 +141,7 @@ export default {
           label: "attendance",
           icon: "fas fa-skull",
           to: "/student_management/classing",
-          key: "classing",
+          key: "attendance",
           active: false
         },
         {

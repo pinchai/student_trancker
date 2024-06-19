@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\StringHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use App\Models\CustomUserModulePermission;
 use App\Models\Enum;
 use App\Models\Group;
@@ -40,7 +41,8 @@ class SystemController extends Controller
                 'default_sale_status' => Setting::getSettingValueByKey('sale_status'),
                 'position' => Position::select('*')->get(),
                 'group' => Group::lists()->where('user_id', auth()->user()->id)->get(),
-                'version' => env('VERSION')
+                'version' => env('VERSION'),
+                'branch' => Branch::all()
             ],
             'success' => 1,
             'message' => 'Your action has been completed successfully.',

@@ -35,6 +35,13 @@
                                 <strong>❌ ឈប់{{ $item->total_absent }}ដង</strong>
                                 <br>
                                 {{ $item->total_score }}ពិន្ទុ
+                                <br>
+                                <br>
+                                <a
+                                        href="/request_permission?id={{ $item->id }}"
+                                >
+                                    ➡️ Request Permission
+                                </a>
                             </center>
                         </div>
                         <div class="card-footer">

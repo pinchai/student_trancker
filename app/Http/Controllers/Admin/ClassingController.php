@@ -17,7 +17,7 @@ use Log;
 
 class ClassingController extends Controller
 {
-    const MODULE_KEY = 'classing';
+    const MODULE_KEY = 'attendance';
 
     public function get(Request $request)
     {

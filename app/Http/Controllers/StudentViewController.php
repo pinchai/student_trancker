@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RequestPermission;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -36,5 +37,30 @@ class StudentViewController extends Controller
             }
             return view('StudentView', ['data' => $data, 'group'=>$group_name]);
         }
+    }
+
+    public function request_permission(Request $request)
+    {
+        $id = intval($request->query('id'));
+        $student = Student::getDetailByID($id);
+        return view('RequestPermission', ['student' => $student]);
+    }
+
+    public function submit_permission(Request $request){
+        $validated = $request->validate([
+            'date' => ['required'],
+            'reason' => ['required'],
+            'student_id' => ['required'],
+        ]);
+        $rq = new RequestPermission();
+        $rq->date = $request->date;
+        $rq->student_id = $request->student_id;
+        $rq->reason = $request->reason;
+        $rq->referent_url = $request->referent_url;
+        $rq->save();
+
+        $student = Student::getDetailByID($rq->student_id);
+        $url = 'request_permission?id='.$rq->student_id;
+        return redirect($url)->with('status','Your permission has been applies 🍻🍾🥜');
     }
 }

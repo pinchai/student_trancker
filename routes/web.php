@@ -38,6 +38,10 @@ Route::middleware('auth')->group(function () {
 //Front block
 Route::get('/view', 'App\Http\Controllers\StudentViewController@index')
     ->name('student_view');
+Route::get('/request_permission', 'App\Http\Controllers\StudentViewController@request_permission')
+    ->name('request_permission');
+Route::post('/submit_permission', 'App\Http\Controllers\StudentViewController@submit_permission')
+    ->name('submit_permission');
 
 Route::get('/{vue_capture}', function () {
     return view('pages.welcome');

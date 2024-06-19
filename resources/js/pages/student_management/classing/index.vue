@@ -206,7 +206,7 @@
 import {mapGetters} from "vuex";
 
 export default {
-  moduleKey: "classing",
+  moduleKey: "attendance",
   data() {
     return {
       items: [],
