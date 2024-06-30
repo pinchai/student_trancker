@@ -38,7 +38,7 @@ class Classing extends Model
             ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
                 $query->whereIn('classing.group_id', $group_selected);
             })
-            ->where('classing.classing_type', 'Teaching')
+            //->where('classing.classing_type', 'Teaching')
             ->where('group.user_id', auth()->user()->id)
             ->select(
                 'classing.*',

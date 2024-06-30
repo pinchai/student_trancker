@@ -65,12 +65,13 @@ class ClassingController extends Controller
         $classing_data = [
             'group_id'=>$request->group_id,
             'section_id'=>$request->section_id,
-            'classing_type'=>'Teaching',
+            'classing_type'=>$request->classing_type,
             'date_time'=>$request->date_time,
             'remark'=>$request->remark,
         ];
         $classing->setData($classing_data);
         $classing->on_going = $request->on_going;
+        $classing->duration = $request->duration;
         if ($classing->save()) {
             $image_one = $request->file('image_one');
             if ($image_one) {
@@ -118,13 +119,14 @@ class ClassingController extends Controller
         $classing = Classing::find($request->id);
         $classing_data = [
             'section_id'=>$request->section_id,
-            'classing_type'=>'Teaching',
+            'classing_type'=>$request->classing_type,
             'group_id'=>$request->group_id,
             'date_time'=>$request->date_time,
             'remark'=>$request->remark,
         ];
         $classing->setData($classing_data);
         $classing->on_going = $request->on_going;
+        $classing->duration = $request->duration;
         $classing->save();
 
         Attendance::where('classing_id', $request->id)->forceDelete();

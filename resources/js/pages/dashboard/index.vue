@@ -65,6 +65,22 @@
             </div>
           </div>
 
+          <!--count time by group-->
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
+              <div class="widget-heading">
+                <h4>ចំនួនម៉ោងដែលបានបង្រៀនតាមក្រុមនីមួយៗ</h4>
+                <hr>
+              </div>
+              <apexchart
+                height="290"
+                type="bar"
+                :options="columnChartCountTimeByGroup.chartOptions"
+                :series="columnChartCountTimeByGroup.series"
+              ></apexchart>
+            </div>
+          </div>
+
           <!--Calendar-->
           <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
             <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
@@ -205,6 +221,49 @@ export default {
           // ]
         }
       },
+      columnChartCountTimeByGroup: {
+        series: [
+          {
+            name: 'series-1',
+            data: []
+          }
+        ],
+        chartOptions: {
+          chart: {
+            height: 350,
+            type: "bar",
+          },
+          plotOptions: {
+            bar: {
+              columnWidth: "45%",
+              distributed: true
+            }
+          },
+          dataLabels: {
+            //enabled: false,
+            enabled: true,
+            style: {
+              colors: ['#3b3636']
+            },
+          },
+          legend: {
+            show: false
+          },
+          xaxis: {
+            categories: [],
+            labels: {
+              style: {
+                fontSize: "12px"
+              }
+            }
+          },
+          colors: [
+            `${"#"+Math.floor(Math.random() * 0x1000000).toString(16)}`,
+            `${"#"+Math.floor(Math.random() * 0x1000000).toString(16)}`,
+            `${"#"+Math.floor(Math.random() * 0x1000000).toString(16)}`,
+          ]
+        }
+      },
       calendar_attributes: [],
       todayClickedEvent: [],
       todayClickedEventShow: false,
@@ -249,6 +308,7 @@ export default {
           vm.items = response.data.data;
           //get product best_sale
           vm.setCountStudentByGroup(response.data.data.total_student_by_group);
+          vm.setCountTimeByGroup(response.data.data.total_time_by_group);
           vm.attendance = response.data.data.student.attendance
           vm.setAttributeCalendar(vm.attendance)
         })
@@ -264,6 +324,17 @@ export default {
         this.columnChartCountStudentByGroup.series[0].name = obj.group_name;
         this.columnChartCountStudentByGroup.series[0].data.push(obj.total_student);
         this.columnChartCountStudentByGroup.chartOptions.xaxis.categories.push(obj.group_name);
+      })
+
+    },
+    setCountTimeByGroup(item) {
+      this.columnChartCountTimeByGroup.series[0].data = [];
+      this.columnChartCountTimeByGroup.chartOptions.xaxis.categories = [];
+
+      item.forEach(obj => {
+        this.columnChartCountTimeByGroup.series[0].name = obj.group_name;
+        this.columnChartCountTimeByGroup.series[0].data.push(obj.total_time);
+        this.columnChartCountTimeByGroup.chartOptions.xaxis.categories.push(obj.group_name);
       })
 
     },

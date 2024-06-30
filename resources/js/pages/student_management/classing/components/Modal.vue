@@ -127,7 +127,7 @@
               </b-form-radio>
               <b-form-radio
                 v-model="form.classing_type"
-                name="group-section"
+                name="classing_type"
                 value="to"
               >
                 Take Over
@@ -154,30 +154,54 @@
       </b-col>
       <!--date time-->
       <b-col lg="12" xl="12" md="12" sm="12">
-        <b-form-group
-          size="sm"
-          :invalid-feedback="veeErrors.first('date')"
-          :state="veeErrors.has('date') ? false : null"
-          :label="$t('date') + ' *'"
-          label-class="control-label"
-          class="text-left"
-        >
-          <b-form-datepicker
-            reset-button
-            close-button
-            today-button
-            locale='en'
-            required
-            size='sm'
-            hide-header
-            v-model='form.date_time'
-            :date-format-options="{year: 'numeric',month: 'short',day: '2-digit'}"
-            v-validate="'required'"
-            :state="veeErrors.has('date') ? false : null"
-            :data-vv-name="'date'"
-            :data-vv-as="$t('date')"
-          ></b-form-datepicker>
-        </b-form-group>
+        <b-row>
+          <b-col cols="6">
+            <b-form-group
+              size="sm"
+              :invalid-feedback="veeErrors.first('date')"
+              :state="veeErrors.has('date') ? false : null"
+              :label="$t('date') + ' *'"
+              label-class="control-label"
+              class="text-left"
+            >
+              <b-form-datepicker
+                reset-button
+                close-button
+                today-button
+                locale='en'
+                required
+                size='sm'
+                hide-header
+                v-model='form.date_time'
+                :date-format-options="{year: 'numeric',month: 'short',day: '2-digit'}"
+                v-validate="'required'"
+                :state="veeErrors.has('date') ? false : null"
+                :data-vv-name="'date'"
+                :data-vv-as="$t('date')"
+              ></b-form-datepicker>
+            </b-form-group>
+          </b-col>
+          <b-col cols="6">
+            <b-form-group
+              :invalid-feedback="veeErrors.first('duration')"
+              :label="$t('duration') + ' *'"
+              label-class="control-label"
+              class="text-left w-100"
+            >
+              <b-select
+                v-model="form.duration"
+                v-validate="'required'"
+                :state="veeErrors.has('duration') ? false : null"
+                data-vv-name="duration"
+                :data-vv-as="$t('duration')"
+              >
+                <b-form-select-option :value="null">{{ $t('select') }}{{ $t('duration') }}</b-form-select-option>
+                <b-form-select-option :value="1">1 ម៉ោង</b-form-select-option>
+                <b-form-select-option :value="1.5">1.5 ម៉ោង</b-form-select-option>
+              </b-select>
+            </b-form-group>
+          </b-col>
+        </b-row>
       </b-col>
       <!--remark-->
       <b-col lg="12" xl="12" md="12" sm="12">
@@ -220,8 +244,11 @@
               <b-td :class="getBgColor(item.checked)">{{ index + 1 }}</b-td>
               <b-td :class="getBgColor(item.checked)">
                 <b-button v-if="item.checked != 1" variant="primary" size="sm" @click="rowClick(item, 1)">មក</b-button>
-                <b-button v-if="item.checked != 0" variant="danger" size="sm" @click="rowClick(item, 0)">មិនមក</b-button>
-                <b-button v-if="item.checked != 2" variant="warning" size="sm" class="text-dark" @click="rowClick(item, 2)">ច្បាប់</b-button>
+                <b-button v-if="item.checked != 0" variant="danger" size="sm" @click="rowClick(item, 0)">មិនមក
+                </b-button>
+                <b-button v-if="item.checked != 2" variant="warning" size="sm" class="text-dark"
+                          @click="rowClick(item, 2)">ច្បាប់
+                </b-button>
                 {{ item.name }}
               </b-td>
               <b-td :class="getBgColor(item.checked)">
@@ -307,7 +334,8 @@ export default {
         remark: null,
         section_id: null,
         on_going: null,
-        classing_type: null
+        classing_type: null,
+        duration: null
       },
       url: null,
       imgUrl: "/images/classing/",
@@ -391,6 +419,8 @@ export default {
     },
     setData() {
       this.form = Object.assign({}, this.formItem);
+      console.log(this.form)
+      this.form.duration = parseFloat(this.formItem.duration)
       this.form.logo = '/images/classing/' + this.formItem.image;
       this.form.old_logo = this.formItem.image;
 
@@ -414,20 +444,20 @@ export default {
     rowClick(item, status) {
       item.checked = status
     },
-    getBgColor(checked){
+    getBgColor(checked) {
       let color = ''
       //absent
-      if (checked == 0){
+      if (checked == 0) {
         color = 'bg-danger text-warning'
       }
 
       //present
-      if (checked == 1){
+      if (checked == 1) {
         color = ''
       }
 
       //permission
-      if (checked == 2){
+      if (checked == 2) {
         color = 'bg-warning text-dark'
       }
       return color

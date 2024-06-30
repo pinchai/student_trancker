@@ -64,7 +64,21 @@ class Group extends Model
                 GROUP BY student.group_id
                 ORDER BY COUNT(student.`name`) DESC
             
-        ", ['user_id'=>auth()->user()->id]);
+        ", ['user_id' => auth()->user()->id]);
+        return $count;
+    }
+
+    public static function countTime()
+    {
+        $count = DB::SELECT("SELECT
+                `group`.name AS `group_name`,
+                SUM(classing.duration) as total_time
+            FROM
+                `group`
+            INNER JOIN classing ON `group`.id = classing.group_id
+            WHERE `group`.user_id = :user_id
+            GROUP BY classing.group_id  
+        ", ['user_id' => auth()->user()->id]);
         return $count;
     }
 
