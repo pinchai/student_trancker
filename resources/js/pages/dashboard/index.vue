@@ -258,6 +258,7 @@ export default {
             }
           },
           colors: [
+            '#F3B415'
             // `${"#"+Math.floor(Math.random() * 0x1000000).toString(16)}`,
             // `${"#"+Math.floor(Math.random() * 0x1000000).toString(16)}`,
             // `${"#"+Math.floor(Math.random() * 0x1000000).toString(16)}`,
