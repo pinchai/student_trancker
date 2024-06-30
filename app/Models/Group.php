@@ -77,6 +77,7 @@ class Group extends Model
                 `group`
             INNER JOIN classing ON `group`.id = classing.group_id
             WHERE `group`.user_id = :user_id
+            AND `group`.deleted_at IS NULL
             GROUP BY classing.group_id  
         ", ['user_id' => auth()->user()->id]);
         return $count;
