@@ -38,7 +38,7 @@ axios.interceptors.request.use(function (config) {
     if (loading) {
         $.LoadingOverlay("show", {
             // image: "/cat.gif",
-            image: "/github_loading.gif",
+            image: "/labubu.gif",
             imageAnimation: "0ms rotate_right",        // String/Boolean
             imageClass: "img_loading",
             background: "rgba(0,0,0,0.2)",
