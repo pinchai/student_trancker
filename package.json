@@ -22,12 +22,13 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.49.0",
         "sass-loader": "^8.0.2",
-        "vue": "^2.7.14",
+        "vue": "^2.7.16",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "@braid/vue-formulate": "^2.5.3",
         "@chenfengyuan/vue-barcode": "^1.0.1",
+        "@chenfengyuan/vue-countdown": "^1.1.5",
         "@chenfengyuan/vue-qrcode": "^1.0.2",
         "@coders-tm/vue-number-format": "^3.27.0",
         "apexcharts": "^3.26.3",

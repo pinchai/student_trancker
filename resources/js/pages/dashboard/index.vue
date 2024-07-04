@@ -4,6 +4,29 @@
     <template
       v-if="checkCustomModuleAuthorize('dashboard', 'view_card')"
     >
+      <div v-if="false" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+        <div class="row widget-statistic">
+          <countdown
+            :time="30000"
+            ref="countdown"
+            @end="startCountdown"
+            @progress="handleCountdownProgress"
+            :auto-start="false"
+          >
+            <template slot-scope="props">
+              <h3>{{ props.days }} days</h3>
+              <h3>{{ props.hours }} hours</h3>
+              <h3>{{ props.minutes }} minutes</h3>
+              <h3>{{ props.seconds }} seconds</h3>
+            </template>
+          </countdown>
+          <!-- <span>Time Remaining：1 days, 23 hours, 59 minutes, 59 seconds.</span> -->
+          <br>
+          <input type="button" value="start" @click="startCount">
+          <input type="button" value="stop" @click="stopCount">
+        </div>
+      </div>
+
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
         <div class="row widget-statistic">
           <!--total_group-->
@@ -291,6 +314,29 @@ export default {
     }
   },
   methods: {
+    startCount(){
+      this.$refs.countdown.start();
+    },
+    stopCount(){
+      // this.$refs.countdown.end();
+      this.$refs.countdown.abort();
+    },
+    handleCountdownProgress(data) {
+      console.log(data.days);
+      console.log(data.hours);
+      console.log(data.minutes);
+      console.log(data.seconds);
+      console.log(data.milliseconds);
+      console.log(data.totalDays);
+      console.log(data.totalHours);
+      console.log(data.totalMinutes);
+      console.log(data.totalSeconds);
+      console.log(data.totalMilliseconds);
+    },
+    startCountdown(){
+      alert('end')
+    },
+
     onDayClickHandler(e) {
       let popover = e.popovers[0]
       if (popover != undefined) {
