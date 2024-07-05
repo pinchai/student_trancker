@@ -36,20 +36,20 @@ axios.interceptors.request.use(function (config) {
     }
 
     if (loading) {
-        $.LoadingOverlay("show", {
-            // image: "/cat.gif",
-            image: "/labubu.gif",
-            imageAnimation: "0ms rotate_right",        // String/Boolean
-            imageClass: "img_loading",
-            background: "rgba(0,0,0,0.2)",
-        });
-
         // $.LoadingOverlay("show", {
-        //   background  : "rgba(0,0,0,0.1)",
-        //   image       : "",
-        //   fontawesome : "fa fa-spinner fa-spin",
-        //   fontawesomeColor: 'rgba(0,0,0,0.3)',
+        //     // image: "/cat.gif",
+        //     image: "/labubu.gif",
+        //     imageAnimation: "0ms rotate_right",        // String/Boolean
+        //     imageClass: "img_loading",
+        //     background: "rgba(0,0,0,0.2)",
         // });
+
+        $.LoadingOverlay("show", {
+          background  : "rgba(0,0,0,0.1)",
+          image       : "",
+          fontawesome : "fa fa-spinner fa-spin",
+          fontawesomeColor: 'rgba(0,0,0,0.3)',
+        });
     }
     return config;
 
