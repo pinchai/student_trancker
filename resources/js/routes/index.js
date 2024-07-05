@@ -43,6 +43,9 @@ import group from "../pages/student_management/group";
 //position
 import section from "../pages/student_management/section";
 
+//report
+import hour_by_month from "../pages/report/hour_by_month";
+
 //User Management
 import user_role from "../pages/user_management/user_role";
 import user_list from "../pages/user_management/user_list";
@@ -110,6 +113,14 @@ const router = new VueRouter({
             component: classing,
             meta: {
                 title: "classing"
+            }
+        },
+        {
+            path: "/report/hour_by_month",
+            name: "hour_by_month",
+            component: hour_by_month,
+            meta: {
+                title: "hour_by_month"
             }
         },
         {

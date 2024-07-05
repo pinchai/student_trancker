@@ -68,18 +68,24 @@ class Group extends Model
         return $count;
     }
 
-    public static function countTime()
+    public static function countTime($filter = null)
     {
-        $count = DB::SELECT("SELECT
-                `group`.name AS `group_name`,
-                SUM(classing.duration) as total_time
-            FROM
-                `group`
-            INNER JOIN classing ON `group`.id = classing.group_id
-            WHERE `group`.user_id = :user_id
-            AND `group`.deleted_at IS NULL
-            GROUP BY classing.group_id  
-        ", ['user_id' => auth()->user()->id]);
+        $start_date = empty($filter['date_range']) ? null
+            : date("Y-m-d H:i:s", strtotime($filter['date_range']['startDate']));
+        $end_date = empty($filter['date_range']) ? null
+            : date("Y-m-d H:i:s", strtotime($filter['date_range']['endDate']));
+        $count = DB::table('group')
+            ->select(
+                'group.name as group_name',
+                DB::raw('SUM(classing.duration) as total_time'),
+                DB::raw('SUM(classing.duration) as total_hour')
+            )
+            ->join('classing', 'group.id', '=', 'classing.group_id')
+            ->whereBetween('classing.date_time', [$start_date, $end_date])
+            ->where('group.user_id', auth()->user()->id)
+            ->whereNull('group.deleted_at')
+            ->groupBy('classing.group_id')
+            ->get();
         return $count;
     }
 

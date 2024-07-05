@@ -159,9 +159,9 @@ export default {
           active: false,
           subs: [
             {
-              label: "time_by_month",
-              to: "/report/time_by_month",
-              key: "time_by_month",
+              label: "hour_by_month",
+              to: "/report/hour_by_month",
+              key: "hour_by_month",
               active: false
             },
           ]

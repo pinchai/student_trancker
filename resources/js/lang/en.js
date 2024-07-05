@@ -532,4 +532,5 @@ export default {
   subject: "Subject",
   color: "color",
   order_no: "Order No.",
+  hour_by_month: "ម៉ោងបង្រៀន",
 };

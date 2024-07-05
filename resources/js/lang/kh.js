@@ -540,5 +540,6 @@ export default {
   subject: "វគ្គសិក្សា",
   color: "ពណ៌",
   order_no: "លេខលំដាប់",
+  hour_by_month: "ម៉ោងបង្រៀន",
 
 };
