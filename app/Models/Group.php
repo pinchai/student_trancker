@@ -74,6 +74,7 @@ class Group extends Model
             : date("Y-m-d H:i:s", strtotime($filter['date_range']['startDate']));
         $end_date = empty($filter['date_range']) ? null
             : date("Y-m-d H:i:s", strtotime($filter['date_range']['endDate']));
+
         $count = DB::table('group')
             ->select(
                 'group.name as group_name',
@@ -81,7 +82,9 @@ class Group extends Model
                 DB::raw('SUM(classing.duration) as total_hour')
             )
             ->join('classing', 'group.id', '=', 'classing.group_id')
-            ->whereBetween('classing.date_time', [$start_date, $end_date])
+            ->when($start_date != null, function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('classing.date_time', [$start_date, $end_date]);
+            })
             ->where('group.user_id', auth()->user()->id)
             ->whereNull('group.deleted_at')
             ->groupBy('classing.group_id')

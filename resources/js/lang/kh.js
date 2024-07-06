@@ -541,5 +541,6 @@ export default {
   color: "ពណ៌",
   order_no: "លេខលំដាប់",
   hour_by_month: "ម៉ោងបង្រៀន",
+  total_hour: "ម៉ោងបង្រៀន",
 
 };

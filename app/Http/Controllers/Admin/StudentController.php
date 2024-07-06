@@ -206,6 +206,21 @@ class StudentController extends Controller
         ], 200);
     }
 
+    //deleteAttendance
+    public function deleteAttendance(Request $request)
+    {
+        DB::beginTransaction();
+        $att = Attendance::find($request->id);
+        $att->delete();
+        DB::commit();
+        return response()->json([
+            'combo_list' => [],
+            'success' => 1,
+            'message' => 'Your action has been completed successfully.'
+        ], 200);
+    }
+
+
     public function checkValidation($data)
     {
         $this->validate($data, [

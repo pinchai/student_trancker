@@ -26,7 +26,7 @@ class DashboardController extends Controller
                     ->count(),
                 'total_student_view' => 0,
                 'total_student_by_group' => Group::countStudent(),
-                'total_time_by_group' => Group::countTime(),
+                'total_time_by_group' => Group::countTime($request),
                 'student'=>Student::getDetailByID(1233)
             ];
             return $this->responseWithData($response);

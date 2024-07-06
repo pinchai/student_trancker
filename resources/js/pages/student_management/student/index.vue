@@ -298,6 +298,7 @@
                                 <b-th>No.</b-th>
                                 <b-th>Date</b-th>
                                 <b-th>Remark</b-th>
+                                <b-th>Action</b-th>
                               </b-tr>
                             </b-thead>
                             <b-tbody>
@@ -310,6 +311,9 @@
                                   {{ item.classing_date | dateFormat }}
                                 </b-td>
                                 <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ item.remark }}</b-td>
+                                <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
+                                  <i class="fa fa-trash" @click="deleteAttendance(item.id)"></i>
+                                </b-td>
                               </b-tr>
                             </b-tbody>
                           </b-table-simple>
@@ -569,6 +573,40 @@ export default {
           let vm = this;
           axios
             .post("/student/delete", {id: this.selectedItem.id})
+            .then(function (response) {
+              if (response.status == 200) {
+                vm.fetchRecord();
+                vm.$notify({
+                  group: "message",
+                  type: "success",
+                  title: vm.$t("branch"),
+                  text: vm.$t("done")
+                });
+                s
+              }
+            });
+        }
+      });
+    },
+    deleteAttendance(id) {
+      this.$fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+        allowOutsideClick: false,
+        allowEscapeKey: false
+      }).then(result => {
+        if (result.value) {
+          let vm = this;
+          axios
+            .post("/student/delete_attendance",
+              {
+                id: id
+              })
             .then(function (response) {
               if (response.status == 200) {
                 vm.fetchRecord();
