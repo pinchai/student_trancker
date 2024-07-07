@@ -151,7 +151,7 @@
         </b-row>
       </b-col>
       <!--total_score-->
-      <b-col cols="12">
+      <b-col v-if="form.group_id != null" cols="12">
         <b-form-group
           :label="$t('total_score')+ '*'"
           :invalid-feedback="veeErrors.first('total_score')"
@@ -418,7 +418,6 @@ export default {
       }
       axios.post("/student/getByGroupId", input).then(function (response) {
         vm.student_list = response.data.data
-        console.log(vm.student_list)
         vm.group_section = response.data.data[0].group_section
 
       })
@@ -443,20 +442,12 @@ export default {
       }).then(result => {
         if (result.value) {
           let vm = this;
-          let input = this.form
-          axios
-            .post("/score/setToAll", input)
-            .then(function (response) {
-              if (response.status == 200) {
-                vm.fetchRecord();
-                vm.$notify({
-                  group: "message",
-                  type: "success",
-                  title: vm.$t("branch"),
-                  text: vm.$t("done")
-                });
-              }
-            });
+          console.log(vm.student_list)
+          vm.student_list.forEach(item=>{
+            item.score = vm.form.total_score
+            console.log(item)
+          })
+          //alert(vm.form.total_score)
         }
       });
     },

@@ -138,7 +138,6 @@ class ScoreController extends Controller
     //setScoreToAll
     public function setScoreToAll(Request $request)
     {
-//        $this->checkValidation($request);
         DB::beginTransaction();
 
         $res = StudentScore::where('score_id', $request->id)
