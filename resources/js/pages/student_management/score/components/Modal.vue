@@ -442,7 +442,6 @@ export default {
       }).then(result => {
         if (result.value) {
           let vm = this;
-          console.log(vm.student_list)
           vm.student_list.forEach(item=>{
             item.score = vm.form.total_score
             console.log(item)

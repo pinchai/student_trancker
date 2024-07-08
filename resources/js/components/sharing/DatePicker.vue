@@ -93,7 +93,7 @@ export default {
       default: false
     }
   },
-  components: { Vue2DatePicker },
+  components: {Vue2DatePicker},
   created() {
     if (this.range) {
       //when picker is date range picker
@@ -177,6 +177,17 @@ export default {
               moment().subtract(1, 'year').startOf('year').toDate(),
               moment().subtract(1, 'year').endOf('year').toDate()
             ]
+        },
+        {
+          text: 'SETEC',
+          onClick: () =>
+            [
+              (moment().subtract(1, 'months').date(16)).toDate(),
+              (moment().subtract(0, 'months').date(15)).toDate()
+
+              //moment().subtract(1, 'year').startOf('year').toDate(),
+              //moment().subtract(1, 'year').endOf('year').toDate()
+            ]
         }
       ]
     }
@@ -208,11 +219,12 @@ export default {
 .mx-datepicker-range {
   width: 100%;
 }
-.mx-time-item{
+
+.mx-time-item {
   font-size: 18px !important;
 }
 
-.mx-time-header-title{
+.mx-time-header-title {
   font-size: 18px !important;
 }
 
@@ -281,7 +293,7 @@ export default {
   width: 100%;
 }
 
-.mx-datepicker-popup{
+.mx-datepicker-popup {
   width: 100%;
 }
 

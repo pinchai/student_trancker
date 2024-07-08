@@ -145,8 +145,8 @@ export default {
       filter: {
         txt_src: null,
         date_range: {
-          startDate: (moment().subtract(1, 'months').date(16)).format("YYYY-MM-DD HH:mm:ss"),
-          endDate: (moment().subtract(0, 'months').date(15)).format("YYYY-MM-DD HH:mm:ss")
+          startDate: moment().startOf("month").format("YYYY-MM-DD HH:mm:ss"),
+          endDate: moment().endOf("month").format("YYYY-MM-DD HH:mm:ss")
         },
       },
       show_filter: false,
@@ -156,10 +156,6 @@ export default {
     DatePicker,
   },
   created() {
-    // let last = (moment().subtract(1, 'months').date(16)).format("YYYY-MM-DD HH:mm:ss")
-    // let now = (moment().subtract(0, 'months').date(15)).format("YYYY-MM-DD HH:mm:ss")
-    // console.log(last)
-    // console.log(now)
     this.fetchRecord();
   },
   watch: {},
