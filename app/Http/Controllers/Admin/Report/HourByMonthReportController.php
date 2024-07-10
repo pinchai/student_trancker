@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class HourByMonthReportController extends Controller
 {
-    const MODULE_KEY = 'hour_by_month';
+    const MODULE_KEY = 'report';
 
     public function get(Request $request)
     {

@@ -138,6 +138,17 @@ class ModuleSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
+            //report
+            [
+                'module_name' => 'Report',
+                'module_key' => 'report',
+                'featured' => 0,
+                'permission' => '1,2,3,4',
+                'sequence' => 140,
+                'menu_title' => '',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
         ];
 
         foreach ($module as $item) {

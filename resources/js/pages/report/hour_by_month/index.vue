@@ -134,7 +134,7 @@ import moment from "moment";
 import DatePicker from "../../../components/sharing/DatePicker";
 
 export default {
-  moduleKey: "net_income_report",
+  moduleKey: "report",
   data() {
     return {
       items: [],
