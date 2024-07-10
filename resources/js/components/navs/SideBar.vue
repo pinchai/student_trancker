@@ -161,7 +161,7 @@ export default {
             {
               label: "hour_by_month",
               to: "/report/hour_by_month",
-              key: "hour_by_month",
+              key: "report",
               active: false
             },
           ]
