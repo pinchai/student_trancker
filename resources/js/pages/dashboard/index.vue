@@ -148,6 +148,7 @@
 <script>
 
 import {mapGetters} from "vuex";
+import * as XLSX from 'xlsx'
 
 export default {
   moduleKey: "dashboard",
@@ -291,7 +292,13 @@ export default {
       calendar_attributes: [],
       todayClickedEvent: [],
       todayClickedEventShow: false,
-      attendance: []
+      attendance: [],
+      items_xlsx: [
+        {age: 40, first_name: 'ចាន់ ដារា', last_name: 'Macdonald'},
+        {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
+        {age: 89, first_name: 'Geneva', last_name: 'Wilson'},
+        {age: 38, first_name: 'Jami', last_name: 'Carney'}
+      ]
     };
   },
   components: {},
@@ -314,10 +321,10 @@ export default {
     }
   },
   methods: {
-    startCount(){
+    startCount() {
       this.$refs.countdown.start();
     },
-    stopCount(){
+    stopCount() {
       // this.$refs.countdown.end();
       this.$refs.countdown.abort();
     },
@@ -333,7 +340,7 @@ export default {
       console.log(data.totalSeconds);
       console.log(data.totalMilliseconds);
     },
-    startCountdown(){
+    startCountdown() {
       alert('end')
     },
 

@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         Commands\BackupDBCron::class,
-        Commands\NotifyCron::class,
+        //Commands\NotifyCron::class,
     ];
 
     /**

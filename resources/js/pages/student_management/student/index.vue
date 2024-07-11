@@ -70,16 +70,21 @@
               <i class="fa fa-trash"></i>
               {{ $t("delete") }}
             </b-button>
-            <export-excel
+<!--            <export-excel-->
+<!--              class="btn btn-outline-dark"-->
+<!--              style="cursor: pointer; margin-top: -8px"-->
+<!--              :data="export_excel"-->
+<!--              name="student_score.xls"-->
+<!--              :title="selectedGroup"-->
+<!--              :worksheet="selectedGroup"-->
+<!--            >-->
+<!--              Export Excel-->
+<!--            </export-excel>-->
+            <button
+              type="button"
               class="btn btn-outline-dark"
-              style="cursor: pointer; margin-top: -8px"
-              :data="export_excel"
-              name="student_score.xls"
-              :title="selectedGroup"
-              :worksheet="selectedGroup"
-            >
-              Export Excel
-            </export-excel>
+              style="margin-top: -8px"
+              @click="download">Export Excel</button>
             <a
               href="/view?group_name=st8.9"
               target="_blank"
@@ -380,6 +385,7 @@
 import {mapGetters} from "vuex";
 import TextEditor from "../../../components/sharing/TextEditor";
 import group from "../../../store/group";
+import * as XLSX from 'xlsx'
 
 export default {
   moduleKey: "student",
@@ -680,7 +686,13 @@ export default {
       })
 
       return total
-    }
+    },
+    download : function() {
+      const data = XLSX.utils.json_to_sheet(this.export_excel)
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, data, 'data')
+      XLSX.writeFile(wb,'student_list.xlsx')
+    },
   }
 };
 </script>
