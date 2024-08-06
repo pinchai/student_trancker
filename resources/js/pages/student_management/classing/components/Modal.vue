@@ -139,16 +139,16 @@
               <!--Midterm Exam-->
               <b-form-radio
                 v-model="form.classing_type"
-                name="midterm"
-                value="to"
+                name="classing_type"
+                value="midterm"
               >
                 Midterm Exam
               </b-form-radio>
               <!--Final Exam-->
               <b-form-radio
                 v-model="form.classing_type"
-                name="final"
-                value="to"
+                name="classing_type"
+                value="final"
               >
                 Final Exam
               </b-form-radio>

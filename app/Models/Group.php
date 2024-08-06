@@ -91,5 +91,29 @@ class Group extends Model
             ->get();
         return $count;
     }
+    public static function countExamTime($filter = null)
+    {
+        $start_date = empty($filter['date_range']) ? null
+            : date("Y-m-d H:i:s", strtotime($filter['date_range']['startDate']));
+        $end_date = empty($filter['date_range']) ? null
+            : date("Y-m-d H:i:s", strtotime($filter['date_range']['endDate']));
+
+        $count = DB::table('group')
+            ->select(
+                'group.name as group_name',
+                'classing.classing_type as classing_type',
+                DB::raw("Date(classing.date_time) AS exam_date"),
+                DB::raw("IF(classing.classing_type = 'midterm', '32', '44') as cost")
+            )
+            ->join('classing', 'group.id', '=', 'classing.group_id')
+            ->when($start_date != null, function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('classing.date_time', [$start_date, $end_date]);
+            })
+            ->where('group.user_id', auth()->user()->id)
+            ->whereIn('classing.classing_type', ['midterm', 'final'])
+            ->whereNull('group.deleted_at')
+            ->get();
+        return $count;
+    }
 
 }

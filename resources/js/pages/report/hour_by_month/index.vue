@@ -45,7 +45,11 @@
       <!--list-->
       <b-card-body>
         <b-row>
-          <b-col cols="12">
+          <!--teaching-->
+          <b-col lg="6" sm="12">
+            <center>
+              <h3>Teaching</h3>
+            </center>
             <div class="table-responsive">
               <table
                 class="table table-bordered table-striped"
@@ -97,6 +101,62 @@
               </table>
             </div>
           </b-col>
+          <!--exam-->
+          <b-col lg="6" sm="12" class="btn-outline-info">
+            <center>
+              <h3>Exam</h3>
+            </center>
+            <div class="table-responsive">
+              <table
+                class="table table-bordered table-striped"
+                style="width: 100%"
+              >
+                <thead>
+                <tr class="font-weight-bolder">
+                  <th width="10">No.</th>
+                  <th width="150">{{ $t("group") }}</th>
+                  <th width="300">Exam Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-if="exam_items.length == 0">
+                  <td colspan="9" style="text-align: center">
+                    <div
+                      class="material-icons"
+                      style="font-size: 40px; color: gray"
+                    >
+                      storage
+                    </div>
+                    <center style="font-size: 20px">
+                      {{ $t("no_recode") }}
+                    </center>
+                  </td>
+                </tr>
+                <tr
+                  v-for="(item, index) in exam_items"
+                  :key="'sale_list_exam' + index"
+                >
+                  <!--no. -->
+                  <td>
+                    <strong class="text-dark">{{ index + 1 }}</strong>
+                  </td>
+                  <!-- group_name -->
+                  <td>
+                    <strong class="text-dark">
+                      {{ item.group_name }}
+                    </strong>
+                  </td>
+                  <!-- total_hour -->
+                  <td>
+                    <strong class="text-dark">
+                      {{ item.classing_type }}({{ item.cost }}$) - {{ item.exam_date | date }}
+                    </strong>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </b-col>
         </b-row>
       </b-card-body>
       <b-card-footer>
@@ -115,9 +175,10 @@
               <tr>
                 <td>
                   <h4>{{ sumHour(items) }} ម៉ោង</h4>
+                  <h4>Exam: {{ exam_items.length }} ដង</h4>
                 </td>
                 <td>
-                  <h4>{{ (sumHour(items) * 9) | currencyFormat }} $</h4>
+                  <h4 class='text-danger'>{{ sumHour(items) * 9 }} $+ {{ sumExamHour(exam_items) }} $ = {{ ((sumHour(items) * 9) + sumExamHour(exam_items)) | currencyFormat }} $</h4>
                 </td>
               </tr>
             </table>
@@ -138,6 +199,7 @@ export default {
   data() {
     return {
       items: [],
+      exam_items: [],
       selectedItem: {},
       showDelete: true,
       showOverlay: false,
@@ -187,7 +249,8 @@ export default {
       };
     },
     setInput(data) {
-      this.items = data;
+      this.items = data.teaching;
+      this.exam_items = data.exam;
       //
     },
     dateTimeSelected(dateTime) {
@@ -218,6 +281,13 @@ export default {
       let total = 0;
       data.forEach((item) => {
         total += parseFloat(item.total_hour);
+      });
+      return total;
+    },
+    sumExamHour(data) {
+      let total = 0;
+      data.forEach((item) => {
+        total += parseFloat(item.cost);
       });
       return total;
     },

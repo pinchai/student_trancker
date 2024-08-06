@@ -14,7 +14,10 @@ class HourByMonthReportController extends Controller
 
     public function get(Request $request)
     {
-        $data = Group::countTime($request->filter);
+        $data = [
+            'teaching'=>Group::countTime($request->filter),
+            'exam'=>Group::countExamTime($request->filter),
+        ];
         return $this->responseWithData($data);
     }
 
