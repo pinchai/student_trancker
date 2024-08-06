@@ -115,6 +115,7 @@
                 v-model="form.on_going"
                 name="on_going"
                 value="midterm"
+                :disabled="form.on_going !== 'midterm'"
               >
                 Midterm
               </b-form-radio>
@@ -122,6 +123,7 @@
                 v-model="form.on_going"
                 name="on_going"
                 value="final"
+                :disabled="form.on_going !== 'midterm'"
               >
                 Final
               </b-form-radio>
@@ -413,6 +415,10 @@ export default {
     },
     getStudent(group_id) {
       let vm = this;
+      let group_detail = vm.groups.find(item=>{
+        return item.id == group_id
+      })
+      vm.form.on_going = group_detail.on_going
       const input = {
         'group_id': group_id
       }

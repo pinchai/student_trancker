@@ -97,7 +97,7 @@
                 <span
                   :style="'color: '+row.item.color"
                 >
-                  {{ row.item.name }}
+                  {{ row.item.name }}({{ row.item.on_going }})
                 </span>
               </template>
               <template v-slot:cell(order_no)="row">

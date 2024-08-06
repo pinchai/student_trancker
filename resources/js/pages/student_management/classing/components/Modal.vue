@@ -87,6 +87,7 @@
         <b-row>
           <!--on_going-->
           <b-col lg="4" xl="4" md="12" sm="12">
+            {{ form.on_going }}
             <b-form-group
               label="On Going"
             >
@@ -94,6 +95,7 @@
                 v-model="form.on_going"
                 name="on_going"
                 value="midterm"
+                :disabled="form.on_going !== 'midterm'"
               >
                 Midterm
               </b-form-radio>
@@ -101,6 +103,7 @@
                 v-model="form.on_going"
                 name="on_going"
                 value="final"
+                :disabled="form.on_going !== 'final'"
               >
                 Final
               </b-form-radio>
@@ -429,13 +432,16 @@ export default {
     },
     getStudent(group_id) {
       let vm = this;
+      let group_detail = vm.groups.find(item=>{
+        return item.id == group_id
+      })
+      vm.form.on_going = group_detail.on_going
       const input = {
         'group_id': group_id
       }
       axios.post("/student/getByGroupId", input).then(function (response) {
         vm.student_list = response.data.data
         vm.group_section = response.data.data[0].group_section
-
       })
         .catch(function (error) {
           console.log(error);

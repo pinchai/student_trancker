@@ -75,6 +75,7 @@ class GroupController extends Controller
             $group->order_no = $request->order_no;
             $group->color = $request->color;
             $group->user_id = auth()->user()->id;
+            $group->on_going =  $request->on_going;
             if($group->save()){
                 $section = new Section();
                 $section_data = [
@@ -130,6 +131,7 @@ class GroupController extends Controller
             $group->setData($request);
             $group->order_no = $request->order_no;
             $group->color = $request->color;
+            $group->on_going =  $request->on_going;
             $group->save();
 
             DB::commit();

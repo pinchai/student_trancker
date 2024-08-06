@@ -257,12 +257,12 @@ export default {
       formItem: {},
       pagination: {
         current_page: 1,
-        per_page: 10,
+        per_page: 3,
         total: 0,
         to: 0,
         from: 0,
         last_page: 0,
-        table_size: 10
+        table_size: 3
       },
       filter: {
         warehouses: {},
