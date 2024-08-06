@@ -253,7 +253,7 @@ export default {
       modalShow: false,
       modalScoreShow: false,
       modalType: 0,
-      modalScoreType: 0,
+      modalScoreType: 0,//test
       formItem: {},
       pagination: {
         current_page: 1,
