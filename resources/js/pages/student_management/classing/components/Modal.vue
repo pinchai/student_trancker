@@ -128,12 +128,29 @@
               >
                 REPLACEMENT
               </b-form-radio>
+              <!--Take Over-->
               <b-form-radio
                 v-model="form.classing_type"
                 name="classing_type"
                 value="to"
               >
                 Take Over
+              </b-form-radio>
+              <!--Midterm Exam-->
+              <b-form-radio
+                v-model="form.classing_type"
+                name="midterm"
+                value="to"
+              >
+                Midterm Exam
+              </b-form-radio>
+              <!--Final Exam-->
+              <b-form-radio
+                v-model="form.classing_type"
+                name="final"
+                value="to"
+              >
+                Final Exam
               </b-form-radio>
             </b-form-group>
           </b-col>

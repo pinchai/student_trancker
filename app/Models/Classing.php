@@ -33,12 +33,15 @@ class Classing extends Model
     {
         $filter = $request->filter;
         $group_selected = isset($filter['group_selected']) ? $filter['group_selected'] : null;
+        $classing_type = isset($filter['classing_type']) ? $filter['classing_type'] : null;
         $data = Classing::join('group', 'classing.group_id', 'group.id')
             ->join('section', 'classing.section_id', 'section.id')
             ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
                 $query->whereIn('classing.group_id', $group_selected);
             })
-            //->where('classing.classing_type', 'Teaching')
+            ->when(count($classing_type) > 0, function ($query) use ($classing_type) {
+                $query->whereIn('classing.classing_type', $classing_type);
+            })
             ->where('group.user_id', auth()->user()->id)
             ->select(
                 'classing.*',

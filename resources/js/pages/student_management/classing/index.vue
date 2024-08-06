@@ -77,7 +77,7 @@
         </b-row>
         <!--group list-->
         <b-row>
-          <b-col cols="12 mb-lt-0 mt-sm-2">
+          <b-col cols="6 mb-lt-0 mt-sm-2">
             <b-form-group>
               <v-select
                 multiple
@@ -87,6 +87,16 @@
                 label="name"
                 @input="fetchRecord"
               />
+            </b-form-group>
+          </b-col>
+          <b-col cols="6 mb-lt-0 mt-sm-2">
+            <b-form-group>
+              <b-form-checkbox-group
+                v-model="filter.classing_type"
+                :options="classing_types"
+                name="classing_type"
+                @input="fetchRecord"
+              ></b-form-checkbox-group>
             </b-form-group>
           </b-col>
         </b-row>
@@ -120,11 +130,15 @@
               </template>
               <template v-slot:cell(section)="row">
                 <strong style="font-size: 15px; text-transform: capitalize; color: red">
-                  {{ row.item.on_going}}
+                  {{ row.item.on_going }}
                 </strong>
                 <br>
                 <strong style="font-size: 15px">
                   {{ row.item.section }}
+                </strong>
+                <br>
+                <strong style="font-size: 15px">
+                  Class Type: {{ row.item.classing_type }}
                 </strong>
               </template>
               <template v-slot:cell(classing)="row">
@@ -228,9 +242,11 @@ export default {
       filter: {
         warehouses: {},
         txt_src: null,
-        group_selected: []
+        group_selected: [],
+        classing_type: []
       },
-      data_:{
+      classing_types: ['normal', 'rep', 'to', 'midterm', 'final'],
+      data_: {
         country: 'canada',
         meta: {
           code: 'ca',
@@ -384,14 +400,14 @@ export default {
       this.pagination.from = data.pagination.from;
       this.pagination.to = data.pagination.to;
     },
-    getPreset(item){
-      let preset = item.filter(obj=>{
+    getPreset(item) {
+      let preset = item.filter(obj => {
         return obj.checked == 1
       })
       return preset
     },
-    getAbsent(item){
-      let preset = item.filter(obj=>{
+    getAbsent(item) {
+      let preset = item.filter(obj => {
         return obj.checked == 0
       })
       return preset
