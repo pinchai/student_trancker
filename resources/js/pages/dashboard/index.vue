@@ -72,6 +72,22 @@
             </div>
           </div>
 
+          <!--count time by group-->
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
+              <div class="widget-heading">
+                <h4>ចំនួនម៉ោងដែលបានបង្រៀនតាមក្រុមនីមួយៗ</h4>
+                <hr>
+              </div>
+              <apexchart
+                height="290"
+                type="bar"
+                :options="columnChartCountTimeByGroup.chartOptions"
+                :series="columnChartCountTimeByGroup.series"
+              ></apexchart>
+            </div>
+          </div>
+
           <!--count student by group-->
           <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
             <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
@@ -84,22 +100,6 @@
                 type="bar"
                 :options="columnChartCountStudentByGroup.chartOptions"
                 :series="columnChartCountStudentByGroup.series"
-              ></apexchart>
-            </div>
-          </div>
-
-          <!--count time by group-->
-          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-            <div class="widget widget-one_hybrid bg-gradient-secondary mb-3">
-              <div class="widget-heading">
-                <h4>ចំនួនម៉ោងដែលបានបង្រៀនតាមក្រុមនីមួយៗ</h4>
-                <hr>
-              </div>
-              <apexchart
-                height="290"
-                type="bar"
-                :options="columnChartCountTimeByGroup.chartOptions"
-                :series="columnChartCountTimeByGroup.series"
               ></apexchart>
             </div>
           </div>
