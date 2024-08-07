@@ -50,11 +50,16 @@ class Score extends Model
     {
         return $this->hasMany('App\Models\StudentScore', 'score_id', 'id')
             ->join('student', 'student_score.student_id', 'student.id')
+            ->join('attendance', 'student_score.student_id', 'attendance.student_id')
             ->select(
                 'student_score.*',
+                'attendance.checked',
                 'student.name',
                 'student.latin_name',
+                DB::raw("SUM(case when attendance.checked = 0 then 1 else 0 end) AS total_absent"),
+                DB::raw("SUM(case when attendance.checked = 1 then 1 else 0 end) AS total_present")
             )
+            ->groupBy('student_score.student_id')
             ->orderBy('student.latin_name', 'ASC');
     }
 

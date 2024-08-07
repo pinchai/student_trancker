@@ -22,20 +22,13 @@ class ScoreController extends Controller
             $table_size = 10;
         }
         $data = Score::getList($request)->paginate($table_size);
-        foreach ($data->items() as $item){
-            foreach($item->studentScore as $student){
-                $att = Attendance::getAttendanceByStudentID($student->student_id);
-                $student->total_absent = $att == null ? 0 : $att->total_absent;
-                $student->total_present = $att == null ? 0 : $att->total_present;
-            }
-        }
-
-//        $itemsPaginated = $this->items()->paginate(15);
-//        $itemsPaginated = json_encode($itemsPaginated);
-//        foreach ($itemsPaginated->data as $key => $item) {
-//            $results->data[$key]; //Modify
+//        foreach ($data->items() as $item){
+//            foreach($item->studentScore as $student){
+//                $att = Attendance::getAttendanceByStudentID($student->student_id);
+//                $student->total_absent = $att == null ? 0 : $att->total_absent;
+//                $student->total_present = $att == null ? 0 : $att->total_present;
+//            }
 //        }
-//        $itemsPaginated = json_encode($results);
 
         $response = [
             'pagination' => [
