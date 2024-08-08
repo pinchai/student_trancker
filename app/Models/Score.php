@@ -57,7 +57,8 @@ class Score extends Model
                 'student.name',
                 'student.latin_name',
                 DB::raw("SUM(case when attendance.checked = 0 then 1 else 0 end) AS total_absent"),
-                DB::raw("SUM(case when attendance.checked = 1 then 1 else 0 end) AS total_present")
+                DB::raw("SUM(case when attendance.checked = 1 then 1 else 0 end) AS total_present"),
+                DB::raw("0 AS show_remark")
             )
             ->groupBy('student_score.id')
             ->orderBy('student.latin_name', 'ASC');

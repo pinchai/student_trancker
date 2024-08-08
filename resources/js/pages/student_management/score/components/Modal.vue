@@ -34,7 +34,7 @@
         </b-form-group>
       </b-col>
       <!--start date-->
-      <b-col lg="12" xl="12" md="12" sm="12">
+      <b-col lg="6" xl="6" md="6" sm="12">
         <b-form-group
           size="sm"
           :invalid-feedback="veeErrors.first('start_date')"
@@ -61,7 +61,7 @@
         </b-form-group>
       </b-col>
       <!--end date-->
-      <b-col lg="12" xl="12" md="12" sm="12">
+      <b-col lg="6" xl="6" md="6" sm="12">
         <b-form-group
           size="sm"
           :invalid-feedback="veeErrors.first('end_date')"
@@ -245,7 +245,25 @@
                 >
                   {{ item.total_absent == null ? 'សិស្សល្អ ⏰' : 'ឈប់: ' + item.total_absent + 'ដង' }}
                 </b> |
-                <span class="text-primary">មករៀន:{{ item.total_present }}ដង</span>
+                <span class="text-primary">មករៀន:{{ item.total_present }}ដង</span> |
+                <span
+                  class="text-secondary"
+                  v-if="item.show_remark == 0"
+                  style="cursor: pointer"
+                  @click="item.show_remark = 1"
+                >show remark</span>
+                <span
+                  class="text-secondary"
+                  v-if="item.show_remark == 1"
+                  style="cursor: pointer"
+                  @click="item.show_remark = 0"
+                >Hide remark</span>
+                <textarea
+                  v-if="item.show_remark == 1"
+                  class="w-100"
+                  rows="5"
+                  v-model="item.remark"
+                ></textarea>
               </b-td>
             </b-tr>
           </b-tbody>

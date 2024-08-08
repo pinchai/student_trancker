@@ -66,6 +66,7 @@ class ScoreController extends Controller
             $student_score = new StudentScore();
             $student_score->setData($data);
             $student_score->on_going = $score->on_going;
+            $student_score->remark = $score->remark;
             $student_score->save();
         }
 
@@ -99,6 +100,7 @@ class ScoreController extends Controller
             $student_score = new StudentScore();
             $student_score->setData($data);
             $student_score->on_going = $score->on_going;
+            $student_score->remark = $item['remark'];
             $student_score->save();
         }
 
