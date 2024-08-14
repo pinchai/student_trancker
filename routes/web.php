@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     include 'admin/telegram_bot.php';
     include 'admin/module.php';
 
+    include 'admin/transaction_reference_file.php';
+
 
     include 'admin/hour_by_month_report.php';
 });

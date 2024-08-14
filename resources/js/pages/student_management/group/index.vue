@@ -10,6 +10,16 @@
     </div>
     <!--end modal-->
 
+    <!-- FileModal -->
+    <div v-if="modalShowFile">
+      <file-modal
+        :modalType="modalTypeFile"
+        :formItem="formItemFile"
+        @closeModal="closeModalFile"
+      ></file-modal>
+    </div>
+    <!-- end FileModal -->
+
     <b-card no-body class="card-table">
       <b-card-header>
         <h1>{{ $t("group") }}</h1>
@@ -51,6 +61,17 @@
             >
               <i class="fa fa-trash"></i>
               {{ $t("delete_record") }}
+            </b-button>
+            <!--reference file-->
+            <b-button
+              :disabled="showDelete"
+              @click="showFileModal"
+              variant="outline-primary"
+              v-if="checkAuthorize($store.state.permission.delete)"
+              class="mb-2"
+            >
+              <i class="fa fa-folder"></i>
+              Reference file
             </b-button>
           </b-col>
           <b-col cols="6" md="5" lg="5" xl="5" class="mb-2">
@@ -141,6 +162,7 @@
 <script>
 import {mapGetters} from "vuex";
 import store from "../../../store";
+import FileModal from './components/FileModal'
 
 export default {
   moduleKey: "group",
@@ -155,20 +177,24 @@ export default {
       formItem: {},
       pagination: {
         current_page: 1,
-        per_page: 10,
+        per_page: 100,
         total: 0,
         to: 0,
         from: 0,
         last_page: 0,
-        table_size: 10
+        table_size: 100
       },
       filter: {
         txt_src: null
-      }
+      },
+      modalShowFile: false,
+      modalTypeFile: 0,
+      formItemFile: {},
     };
   },
   components: {
-    Modal: () => import("./components/Modal")
+    Modal: () => import("./components/Modal"),
+    FileModal
   },
   created() {
     this.fetchRecord();
@@ -293,7 +319,21 @@ export default {
       this.pagination.total = data.pagination.total;
       this.pagination.from = data.pagination.from;
       this.pagination.to = data.pagination.to;
-    }
+    },
+    showFileModal() {
+      this.modalShowFile = true;
+      this.selectedItem.action = "edit";
+      this.formItemFile = Object.assign({}, this.selectedItem);
+      this.modalTypeFile = 2; //set modal type 2 = edit
+    },
+    closeModalFile(obj) {
+      this.modalTypeFile = 0;
+      this.modalShowFile = false;
+
+      if (!this.$helpers.isEmpty(obj)) {
+        this.fetchRecord();
+      }
+    },
   }
 };
 </script>
