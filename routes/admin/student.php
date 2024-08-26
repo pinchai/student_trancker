@@ -6,3 +6,7 @@ Route::post('/student/import','App\Http\Controllers\Admin\StudentController@impo
 Route::post('/student/edit','App\Http\Controllers\Admin\StudentController@edit');
 Route::post('/student/delete','App\Http\Controllers\Admin\StudentController@delete');
 Route::post('/student/delete_attendance','App\Http\Controllers\Admin\StudentController@deleteAttendance');
+
+Route::post('/student/getInfo','App\Http\Controllers\Admin\StudentController@getInfo');
+
+

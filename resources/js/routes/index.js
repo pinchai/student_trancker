@@ -59,6 +59,8 @@ import module from "../pages/developer/module/index";
 import pageNotFound from "../pages/errors/404.vue";
 import pageNotPermission from "../pages/errors/403.vue";
 
+// addToScore
+import addToScore from "../pages/student_management/student/action/addToScore.vue";
 
 const router = new VueRouter({
     mode: "history",
@@ -218,7 +220,15 @@ const router = new VueRouter({
             meta: {
                 title: "404 | Not Found"
             }
-        }
+        },
+        {
+            path: "/student_management/add_to_score",
+            name: "add_to_score",
+            component: addToScore,
+            meta: {
+                title: "add_to_score"
+            }
+        },
     ]
 });
 

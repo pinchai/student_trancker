@@ -290,8 +290,7 @@
         <i class="fas fa-save mr-1" v-if="modalType == 1"></i>
         <i class="fa fa-edit mr-1" v-if="modalType == 2"></i>
         {{ modalOk }}
-      </b-button
-      >
+      </b-button>
     </template>
   </b-modal>
 </template>

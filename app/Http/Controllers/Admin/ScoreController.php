@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\Group;
 use App\Models\Score;
 use App\Models\StudentScore;
 use Illuminate\Http\Request;
@@ -78,6 +79,49 @@ class ScoreController extends Controller
         ], 200);
 
     }
+
+    //customer_add
+    public function customerAdd(Request $request)
+    {
+        $this->validate($request, [
+            'student_id' => 'numeric|required',
+            'score_id' => 'numeric|required',
+            'score' => 'numeric|required',
+        ]);
+
+        $dpl = StudentScore::where('score_id', $request->score_id)
+            ->where('student_id', $request->student_id)
+            ->first();
+        if ($dpl != null) {
+            return $this->responseCustomValidation([
+                'code' => '004',
+                'title' => 'This Student And Score Is Exist',
+                'message' => 'មានរួចហើយ',
+                'i18n_message' => 'expense_category_is_already_exist'
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        $data = [
+            'student_id' => $request->student_id,
+            'score_id' => $request->score_id,
+            'score' => $request->score,
+        ];
+        $student_score = new StudentScore();
+        $student_score->setData($data);
+        $student_score->on_going = Score::where('id', $request->score_id)->pluck('on_going')[0];
+        $student_score->save();
+
+        DB::commit();
+        return response()->json([
+            'data' => $student_score,
+            'success' => 1,
+            'message' => 'Your action has been completed successfully.'
+        ], 200);
+
+    }
+
 
     //edit
     public function edit(Request $request)

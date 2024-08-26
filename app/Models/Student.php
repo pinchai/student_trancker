@@ -95,6 +95,7 @@ class Student extends Model
 
     public static function getDetailByID($id){
         $data = Student::join('group', 'student.group_id', 'group.id')
+            ->join('position', 'student.position_id', 'position.id')
             ->with([
                 'attendance',
                 'score'
@@ -102,7 +103,8 @@ class Student extends Model
             ->where('student.id', $id)
             ->select(
                 'student.*',
-                'group.name as group',
+                'position.name as position',
+                'group.name as group_name',
             )
             ->first();
 

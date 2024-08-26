@@ -1,5 +1,6 @@
 <?php
 Route::post('/score/get','App\Http\Controllers\Admin\ScoreController@get');
+Route::post('/score/customer_add','App\Http\Controllers\Admin\ScoreController@customerAdd');
 Route::post('/score/store','App\Http\Controllers\Admin\ScoreController@store');
 Route::post('/score/setToAll','App\Http\Controllers\Admin\ScoreController@setScoreToAll');
 Route::post('/score/edit','App\Http\Controllers\Admin\ScoreController@edit');

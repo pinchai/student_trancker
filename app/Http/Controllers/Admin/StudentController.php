@@ -229,4 +229,10 @@ class StudentController extends Controller
         ]);
     }
 
+
+    public function getInfo(Request $request)
+    {
+        $data = Student::getDetailByID($request->id);
+        return response()->json($data, 200);
+    }
 }

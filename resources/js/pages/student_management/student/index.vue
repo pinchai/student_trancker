@@ -70,16 +70,6 @@
               <i class="fa fa-trash"></i>
               {{ $t("delete") }}
             </b-button>
-<!--            <export-excel-->
-<!--              class="btn btn-outline-dark"-->
-<!--              style="cursor: pointer; margin-top: -8px"-->
-<!--              :data="export_excel"-->
-<!--              name="student_score.xls"-->
-<!--              :title="selectedGroup"-->
-<!--              :worksheet="selectedGroup"-->
-<!--            >-->
-<!--              Export Excel-->
-<!--            </export-excel>-->
             <button
               type="button"
               class="btn btn-outline-dark"
@@ -256,6 +246,21 @@
               </template>
               <template #row-details="row">
                 <div class="row">
+                  <b-col cols="12" class="mt-2 mb-2">
+                    <hr>
+                    <router-link
+                      :to="'/student_management/add_to_score?id='+row.item.id"
+                    >
+                      <b-button
+                        variant="outline-primary"
+                        class="btn btn-sm w-10"
+                      >
+                        <i class="fa fa-plus"></i>
+                        Add To Score
+                      </b-button>
+                    </router-link>
+                  </b-col>
+
                   <b-col cols="6">
                     <!--Present Details-->
                     <div class="col-lg-12 col-md-12 col-sm-6">
@@ -326,6 +331,7 @@
                       </div>
                     </div>
                   </b-col>
+
                   <b-col cols="6">
                     <!--Score list-->
                     <div class="col-lg-12 col-md-12 col-sm-6">
@@ -632,7 +638,6 @@ export default {
       if (event.length > 0) {
         this.selectedItem = event[0];
         this.showDelete = false;
-        console.log(this.selectedItem.id);
       } else {
         this.showDelete = true;
         this.selectedItem = {};

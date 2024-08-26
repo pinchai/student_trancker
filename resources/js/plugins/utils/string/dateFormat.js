@@ -5,7 +5,7 @@
  */
 import moment from 'moment'
 
-function dateFormat(value, format = 'DD-MM-YYYY', nullValue = '') {
+function dateFormat(value, format = 'DD(ddd)-MM-YYYY', nullValue = '') {
 	if (value != '' && value != null && value != '0000-00-00 00:00:00') {
 		return moment(value).format(format)
 	} else return nullValue
