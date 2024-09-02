@@ -24,7 +24,9 @@
                         <h3 style="text-transform: uppercase">Group {{ $student->group ?? '' }}</h3>
                     </center>
                 </div>
+
                 <div class="card-body">
+                    {{--request form--}}
                     <div class="card-body">
                         <center>
                             {{ $student->name }} | {{ $student->latin_name }}
@@ -43,7 +45,6 @@
                             </a>
                         </center>
                     </div>
-
                     <form method="post" action="{{ route('submit_permission') }}">
                         @csrf
 
@@ -94,6 +95,36 @@
                         </div>
                         <input type="submit" value="Submit Permission" class="w-100" style="height: 50px">
                     </form>
+                </div>
+
+                <div class="card-footer">
+                    <h3>Request Permission List</h3>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Request Date</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($student->requestPermission as $row)
+                                        <tr>
+                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td>{{ $row->date }}</td>
+                                            <td>{{ $row->reason }}</td>
+                                            <td>{{ $row->status }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

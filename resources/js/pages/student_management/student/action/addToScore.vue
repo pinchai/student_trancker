@@ -20,6 +20,12 @@
           <p>
             {{ item.address }}
           </p>
+          <router-link
+            :to="'/student_management/student'"
+          >
+            <i class="far fa-caret-square-left"></i>
+            Back
+          </router-link>
         </b-col>
       </b-row>
     </b-card>

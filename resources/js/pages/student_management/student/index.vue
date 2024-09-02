@@ -74,7 +74,8 @@
               type="button"
               class="btn btn-outline-dark"
               style="margin-top: -8px"
-              @click="download">Export Excel</button>
+              @click="download">Export Excel
+            </button>
             <a
               href="/view?group_name=st8.9"
               target="_blank"
@@ -178,7 +179,14 @@
               <template v-slot:cell(name)="row">
                 <span
                   :class="getAbsent(row.item.attendance).length >=6 ? 'text-danger bg-warning' : ''"
-                >{{ row.item.name }}</span>
+                >{{ row.item.name }}
+                </span>
+                <router-link
+                  :to="'/student_management/add_to_score?id='+row.item.id"
+                >
+                  <i class="fas fa-external-link-alt"></i>
+                  detail
+                </router-link>
                 <template v-if="getAbsent(row.item.attendance).length >=6">
                   <img src="/alert.gif" style="width: 20px; margin-top: -12px; margin-left: 1px">
                 </template>
@@ -455,7 +463,7 @@ export default {
           label: this.$t("name"),
           sortable: true,
           show_sm: true,
-          thStyle: {width: "18%"},
+          thStyle: {width: "25%"},
         },
         {
           key: "latin_name",
@@ -692,11 +700,11 @@ export default {
 
       return total
     },
-    download : function() {
+    download: function () {
       const data = XLSX.utils.json_to_sheet(this.export_excel)
       const wb = XLSX.utils.book_new()
       XLSX.utils.book_append_sheet(wb, data, 'data')
-      XLSX.writeFile(wb,'student_list.xlsx')
+      XLSX.writeFile(wb, 'student_list.xlsx')
     },
   }
 };

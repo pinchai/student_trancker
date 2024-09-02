@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TelegramBot;
 use App\Models\RequestPermission;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentViewController extends Controller
 {
@@ -47,6 +49,7 @@ class StudentViewController extends Controller
     }
 
     public function submit_permission(Request $request){
+        DB::beginTransaction();
         $validated = $request->validate([
             'date' => ['required'],
             'reason' => ['required'],
@@ -61,6 +64,27 @@ class StudentViewController extends Controller
 
         $student = Student::getDetailByID($rq->student_id);
         $url = 'request_permission?id='.$rq->student_id;
+
+        $date = date('d-m-Y H:s');
+        $device = $request->ip();
+
+        $html = "<strong>🛡️ Group: $student->group_name</strong>"."\n";
+        $html .= "<strong>🐣 Name: $student->name</strong>"."\n";
+        $html .= "<strong>🐥 Latin Name: $student->latin_name</strong>"."\n";
+        $html .= "<strong>----------</strong>"."\n";
+        $html .= "<strong>📅 Permission Date: $request->date</strong>"."\n";
+        $html .= "<strong>⚔️ Reason: $request->reason</strong>"."\n";
+        $html .= "<strong>🌏 Referent Url: $request->referent_url</strong>"."\n";
+        $html .= "<strong>📱 IP Address: $device</strong>"."\n";
+        $html .= "<strong>Created At: $date</strong>"."\n";
+
+        $html = urlencode($html);
+        $bot_toked = '7392836561:AAHl9_dT8GJs_903O4PmCca78RU6QM8wNaA';
+        $chat_id = '756357473';
+        $config_url = "https://api.telegram.org/bot$bot_toked/sendMessage?chat_id=$chat_id&text=$html&parse_mode=HTML";
+        TelegramBot::sendHtml("$html", $config_url);
+
+        DB::commit();
         return redirect($url)->with('status','Your permission has been applies 🍻🍾🥜');
     }
 }

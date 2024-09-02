@@ -38,7 +38,8 @@ class Student extends Model
         $data = Student::join('group', 'student.group_id', 'group.id')
             ->with([
                 'attendance',
-                'score'
+                'score',
+                'requestPermission'
             ])
             ->when(count($group_selected) > 0, function ($query) use ($group_selected) {
                 $query->whereIn('group.id', $group_selected);
@@ -64,6 +65,14 @@ class Student extends Model
             );
     }
 
+    public function requestPermission()
+    {
+        return $this->hasMany('App\Models\RequestPermission', 'student_id', 'id')
+            ->select(
+                '*'
+            );
+    }
+
     public function score()
     {
         return $this->hasMany('App\Models\StudentScore', 'student_id', 'id')
@@ -82,7 +91,8 @@ class Student extends Model
             ->where('group.name', $group_name)
             ->with([
                 'attendance',
-                'score'
+                'score',
+                'requestPermission'
             ])
             ->select(
                 'student.*',
@@ -98,7 +108,8 @@ class Student extends Model
             ->join('position', 'student.position_id', 'position.id')
             ->with([
                 'attendance',
-                'score'
+                'score',
+                'requestPermission'
             ])
             ->where('student.id', $id)
             ->select(
