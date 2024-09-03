@@ -119,11 +119,12 @@
               >
                 Midterm
               </b-form-radio>
+
               <b-form-radio
                 v-model="form.on_going"
                 name="on_going"
                 value="final"
-                :disabled="form.on_going !== 'midterm'"
+                :disabled="form.on_going !== 'final'"
               >
                 Final
               </b-form-radio>
