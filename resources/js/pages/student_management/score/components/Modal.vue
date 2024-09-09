@@ -221,16 +221,16 @@
               :key="'student_'+index"
               @click="rowClick(item)"
             >
-              <b-td :class="item.score <= 0 ? 'bg-warning': ''">{{ index + 1 }}</b-td>
-              <b-td :class="item.score <= 0 ? 'bg-warning': ''">
+              <b-td :class="item.score < 0 ? 'bg-danger text-white': ''">{{ index + 1 }}</b-td>
+              <b-td :class="item.score < 0 ? 'bg-danger text-white': ''">
                 {{ item.name }}
               </b-td>
-              <b-td>{{ item.latin_name }}</b-td>
+              <b-td :class="item.score < 0 ? 'bg-danger text-white': ''">{{ item.latin_name }}</b-td>
               <b-td>
                 <b-form-input
                   style='border-radius: 5px'
                   v-model='item.score'
-                  v-validate="`required|min_value:0|max_value:${form.total_score}`"
+                  v-validate="`required|max_value:${form.total_score}`"
                   :state="veeErrors.has('score_'+index) ? false : null"
                   :data-vv-name="'score_'+index"
                   :data-vv-as="$t('score')"
