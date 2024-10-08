@@ -32,6 +32,8 @@
                                 <br>
                                 <span>🟢 មករៀន{{ $item->total_present }}ដង</span>
                                 <br>
+                                <span>😅 ដាក់ច្បាប់{{ $item->total_permission }}ដង</span>
+                                <br>
                                 <strong>❌ ឈប់{{ $item->total_absent }}ដង</strong>
                                 <br>
                                 {{ $item->total_score }}ពិន្ទុ
@@ -71,15 +73,38 @@
                                                     </thead>
                                                     <tbody>
                                                     @foreach($item->attendance as $att)
-                                                        <tr class="{{ $att->checked == 1 ? '' : 'bg-danger' }}">
-                                                            <th>{{ $loop->iteration }}</th>
-                                                            <th>
-                                                                {{ \Carbon\Carbon::parse($att->classing_date)->format('D d-m-Y')}}
-                                                            </th>
-                                                            <th>
-                                                                {{ $att->checked == 1 ? 'មករៀន' : 'មិនខ្ចីមករៀន' }}
-                                                            </th>
-                                                        </tr>
+                                                        {{--មករៀន--}}
+                                                        @if($att->checked == 1)
+                                                            <tr>
+                                                                <th>{{ $loop->iteration }}</th>
+                                                                <th>
+                                                                    {{ \Carbon\Carbon::parse($att->classing_date)->format('D d-m-Y')}}
+                                                                </th>
+                                                                <th>មករៀន</th>
+                                                            </tr>
+                                                        @endif
+
+                                                        {{--មិនខ្ចីមករៀន--}}
+                                                        @if($att->checked == 0)
+                                                            <tr class="bg-danger">
+                                                                <th>{{ $loop->iteration }}</th>
+                                                                <th>
+                                                                    {{ \Carbon\Carbon::parse($att->classing_date)->format('D d-m-Y')}}
+                                                                </th>
+                                                                <th>មិនខ្ចីមករៀន</th>
+                                                            </tr>
+                                                        @endif
+
+                                                        {{--ដាក់ច្បាប់--}}
+                                                        @if($att->checked == 2)
+                                                            <tr class="bg-warning">
+                                                                <th>{{ $loop->iteration }}</th>
+                                                                <th>
+                                                                    {{ \Carbon\Carbon::parse($att->classing_date)->format('D d-m-Y')}}
+                                                                </th>
+                                                                <th>ដាក់ច្បាប់</th>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                     </tbody>
                                                 </table>
@@ -107,7 +132,7 @@
                                                             <th>{{ $sc->score }}</th>
                                                             <th>{{ $sc->remark }}</th>
                                                         </tr>
-                                                        <?php $sum_score+=$sc->score ?>
+                                                        <?php $sum_score += $sc->score ?>
                                                     @endforeach
                                                     <tr class="bg-gradient-dark">
                                                         <td colspan="4">

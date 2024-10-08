@@ -21,6 +21,7 @@ class StudentViewController extends Controller
                 $total_absent = 0;
                 $total_present = 0;
                 $total_score = 0;
+                $total_permission = 0;
                 foreach ($item->attendance as $row) {
                     if ($row->checked == 0) {
                         $total_absent++;
@@ -28,6 +29,10 @@ class StudentViewController extends Controller
                     if ($row->checked == 1) {
                         $total_present++;
                     }
+                    if ($row->checked == 2) {
+                        $total_permission++;
+                    }
+
                 }
 
                 foreach ($item->score as $row) {
@@ -35,6 +40,7 @@ class StudentViewController extends Controller
                 }
                 $item->total_absent = $total_absent;
                 $item->total_present = $total_present;
+                $item->total_permission = $total_permission;
                 $item->total_score = $total_score;
             }
             return view('StudentView', ['data' => $data, 'group'=>$group_name]);
