@@ -43,9 +43,9 @@ class RequestPermission extends Model
 
     public static function getRequestPermissionByStudentID($student_id, $date){
         $data = RequestPermission::where('student_id', $student_id)
-            ->where(DB::raw("DATE(date) = '".$date."'"))
+            ->whereDate('date', $date)
             ->select('*')
-            ->first();
+            ->get();
         return $data;
     }
 

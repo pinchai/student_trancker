@@ -14,6 +14,7 @@ use App\Models\Section;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use setasign\Fpdi\PdfParser\CrossReference\FixedReader;
 use Validator;
 use Log;
 
@@ -61,6 +62,7 @@ class StudentController extends Controller
 
     public function getByGroupId(Request $request)
     {
+
         $data = Student::join('group', 'student.group_id', 'group.id')
             ->select(
                 'student.*',
@@ -83,10 +85,11 @@ class StudentController extends Controller
             ->get();
         foreach ($data as $item) {
             $att = Attendance::getAttendanceByStudentID($item->student_id);
-            $request_permission = RequestPermission::getRequestPermissionByStudentID($item->student_id, $item->date_time);
+            $request_permission = RequestPermission::getRequestPermissionByStudentID($item->student_id, $request->date_time);
             $item->total_absent = $att == null ? 0 : $att->total_absent;
             $item->total_present = $att == null ? 0 : $att->total_present;
             $item->group_section = $group_section;
+            $item->request_permission = $request_permission;
             $item->score = 0;
         }
 

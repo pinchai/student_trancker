@@ -270,6 +270,29 @@
                           @click="rowClick(item, 2)">ច្បាប់
                 </b-button>
                 {{ item.name }}
+                <br>
+                <div  v-if="item.request_permission.length > 0">
+                  <a
+                    href="#"
+                    class="btn btn-sm btn-outline-info"
+                    :id="'popover-target-1'+item.name"
+
+                  >
+                    Permission
+                    <img src="/github_loading.gif" alt="loading" style="width: 20px; height: 20px;">
+                  </a>
+                  <b-popover :target="'popover-target-1'+item.name" triggers="hover" placement="top">
+                    <template #title>
+                      <strong>Name: {{ item.name }}</strong>
+                      <br>
+                      <!--                    <strong>Status: {{ item.request_permission[0].status }}</strong>-->
+                      <!--                    <br>-->
+                      <!--                    <strong>Reason: {{ item.request_permission[0].reason }}</strong>-->
+                      <!--                    <br>-->
+                      <!--                    <strong>Date: {{ item.request_permission[0].date }}</strong>-->
+                    </template>
+                  </b-popover>
+                </div>
               </b-td>
               <b-td :class="getBgColor(item.checked)">
                 {{ item.latin_name }}
@@ -449,7 +472,7 @@ export default {
     },
     getStudent(group_id) {
       let vm = this;
-      let group_detail = vm.groups.find(item=>{
+      let group_detail = vm.groups.find(item => {
         return item.id == group_id
       })
       vm.form.on_going = group_detail.on_going
