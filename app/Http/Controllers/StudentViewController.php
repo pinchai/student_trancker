@@ -69,6 +69,8 @@ class StudentViewController extends Controller
         $rq->save();
 
         $student = Student::getDetailByID($rq->student_id);
+        $teacher = auth()->user();
+
         $url = 'request_permission?id='.$rq->student_id;
 
         $date = date('d-m-Y H:s');
@@ -86,9 +88,9 @@ class StudentViewController extends Controller
 
         $html = urlencode($html);
         $bot_toked = '7392836561:AAHl9_dT8GJs_903O4PmCca78RU6QM8wNaA';
-        $chat_id = '756357473';
+        $chat_id = $teacher->telegram_chat_id;
         $config_url = "https://api.telegram.org/bot$bot_toked/sendMessage?chat_id=$chat_id&text=$html&parse_mode=HTML";
-        TelegramBot::sendHtml("$html", $config_url);
+        $res = TelegramBot::sendHtml("$html", $config_url);
 
         DB::commit();
         return redirect($url)->with('status','Your permission has been applies 🍻🍾🥜');

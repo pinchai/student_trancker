@@ -454,7 +454,8 @@ export default {
       })
       vm.form.on_going = group_detail.on_going
       const input = {
-        'group_id': group_id
+        'group_id': group_id,
+        'date_time': vm.form.date_time,
       }
       axios.post("/student/getByGroupId", input).then(function (response) {
         vm.student_list = response.data.data

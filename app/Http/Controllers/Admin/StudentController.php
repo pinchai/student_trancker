@@ -9,6 +9,7 @@ use App\Helpers\StringHelper;
 use App\Models\Attendance;
 use App\Models\Branch;
 use App\Models\ExpenseCategory;
+use App\Models\RequestPermission;
 use App\Models\Section;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -67,10 +68,12 @@ class StudentController extends Controller
                 'group.name as group',
                 DB::raw("1 as 'checked'")
             )
+//            ->where(DB::raw("DATE(created_at) = '".date('Y-m-d')."'"))
             ->where('group_id', $request->group_id)
             ->where('student.user_id', auth()->user()->id)
             ->orderBy('student.latin_name', 'asc')
             ->get();
+
         $group_section = Section::where('group_id', $request->group_id)
             ->select(
                 'section.id as id',
@@ -80,6 +83,7 @@ class StudentController extends Controller
             ->get();
         foreach ($data as $item) {
             $att = Attendance::getAttendanceByStudentID($item->student_id);
+            $request_permission = RequestPermission::getRequestPermissionByStudentID($item->student_id, $item->date_time);
             $item->total_absent = $att == null ? 0 : $att->total_absent;
             $item->total_present = $att == null ? 0 : $att->total_present;
             $item->group_section = $group_section;

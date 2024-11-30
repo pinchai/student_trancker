@@ -40,4 +40,13 @@ class RequestPermission extends Model
         $this->{self::REFERENT_URL} = $data[self::REFERENT_URL];
     }
 
+
+    public static function getRequestPermissionByStudentID($student_id, $date){
+        $data = RequestPermission::where('student_id', $student_id)
+            ->where(DB::raw("DATE(date) = '".$date."'"))
+            ->select('*')
+            ->first();
+        return $data;
+    }
+
 }
