@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\TelegramBot;
 use App\Models\RequestPermission;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -69,7 +70,7 @@ class StudentViewController extends Controller
         $rq->save();
 
         $student = Student::getDetailByID($rq->student_id);
-        $teacher = auth()->user();
+        $teacher = User::where('id', $student->user_id)->first();
 
         $url = 'request_permission?id='.$rq->student_id;
 
@@ -88,8 +89,8 @@ class StudentViewController extends Controller
 
         $html = urlencode($html);
         $bot_toked = '7392836561:AAHl9_dT8GJs_903O4PmCca78RU6QM8wNaA';
-        dd($teacher);
         $chat_id = $teacher->telegram_chat_id ?? '';
+
         $config_url = "https://api.telegram.org/bot$bot_toked/sendMessage?chat_id=$chat_id&text=$html&parse_mode=HTML";
         $res = TelegramBot::sendHtml("$html", $config_url);
 
