@@ -88,7 +88,8 @@ class StudentViewController extends Controller
 
         $html = urlencode($html);
         $bot_toked = '7392836561:AAHl9_dT8GJs_903O4PmCca78RU6QM8wNaA';
-        $chat_id = $teacher->telegram_chat_id;
+        dd($teacher);
+        $chat_id = $teacher->telegram_chat_id ?? '';
         $config_url = "https://api.telegram.org/bot$bot_toked/sendMessage?chat_id=$chat_id&text=$html&parse_mode=HTML";
         $res = TelegramBot::sendHtml("$html", $config_url);
 
