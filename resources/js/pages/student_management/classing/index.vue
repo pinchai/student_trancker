@@ -259,6 +259,8 @@ export default {
     Modal: () => import("./components/Modal"),
   },
   created() {
+    let selected_group = JSON.parse(localStorage.getItem('group_selected'))
+    this.filter.group_selected = selected_group ?? []
     this.fetchRecord();
   },
   computed: {
@@ -330,6 +332,7 @@ export default {
     fetchRecord() {
       let vm = this;
       const input = this.getInput();
+      localStorage.setItem('group_selected', JSON.stringify(input.filter.group_selected))
       axios
         .post("/classing/get", input)
         .then(function (response) {
