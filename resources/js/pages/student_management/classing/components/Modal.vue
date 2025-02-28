@@ -382,7 +382,8 @@ export default {
         section_id: null,
         on_going: null,
         classing_type: null,
-        duration: null
+        duration: null,
+        test_: 'ggwp'
       },
       url: null,
       imgUrl: "/images/classing/",
