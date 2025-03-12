@@ -48,6 +48,9 @@ Route::get('/request_permission', 'App\Http\Controllers\StudentViewController@re
 Route::post('/submit_permission', 'App\Http\Controllers\StudentViewController@submit_permission')
     ->name('submit_permission');
 
+Route::post('/submit_permission/reject', 'App\Http\Controllers\StudentViewController@reject');
+Route::post('/submit_permission/approve', 'App\Http\Controllers\StudentViewController@approve');
+
 Route::get('/{vue_capture}', function () {
     return view('pages.welcome');
 })->where('vue_capture', '.*')->middleware('auth');

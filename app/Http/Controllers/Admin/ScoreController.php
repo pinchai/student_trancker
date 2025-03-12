@@ -18,18 +18,19 @@ class ScoreController extends Controller
 
     public function get(Request $request)
     {
+
         $table_size = $request->input('table_size');
         if (empty($table_size)) {
             $table_size = 10;
         }
         $data = Score::getList($request)->paginate($table_size);
-//        foreach ($data->items() as $item){
-//            foreach($item->studentScore as $student){
-//                $att = Attendance::getAttendanceByStudentID($student->student_id);
-//                $student->total_absent = $att == null ? 0 : $att->total_absent;
-//                $student->total_present = $att == null ? 0 : $att->total_present;
-//            }
-//        }
+        //        foreach ($data->items() as $item){
+        //            foreach($item->studentScore as $student){
+        //                $att = Attendance::getAttendanceByStudentID($student->student_id);
+        //                $student->total_absent = $att == null ? 0 : $att->total_absent;
+        //                $student->total_present = $att == null ? 0 : $att->total_present;
+        //            }
+        //        }
 
         $response = [
             'pagination' => [

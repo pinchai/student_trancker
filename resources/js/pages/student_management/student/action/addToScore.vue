@@ -5,10 +5,10 @@
       <b-row>
         <b-col md="3" class="text-center">
           <b-img
-            src="https://via.placeholder.com/150"
-            alt="Profile Picture"
-            rounded
-            class="mb-3"
+              src="/no-image.png"
+              alt="Profile Picture"
+              class="mb-3"
+              style="border-radius: 10px"
           />
         </b-col>
         <b-col md="9">
@@ -21,7 +21,7 @@
             {{ item.address }}
           </p>
           <router-link
-            :to="'/student_management/student'"
+              :to="'/student_management/student'"
           >
             <i class="far fa-caret-square-left"></i>
             Back
@@ -53,8 +53,8 @@
                     </b-thead>
                     <b-tbody>
                       <b-tr
-                        v-for="(item, index) in getPreset(item)"
-                        :key="'student_'+index"
+                          v-for="(item, index) in getPreset(item)"
+                          :key="'student_'+index"
                       >
                         <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
                           {{ index + 1 }}
@@ -86,8 +86,8 @@
                     </b-thead>
                     <b-tbody>
                       <b-tr
-                        v-for="(item, index) in getPermission(item)"
-                        :key="'student_'+index"
+                          v-for="(item, index) in getPermission(item)"
+                          :key="'student_'+index"
                       >
                         <b-td class="text-warning bg-dark">
                           {{ index + 1 }}
@@ -120,8 +120,8 @@
                     </b-thead>
                     <b-tbody>
                       <b-tr
-                        v-for="(item, index) in getAbsent(item)"
-                        :key="'student_'+index"
+                          v-for="(item, index) in getAbsent(item)"
+                          :key="'student_'+index"
                       >
                         <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">{{ index + 1 }}</b-td>
                         <b-td :class="item.checked == 0 ? 'bg-danger text-warning': ''">
@@ -161,8 +161,8 @@
                     </b-thead>
                     <b-tbody>
                       <b-tr
-                        v-for="(item, index) in getMidtermScore(item.score)"
-                        :key="'score_'+index"
+                          v-for="(item, index) in getMidtermScore(item.score)"
+                          :key="'score_'+index"
                       >
                         <b-td>{{ index + 1 }}</b-td>
                         <b-td>{{ item.updated_at | dateFormat }}</b-td>
@@ -195,8 +195,8 @@
                     </b-thead>
                     <b-tbody>
                       <b-tr
-                        v-for="(item, index) in getFinalScore(item.score)"
-                        :key="'score_'+index"
+                          v-for="(item, index) in getFinalScore(item.score)"
+                          :key="'score_'+index"
                       >
                         <b-td>{{ index + 1 }}</b-td>
                         <b-td>{{ item.updated_at | dateFormat }}</b-td>
@@ -211,8 +211,8 @@
             </div>
           </b-row>
         </b-tab>
-        <!--other action Tab-->
-        <b-tab title="Add To Score List" active>
+        <!--Add To Score List Tab-->
+        <b-tab title="Add To Score List">
           <b-row>
             <div class="col-6">
               <div class="card">
@@ -224,67 +224,109 @@
                     <!--group search-->
                     <b-form-group v-if="false">
                       <v-select
-                        multiple
-                        :options="groups"
-                        v-model="filter.group_selected"
-                        :reduce="(option) => option.id"
-                        label="name"
-                        @input="fetchScore"
+                          multiple
+                          :options="groups"
+                          v-model="filter.group_selected"
+                          :reduce="(option) => option.id"
+                          label="name"
+                          @input="fetchScore"
                       />
                     </b-form-group>
                     <!--score list-->
                     <b-form-group
-                      v-if="score_list.length > 0"
-                      label="Score List"
+                        v-if="score_list.length > 0"
+                        label="Score List"
                     >
                       <b-form-radio-group
-                        v-model="form.score_id"
-                        :options="score_list"
-                        name="radios-stacked"
-                        stacked
+                          v-model="form.score_id"
+                          :options="score_list"
+                          name="radios-stacked"
+                          stacked
                       ></b-form-radio-group>
                     </b-form-group>
                   </b-col>
                   <!--score-->
                   <b-col
-                    v-if="form.score_id != null"
-                    cols="12"
-                    class=" mb-lt-0 mt-sm-2"
+                      v-if="form.score_id != null"
+                      cols="12"
+                      class=" mb-lt-0 mt-sm-2"
                   >
                     <b-form-group
-                      :label="$t('score')+ '*'"
-                      :invalid-feedback="veeErrors.first('score')"
-                      label-class="control-label"
-                      class="text-left"
+                        :label="$t('score')+ '*'"
+                        :invalid-feedback="veeErrors.first('score')"
+                        label-class="control-label"
+                        class="text-left"
                     >
                       <b-form-input
-                        autocomplete="off"
-                        v-model="form.score"
-                        type="number"
-                        :placeholder="$t('score')"
-                        @keydown.enter.prevent="onSubmit"
-                        v-validate="'required'"
-                        :state="veeErrors.has('score') ? false : null"
-                        data-vv-name="score"
-                        :data-vv-as="$t('score')"
+                          autocomplete="off"
+                          v-model="form.score"
+                          type="number"
+                          :placeholder="$t('score')"
+                          @keydown.enter.prevent="onSubmit"
+                          v-validate="'required'"
+                          :state="veeErrors.has('score') ? false : null"
+                          data-vv-name="score"
+                          :data-vv-as="$t('score')"
                       ></b-form-input>
                     </b-form-group>
                   </b-col>
                   <!--save-->
                   <b-col
-                    v-if="form.score_id != null"
-                    cols="12"
+                      v-if="form.score_id != null"
+                      cols="12"
                   >
                     <b-button
-                      type="submit"
-                      variant="outline-primary"
-                      class="float-right"
-                      @click.prevent="onSubmit"
+                        type="submit"
+                        variant="outline-primary"
+                        class="float-right"
+                        @click.prevent="onSubmit"
                     >
                       Save
                     </b-button>
                   </b-col>
                 </div>
+              </div>
+            </div>
+          </b-row>
+        </b-tab>
+        <!--Permission-->
+        <b-tab title="Permission" active>
+          <b-row>
+            <div class="col-8">
+              <div class="card">
+                <div class="card-header">
+                  <h3>Request permission</h3>
+                </div>
+                <table class="table table-sm table-borderless table-striped">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>DateTime</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr
+                      v-for="(item, index) in permission"
+                      :key="'permission_'+index"
+                  >
+                    <th>{{ index+1 }}</th>
+                    <th>{{ item.date }}</th>
+                    <th>{{ item.reason }}</th>
+                    <th>
+                      <span v-if="item.status == 'reject'" class="badge badge-danger">{{ item.status }}</span>
+                      <span v-if="item.status == 'approve'" class="badge badge-primary">{{ item.status }}</span>
+                      <span v-if="item.status == 'pending'" class="badge badge-warning">{{ item.status }}</span>
+                    </th>
+                    <th>
+                      <button v-if="item.status == 'pending'" @click="rejectPermission(item)" class="btn btn-sm btn-outline-danger">❌ Reject</button>
+                      <button v-if="item.status == 'pending'" @click="approvePermission(item)" class="btn btn-sm btn-outline-secondary">✅ Approve</button>
+                    </th>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </b-row>
@@ -312,7 +354,8 @@ export default {
         txt_src: null,
         group_selected: []
       },
-      score_list: []
+      score_list: [],
+      permission: []
     }
   },
   props: {
@@ -348,14 +391,15 @@ export default {
       }
 
       await axios
-        .post("/student/getInfo", input)
-        .then(function (response) {
-          vm.item = response.data
-          vm.filter.group_selected = [response.data.group_id]
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          .post("/student/getInfo", input)
+          .then(function (response) {
+            vm.item = response.data
+            vm.permission = response.data.request_permission
+            vm.filter.group_selected = [response.data.group_id]
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       await vm.fetchScore()
     },
     fetchScore() {
@@ -364,19 +408,18 @@ export default {
         filter: this.filter,
       }
       axios
-        .post("/score/get", input)
-        .then(function (response) {
-          vm.score_list = response.data.data
-          vm.score_list.map(item => {
-            item.text = `Remark: ${item.remark} - Score: ${item.total_score} - ${item.on_going}`
-            item.value = item.id
+          .post("/score/get", input)
+          .then(function (response) {
+            vm.score_list = response.data.data
+            vm.score_list.map(item => {
+              item.text = `Remark: ${item.remark} - Score: ${item.total_score} - ${item.on_going}`
+              item.value = item.id
+            })
+            //vm.setInput(response.data);
           })
-          console.log(response.data.data)
-          //vm.setInput(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          .catch(function (error) {
+            console.log(error);
+          });
     },
     onSubmit() {
       this.$validator.validateAll().then((result) => {
@@ -448,21 +491,21 @@ export default {
         if (result.value) {
           let vm = this;
           axios
-            .post("/student/delete_attendance",
-              {
-                id: id
-              })
-            .then(function (response) {
-              if (response.status == 200) {
-                vm.fetchRecord();
-                vm.$notify({
-                  group: "message",
-                  type: "success",
-                  title: vm.$t("branch"),
-                  text: vm.$t("done")
-                });
-              }
-            });
+              .post("/student/delete_attendance",
+                  {
+                    id: id
+                  })
+              .then(function (response) {
+                if (response.status == 200) {
+                  vm.fetchRecord();
+                  vm.$notify({
+                    group: "message",
+                    type: "success",
+                    title: vm.$t("branch"),
+                    text: vm.$t("done")
+                  });
+                }
+              });
         }
       });
     },
@@ -478,11 +521,95 @@ export default {
       })
       return final
     },
-    clearForm(){
+    clearForm() {
       this.filter.group_selected = []
       this.form.score_id = null
       this.form.score = 0
-    }
+    },
+    rejectPermission(item) {
+      this.$fire({
+        title: "Are you want to reject ?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Reject",
+        allowOutsideClick: false,
+        allowEscapeKey: false
+      }).then(result => {
+        if (result.value) {
+          //
+          let vm = this;
+          if (result) {
+            let permission_id = item.id
+            axios.post('/submit_permission/reject', {permission_id}).then(function (response) {
+              if (response.status === 200) {
+                vm.$notify({
+                  group: 'message',
+                  type: 'success',
+                  title: vm.$t('permission'),
+                  text: vm.$t('done')
+                });
+                vm.clearForm()
+                vm.fetchRecord()
+              }
+            }).catch(function (error) {
+              console.log(error)
+            });
+          } else {
+            vm.$notify({
+              group: 'message',
+              type: 'warning',
+              title: vm.$t('score'),
+              text: vm.$t('validation_failed')
+            });
+          }
+        }
+      });
+    },
+    approvePermission(item) {
+      this.$fire({
+        title: "Are you want to approve?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Approve",
+        allowOutsideClick: false,
+        allowEscapeKey: false
+      }).then(result => {
+        if (result.value) {
+          //
+          let vm = this;
+          if (result) {
+            let permission_id = item.id
+            axios.post('/submit_permission/approve', {permission_id}).then(function (response) {
+              if (response.status === 200) {
+                vm.$notify({
+                  group: 'message',
+                  type: 'success',
+                  title: vm.$t('permission'),
+                  text: vm.$t('done')
+                });
+                vm.clearForm()
+                vm.fetchRecord()
+              }
+            }).catch(function (error) {
+              console.log(error)
+            });
+          } else {
+            vm.$notify({
+              group: 'message',
+              type: 'warning',
+              title: vm.$t('score'),
+              text: vm.$t('validation_failed')
+            });
+          }
+        }
+      });
+    },
   }
 }
 </script>

@@ -97,4 +97,22 @@ class StudentViewController extends Controller
         DB::commit();
         return redirect($url)->with('status','Your permission has been applies 🍻🍾🥜');
     }
+
+    public function reject(Request $request){
+        $permission = RequestPermission::find($request->permission_id);
+        if ($permission){
+            $permission->status = 'reject';
+            $permission->save();
+        }
+        return response()->json($permission, 200);
+    }
+
+    public function approve(Request $request){
+        $permission = RequestPermission::find($request->permission_id);
+        if ($permission){
+            $permission->status = 'approve';
+            $permission->save();
+        }
+        return response()->json($permission, 200);
+    }
 }
